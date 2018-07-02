@@ -337,11 +337,11 @@ class Scenario {
 
           findMessage(transfer_criteria).then(function(items) {
 
-            var dict = {'amount':'số tiền', 'acc':'số tài khoản', 'bank':'ngân hàng'};
+            var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
             if (items.length > 0 && items[items.length -1].missing !== []){
-              var conditions = ['amount', 'acc', 'bank'];
-              var missing = ['amount', 'acc', 'bank'];
+              var conditions = ['amount', 'acc_number', 'bank'];
+              var missing = ['amount', 'acc_number', 'bank'];
               //find missing condition
               var i;
               for (i = 0; i < conditions.length; i++ ){
