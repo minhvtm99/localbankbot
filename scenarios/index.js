@@ -343,6 +343,7 @@ class Scenario {
               //find missing condition
               for (var cond in conditions){
                 var prop = extractProperty(msg_tagged, cond);
+                console.log("property: " + prop);
                 if(prop !== ''){
                   var index = missing.indexOf(cond);
                   if (index > -1) {
@@ -351,15 +352,17 @@ class Scenario {
                 }
               }
 
-            console.log("MISSING CONDITIONS: " + missing);
-
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
             else {
+              console.log("MISSING CONDITIONS: " + missing);
               var text = "Bạn vui lòng gửi thêm thông tin về";
-              for (var missing_item in missing){
+
+              for (var missing_item in missing);
                 text += missing_item + ', ';
+                console.log(missing_item);
+
               }
               text += 'mà bạn muốn chuyển tiền';
               f.txt(sender, text);
