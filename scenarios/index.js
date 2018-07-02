@@ -358,7 +358,7 @@ class Scenario {
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
             else {
-               console.log("MISSING CONDITIONS: " + missing);
+               console.log(missing);
 
               var text = "Bạn vui lòng gửi thêm thông tin về ";
               var missing_item;
