@@ -329,7 +329,7 @@ class Scenario {
               'message tagged': msg_tagged,
               'time': msg_time,
               'request': 'transfer'
-              'missing':['amount, account, bank']
+              'missing':['amount', 'account', 'bank']
             });
 
           }
