@@ -221,7 +221,6 @@ class Scenario {
             
             
             console.log("STREET : " + street_name);
-            console.info('The promise was fulfilled with items!', items);
             
             if (street_name !== '' && atm !== '') {
             //log message
@@ -352,6 +351,8 @@ class Scenario {
                 }
               }
 
+            console.log('CHUYỂN TIỀN ĐEEEEEEEEEEE');
+            
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
