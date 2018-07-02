@@ -352,15 +352,16 @@ class Scenario {
                 }
               }
 
-            console.log("MISSING CONDITIONS: " + missing);
 
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
             else {
-              var text = "Bạn vui lòng gửi thêm thông tin về";
-              
-              for (var missing_item in missing);
+               console.log("MISSING CONDITIONS: " + missing);
+
+              var text = "Bạn vui lòng gửi thêm thông tin về ";
+              for (var missing_item in missing){
+                console.log(missing_item);
                 text += missing_item + ', ';
               }
               text += 'mà bạn muốn chuyển tiền';
