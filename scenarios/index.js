@@ -337,13 +337,15 @@ class Scenario {
 
           findMessage(transfer_criteria).then(function(items) {
 
+            var dict = {'amount':'số tiền', 'acc':'số tài khoản', 'bank':'ngân hàng'};
+
             if (items.length > 0 && items[items.length -1].missing !== []){
               var conditions = ['amount', 'acc', 'bank'];
               var missing = ['amount', 'acc', 'bank'];
               //find missing condition
               var i;
               for (i = 0; i < conditions.length; i++ ){
-                var cond = missing[i];
+                var cond = conditions[i];
                 console.log("condition: " + cond);
                 var prop = extractProperty(msg_tagged, cond);
                 console.log("property: " + prop);
@@ -364,9 +366,10 @@ class Scenario {
 
               var text = "Bạn vui lòng gửi thêm thông tin về ";
               var missing_item;
-              for (missing_item in missing){
+              for (i = 0; i < missing.length; i++){
+                var missing_item = missing[i];
                 console.log(missing_item);
-                text += missing_item + ', ';
+                text += dict.missing_item + ', ';
               }
               text += 'mà bạn muốn chuyển tiền';
               f.txt(sender, text);
