@@ -341,8 +341,10 @@ class Scenario {
               var conditions = ['amount', 'acc', 'bank'];
               var missing = ['amount', 'acc', 'bank'];
               //find missing condition
-              var cond;
-              for (cond in conditions){
+              var i;
+              for (i = 0; i < conditions.length; i++ ){
+                var cond = missing[i];
+                console.log("condition: " + cond);
                 var prop = extractProperty(msg_tagged, cond);
                 console.log("property: " + prop);
                 if(prop !== ''){
