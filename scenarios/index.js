@@ -368,9 +368,7 @@ class Scenario {
               var missing_item;
               for (i = 0; i < missing.length; i++){
                 var missing_item = missing[i];
-                console.log(missing_item);
-                console.log(dict.missing_item);
-                text += dict.missing_item + ', ';
+                text += dict[missing_item] + ', ';
               }
               text += 'mà bạn muốn chuyển tiền';
               f.txt(sender, text);
