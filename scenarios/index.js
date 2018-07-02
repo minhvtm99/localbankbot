@@ -328,7 +328,7 @@ class Scenario {
               'message tagged': msg_tagged,
               'time': msg_time,
               'request': 'transfer',
-              'missing':['amount', 'account', 'bank']
+              'missing':['amount', 'acc', 'bank']
             });
 
           }
@@ -338,10 +338,11 @@ class Scenario {
           findMessage(transfer_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].missing !== []){
-              var conditions = ['amount', 'account', 'bank'];
-              var missing = ['amount', 'account', 'bank'];
+              var conditions = ['amount', 'acc', 'bank'];
+              var missing = ['amount', 'acc', 'bank'];
               //find missing condition
-              for (var cond in conditions){
+              var cond;
+              for (cond in conditions){
                 var prop = extractProperty(msg_tagged, cond);
                 console.log("property: " + prop);
                 if(prop !== ''){
@@ -360,7 +361,8 @@ class Scenario {
                console.log("MISSING CONDITIONS: " + missing);
 
               var text = "Bạn vui lòng gửi thêm thông tin về ";
-              for (var missing_item in missing){
+              var missing_item;
+              for (missing_item in missing){
                 console.log(missing_item);
                 text += missing_item + ', ';
               }
