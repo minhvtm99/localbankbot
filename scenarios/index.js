@@ -107,7 +107,7 @@ MongoClient.connect(url, {
   var mysort = { property: 1 };
   dbo.collection("customers").find().sort(mysort).toArray(function(err, result) {
     if (err) throw err;
-    console.log(result);
+    console.log("SORTED !");
     db.close();
   });
 });
@@ -332,6 +332,8 @@ class Scenario {
             });
 
           }
+
+          sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
