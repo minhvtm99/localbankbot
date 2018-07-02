@@ -328,7 +328,7 @@ class Scenario {
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
-              'request': 'transfer'
+              'request': 'transfer',
               'missing':['amount', 'account', 'bank']
             });
 
