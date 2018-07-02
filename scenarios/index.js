@@ -338,8 +338,8 @@ class Scenario {
           findMessage(transfer_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].missing !== []){
-              var conditions = ['amount, account, bank'];
-              var missing = ['amount, account, bank'];
+              var conditions = ['amount', 'account', 'bank'];
+              var missing = ['amount', 'account', 'bank'];
               //find missing condition
               for (var cond in conditions){
                 var prop = extractProperty(msg_tagged, cond);
@@ -351,8 +351,8 @@ class Scenario {
                 }
               }
 
-            console.log('CHUYỂN TIỀN ĐEEEEEEEEEEE');
-            
+            console.log("MISSING CONDITIONS: " + missing);
+
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
