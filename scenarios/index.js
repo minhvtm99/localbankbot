@@ -286,6 +286,7 @@ class Scenario {
 
                 } else {
                   f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+                  return;
                 }
 
                 return locations;
