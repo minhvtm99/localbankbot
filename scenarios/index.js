@@ -379,9 +379,15 @@ class Scenario {
               }
 
             //relog message
-            deleteMessage(logged);
-            logged['missing'] = missing;
-            logMessage(logged);
+            var mew_logged = {
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'transfer',
+              'missing':missing
+            }
+            logMessage(new_logged);
 
 
             if (missing == []){
