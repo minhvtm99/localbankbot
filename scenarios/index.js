@@ -113,6 +113,23 @@ MongoClient.connect(url, {
 });
 }
 
+function deleteMessage(message){
+  var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, {
+    useNewUrlParser: true
+  }, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  dbo.collection("customers").deleteOne(message, function(err, obj) {
+    if (err) throw err;
+    console.log("1 document deleted");
+    db.close();
+  });
+});
+}
+
 
 // get property
 function extractProperty(msg_tagged, property) {
@@ -224,7 +241,7 @@ class Scenario {
             
             if (street_name !== '' && atm !== '') {
             //log message
-                          logMessage({
+              logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -322,14 +339,16 @@ class Scenario {
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-            logMessage({
+            var logged = {
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
               'request': 'transfer',
               'missing':['amount', 'acc', 'bank']
-            });
+            }
+
+            logMessage(logged);
 
           }
 
@@ -358,6 +377,11 @@ class Scenario {
                   }
                 }
               }
+
+            //relog message
+            deleteMessage(logged);
+            logged['missing'] = missing;
+            logMessage(logged);
 
 
             if (missing == []){
