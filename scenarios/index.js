@@ -396,6 +396,9 @@ class Scenario {
 
             if (missing.length == 0){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
+              //get info from fulfilled
+
+              //delete request from log after processing 
             }
             else {
                console.log(missing);
