@@ -394,6 +394,8 @@ class Scenario {
               'fulfilled':fulfilled
             })
 
+            console.log(typeof missing);
+
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
