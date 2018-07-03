@@ -346,8 +346,10 @@ class Scenario {
               'message tagged': msg_tagged,
               'time': msg_time,
               'request': 'transfer',
-              'missing':['amount', 'acc', 'bank']
+              'missing':['amount', 'acc_number', 'bank']
             });
+
+            var fulfilled = {'amount': null, 'acc_number': null, 'bank' : null};
 
           }
 
@@ -370,6 +372,7 @@ class Scenario {
                 var prop = extractProperty(msg_tagged, cond);
                 console.log("property: " + prop);
                 if(prop !== ''){
+                  fulfilled[cond] = prop;
                   var index = missing.indexOf(cond);
                   if (index > -1) {
                   missing.splice(index, 1);
@@ -377,7 +380,7 @@ class Scenario {
                 }
               }
 
-             items[items.length -1].missing = missing; 
+            console.log("FULLFILLED: " + fulfilled);
 
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
