@@ -60,25 +60,6 @@ function logMessage(message) {
 
 }
 
-// function findMessage(criteria){
-//   var MongoClient = require('mongodb').MongoClient;
-//   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
-
-// MongoClient.connect(url, function(err, db) {
-//   if (err) throw err;
-//   var dbo = db.db("bankbotdev");
-//   var query = criteria;
-//   dbo.collection("customers").find(query).toArray(function(err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//     db.close();
-
-//   });
-// });
-// }
-
-
-// db1.js
 var MongoClient = require('mongodb').MongoClient;
 
 function findMessage(query) {
@@ -329,7 +310,6 @@ class Scenario {
             });
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
 
-
           }
 
                    
@@ -361,7 +341,7 @@ class Scenario {
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
-            if (items.length > 0 && items[items.length -1].missing !== []){
+            if (items.length > 0 && items[items.length -1].missing,length > 0){
               var conditions = ['amount', 'acc_number', 'bank'];
               var missing = items[items.length -1].missing;
               var fulfilled = items[items.length -1].fulfilled;
