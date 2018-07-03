@@ -380,7 +380,7 @@ class Scenario {
                 }
               }
 
-            console.log("FULLFILLED: " + fulfilled);
+            console.log("FULLFILLED: " + fulfilled.toString());
 
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
