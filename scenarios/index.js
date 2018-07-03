@@ -347,9 +347,9 @@ class Scenario {
               'time': msg_time,
               'request': 'transfer',
               'missing':['amount', 'acc_number', 'bank']
-            });
+              'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null};
 
-            var fulfilled = {'amount': null, 'acc_number': null, 'bank' : null};
+            });
 
           }
 
@@ -363,7 +363,8 @@ class Scenario {
 
             if (items.length > 0 && items[items.length -1].missing !== []){
               var conditions = ['amount', 'acc_number', 'bank'];
-              var missing = ['amount', 'acc_number', 'bank'];
+              var missing = items[items.length -1].missing;
+              var fulfilled = items[items.length -1].fulfilled;
               //find missing condition
               var i;
               for (i = 0; i < conditions.length; i++ ){
