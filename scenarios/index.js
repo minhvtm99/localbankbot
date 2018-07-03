@@ -309,6 +309,7 @@ class Scenario {
               'request': 'findATM'
             });
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
+            return;
 
           }
 
