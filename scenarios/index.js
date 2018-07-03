@@ -122,6 +122,7 @@ MongoClient.connect(url, {
   }, function(err, db) {
   if (err) throw err;
   var dbo = db.db("mydb");
+
   dbo.collection("customers").deleteOne(message, function(err, obj) {
     if (err) throw err;
     console.log("1 document deleted");
@@ -339,16 +340,14 @@ class Scenario {
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-            var logged = {
+            logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
               'request': 'transfer',
               'missing':['amount', 'acc', 'bank']
-            }
-
-            logMessage(logged);
+            });
 
           }
 
@@ -378,17 +377,7 @@ class Scenario {
                 }
               }
 
-            //relog message
-            var mew_logged = {
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'transfer',
-              'missing':missing
-            }
-            logMessage(new_logged);
-
+             items[items.length -1].missing = missing; 
 
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
