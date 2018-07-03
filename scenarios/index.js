@@ -383,6 +383,16 @@ class Scenario {
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
+            logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'transfer',
+              'missing':missing,
+              'fulfilled':fulfilled
+            })
+
             if (missing == []){
               f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
             }
