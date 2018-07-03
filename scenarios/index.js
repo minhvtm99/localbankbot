@@ -346,7 +346,7 @@ class Scenario {
               'message tagged': msg_tagged,
               'time': msg_time,
               'request': 'transfer',
-              'missing':['amount', 'acc_number', 'bank']
+              'missing':['amount', 'acc_number', 'bank'],
               'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null};
 
             });
