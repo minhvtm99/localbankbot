@@ -212,11 +212,6 @@ class Scenario {
           
           findMessage(atm_criteria).then(function(items) {
 
-            if (msg_time - items[items.length -1].time > 120){
-              deleteMessage({'sender':sender, 'request':'findATM'});
-              f.txt(sender, 'Reset conversation');
-            }
-
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
               street_name = message.text;
               atm = 'ATM';
