@@ -308,7 +308,7 @@ class Scenario {
             console.log("end call find Geocode");
             return;
 
-          } else if (atm !== '' && street_name == '') {
+          } else if (atm !== '' && street_name !== '') {
 
             logMessage({
               'sender': sender,
@@ -346,6 +346,7 @@ class Scenario {
           sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
+          if (atm !== '' && street_name !== ''){
 
           findMessage(transfer_criteria).then(function(items) {
 
@@ -407,6 +408,8 @@ class Scenario {
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
+
+      } // if 
 
         
         }
