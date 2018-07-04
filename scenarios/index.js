@@ -265,7 +265,7 @@ class Scenario {
 
                   buttons.push({
                     content_type: 'text',
-                    title: i,
+                    title: j,
                     image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
                     payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
                   });
