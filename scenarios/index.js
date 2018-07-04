@@ -104,14 +104,13 @@ function deleteMessage(message){
     if (err) throw err;
     var dbo = db.db("mydb");
 
-    dbo.collection("customers").deleteOne(message, function(err, obj) {
+    dbo.collection("customers").deleteMany(message, function(err, obj) {
       if (err) throw err;
-      console.log("1 document deleted");
+      console.log(obj.result.n + " document(s) deleted");
       db.close();
     });
   });
 }
-
 
 // get property
 function extractProperty(msg_tagged, property) {
@@ -212,6 +211,11 @@ class Scenario {
           sortMessage('time');
           
           findMessage(atm_criteria).then(function(items) {
+
+            if (msg_time - items[items.length -1].time > 120){
+              deleteMessage({'sender':sender, 'request':'findATM'});
+              f.txt(sender, 'Reset conversation');
+            }
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
               street_name = message.text;
