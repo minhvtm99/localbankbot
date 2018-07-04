@@ -22,7 +22,7 @@ function doConnect() {
     db.close();
   });
 }
-doConnect()
+// doConnect()
 
 function createCollection() {
   var MongoClient = require('mongodb').MongoClient;
@@ -42,7 +42,7 @@ function createCollection() {
 
 }
 
-createCollection()
+// createCollection()
 
 function logMessage(message) {
   var MongoClient = require('mongodb').MongoClient;
