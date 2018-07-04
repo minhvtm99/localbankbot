@@ -334,6 +334,10 @@ class Scenario {
 
           }
 
+          else if (atm !== ''){
+            return;
+          }
+
           sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
