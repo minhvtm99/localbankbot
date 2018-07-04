@@ -338,6 +338,7 @@ class Scenario {
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
           findMessage(transfer_criteria).then(function(items) {
+            console.log(dict);
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
