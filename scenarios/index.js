@@ -207,18 +207,10 @@ class Scenario {
 
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
-          var transfer = extractProperty(msg_tagged, 'transfer');
-          var amount = extractProperty(msg_tagged, 'amount');
-          var acc_number = extractProperty(msg_tagged, 'acc_number');
-          var bank = extractProperty(msg_tagged, 'bank');
 
           var atm_criteria = {'sender': sender};
           
           sortMessage('time');
-
-          if (transfer == '' && amount == '' && acc_number == '' && bank == '' ){
-
-          console.log("AAAAAAAAAAAAAAAA");
 
           findMessage(atm_criteria).then(function(items) {
 
@@ -310,7 +302,7 @@ class Scenario {
             console.log("end call find Geocode");
             return;
 
-          } else if (atm !== '' && street_name !== '') {
+          } else if (atm !== '' && street_name == '') {
 
             logMessage({
               'sender': sender,
@@ -328,7 +320,6 @@ class Scenario {
             console.error('The promise was rejected', err, err.stack);
           });
 
-}
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
@@ -348,7 +339,6 @@ class Scenario {
           sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
-          if (atm == '' && street_name == ''){
 
           findMessage(transfer_criteria).then(function(items) {
 
@@ -410,8 +400,6 @@ class Scenario {
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
-
-      } // if 
 
         
         }
