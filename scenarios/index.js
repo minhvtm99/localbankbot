@@ -216,7 +216,7 @@ class Scenario {
           
           sortMessage('time');
 
-          if (transfer !== '' && amount !== '' && acc_number !== '' && bank !== '' ){
+          if (transfer == '' && amount == '' && acc_number == '' && bank == '' ){
 
           findMessage(atm_criteria).then(function(items) {
 
@@ -346,7 +346,7 @@ class Scenario {
           sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
-          if (atm !== '' && street_name !== ''){
+          if (atm == '' && street_name == ''){
 
           findMessage(transfer_criteria).then(function(items) {
 
