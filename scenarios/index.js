@@ -334,9 +334,9 @@ class Scenario {
 
           }
 
-          else if (atm !== ''){
-            return;
-          }
+          // else if (atm !== ''){
+          //   return;
+          // }
 
           sortMessage('time');
 
