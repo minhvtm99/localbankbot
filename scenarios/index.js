@@ -35,7 +35,7 @@ function createCollection() {
     var dbo = db.db("bankbotdev");
     dbo.createCollection('customers', function(err, res) {
       if (err) throw err;
-      console.log("Collection created!" + collection_name);
+      console.log("Collection created!");
       db.close();
     });
   });
