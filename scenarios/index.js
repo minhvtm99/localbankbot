@@ -344,7 +344,7 @@ class Scenario {
             console.log('ATM: ');
             console.log(atm);
 
-            if (items.length > 0 && items[items.length -1].missing.length > 0 && atm !== ''){
+            if (items.length > 0 && items[items.length -1].missing.length > 0 && atm == ''){
               var conditions = ['amount', 'acc_number', 'bank'];
               var missing = items[items.length -1].missing;
               var fulfilled = items[items.length -1].fulfilled;
