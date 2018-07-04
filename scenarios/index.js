@@ -22,9 +22,9 @@ function doConnect() {
     db.close();
   });
 }
-// doConnect()
+doConnect()
 
-function createCollection() {
+function createCollection(collection_name) {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
@@ -33,25 +33,26 @@ function createCollection() {
   }, function(err, db) {
     if (err) throw err;
     var dbo = db.db("bankbotdev");
-    dbo.createCollection("customers", function(err, res) {
+    dbo.createCollection(collection_name, function(err, res) {
       if (err) throw err;
-      console.log("Collection created!");
+      console.log("Collection created!" + collection_name);
       db.close();
     });
   });
 
 }
 
-// createCollection()
+createCollection('ATM')
+createCollection('Transfer money')
 
-function logMessage(message) {
+function logMessage(message, collection) {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("bankbotdev");
-    dbo.collection("customers").insertOne(message, function(err, res) {
+    dbo.collection(collection).insertOne(message, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
       db.close();
