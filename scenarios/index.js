@@ -123,7 +123,7 @@ function extractProperty(msg_tagged, property) {
       street_name += msg_tagged[i][0] + ' ';
     }
   }
-  console.log("Desired property: " + street_name);
+  console.log("Desired " + property + ": " + street_name);
   return street_name;
 }
 
