@@ -4,10 +4,10 @@
 //Get entities
 const firstEntity = (entities, name) => {
   return entities &&
-    entities[name] &&
-    Array.isArray(entities[name]) &&
-    entities[name] &&
-    entities[name][0];
+  entities[name] &&
+  Array.isArray(entities[name]) &&
+  entities[name] &&
+  entities[name][0];
 }
 //mongodb
 function doConnect() {
@@ -24,7 +24,7 @@ function doConnect() {
 }
 doConnect()
 
-function createCollection(collection_name) {
+function createCollection() {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
@@ -33,7 +33,7 @@ function createCollection(collection_name) {
   }, function(err, db) {
     if (err) throw err;
     var dbo = db.db("bankbotdev");
-    dbo.createCollection(collection_name, function(err, res) {
+    dbo.createCollection('customers', function(err, res) {
       if (err) throw err;
       console.log("Collection created!" + collection_name);
       db.close();
@@ -42,17 +42,16 @@ function createCollection(collection_name) {
 
 }
 
-createCollection('ATM')
-createCollection('Transfer money')
+createCollection()
 
-function logMessage(message, collection) {
+function logMessage(message) {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("bankbotdev");
-    dbo.collection(collection).insertOne(message, function(err, res) {
+    dbo.collection('customers').insertOne(message, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
       db.close();
@@ -79,38 +78,38 @@ function findMessage(query) {
 
 function sortMessage(property){
   var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
+  var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
-MongoClient.connect(url, {
+  MongoClient.connect(url, {
     useNewUrlParser: true
   }, function(err, db) {
-  if (err) throw err;
-  var dbo = db.db("bankbotdev");
-  var mysort = { property: 1 };
-  dbo.collection("customers").find().sort(mysort).toArray(function(err, result) {
     if (err) throw err;
-    console.log("SORTED !");
-    db.close();
+    var dbo = db.db("bankbotdev");
+    var mysort = { property: 1 };
+    dbo.collection("customers").find().sort(mysort).toArray(function(err, result) {
+      if (err) throw err;
+      console.log("SORTED !");
+      db.close();
+    });
   });
-});
 }
 
 function deleteMessage(message){
   var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+  var url = "mongodb://localhost:27017/";
 
-MongoClient.connect(url, {
+  MongoClient.connect(url, {
     useNewUrlParser: true
   }, function(err, db) {
-  if (err) throw err;
-  var dbo = db.db("mydb");
-
-  dbo.collection("customers").deleteOne(message, function(err, obj) {
     if (err) throw err;
-    console.log("1 document deleted");
-    db.close();
+    var dbo = db.db("mydb");
+
+    dbo.collection("customers").deleteOne(message, function(err, obj) {
+      if (err) throw err;
+      console.log("1 document deleted");
+      db.close();
+    });
   });
-});
 }
 
 
@@ -215,8 +214,8 @@ class Scenario {
           findMessage(atm_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
-                street_name = message.text;
-                atm = 'ATM';
+              street_name = message.text;
+              atm = 'ATM';
             }
             
             
@@ -224,13 +223,13 @@ class Scenario {
             
             if (street_name !== '' && atm !== '') {
             //log message
-              logMessage({
+            logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
             });
-              
+
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
             //             this.findGeoLoc(sender, street_name, f);
@@ -260,8 +259,8 @@ class Scenario {
                 for (var i = 0; i < locations.length; i++) {
                   var loc = locations[i];
                   console.log(loc);
-
-                  text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
+                  var j = i + 1;
+                  text += ' Chọn ' + j + ' để tìm ATM ở ' + loc.formatted_address;
                   console.log(text);
 
                   buttons.push({
@@ -314,39 +313,39 @@ class Scenario {
 
           }
 
-                   
-          }, function(err) {
-            console.error('The promise was rejected', err, err.stack);
-          });
+
+        }, function(err) {
+          console.error('The promise was rejected', err, err.stack);
+        });
 
 //CASE transfer money
-          var transfer = extractProperty(msg_tagged, 'transfer');
-          if (transfer !== ''){
-            logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'transfer',
-              'missing':['amount', 'acc_number', 'bank'],
-              'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
+        var transfer = extractProperty(msg_tagged, 'transfer');
+        if (transfer !== ''){
+          logMessage({
+            'sender': sender,
+            'message': message.text,
+            'message tagged': msg_tagged,
+            'time': msg_time,
+            'request': 'transfer',
+            'missing':['amount', 'acc_number', 'bank'],
+            'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
 
-            });
+          });
 
-          }
+        }
 
-          sortMessage('time');
+        sortMessage('time');
 
-          var transfer_criteria = {'sender':sender, 'request':'transfer'};
+        var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
-          findMessage(transfer_criteria).then(function(items) {
+        findMessage(transfer_criteria).then(function(items) {
 
-            var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
+          var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
-            if (items.length > 0 && items[items.length -1].missing.length > 0){
-              var conditions = ['amount', 'acc_number', 'bank'];
-              var missing = items[items.length -1].missing;
-              var fulfilled = items[items.length -1].fulfilled;
+          if (items.length > 0 && items[items.length -1].missing.length > 0){
+            var conditions = ['amount', 'acc_number', 'bank'];
+            var missing = items[items.length -1].missing;
+            var fulfilled = items[items.length -1].fulfilled;
               //find missing condition  
               var i;
               for (i = 0; i < conditions.length; i++ ){
@@ -358,53 +357,53 @@ class Scenario {
                   fulfilled[cond] = prop;
                   var index = missing.indexOf(cond);
                   if (index > -1) {
-                  missing.splice(index, 1);
+                    missing.splice(index, 1);
                   }
                 }
               }
 
-            console.log("FULFILLED: ");
-            console.log(fulfilled);
+              console.log("FULFILLED: ");
+              console.log(fulfilled);
 
-            logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'transfer',
-              'missing':missing,
-              'fulfilled':fulfilled
-            })
+              logMessage({
+                'sender': sender,
+                'message': message.text,
+                'message tagged': msg_tagged,
+                'time': msg_time,
+                'request': 'transfer',
+                'missing':missing,
+                'fulfilled':fulfilled
+              })
 
-            if (missing.length == 0){
-              f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
+              if (missing.length == 0){
+                f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
               //get info from fulfilled
 
               //delete request from log after processing 
             }
             else {
-               console.log(missing);
+             console.log(missing);
 
-              var text = "Bạn vui lòng gửi thêm thông tin về ";
-              var missing_item;
-              for (i = 0; i < missing.length; i++){
-                var missing_item = missing[i];
-                text += dict[missing_item] + ', ';
-              }
-              text += 'mà bạn muốn chuyển tiền';
-              f.txt(sender, text);
+             var text = "Bạn vui lòng gửi thêm thông tin về ";
+             var missing_item;
+             for (i = 0; i < missing.length; i++){
+              var missing_item = missing[i];
+              text += dict[missing_item] + ', ';
             }
-            }
-                              
-          }, function(err) {
-            console.error('The promise was rejected', err, err.stack);
-          });
-
-        
+            text += 'mà bạn muốn chuyển tiền';
+            f.txt(sender, text);
+          }
         }
+
+      }, function(err) {
+        console.error('The promise was rejected', err, err.stack);
       });
 
+
+      }
     });
+
+});
 
 
     //       wit.message(message.text)
@@ -444,11 +443,11 @@ class Scenario {
     let text = '';
     let data = '';
     
-               logMessage({
-              'sender': sender,
-              'message': message.text,
-              'time': timeOfMessage,
-            });
+    logMessage({
+      'sender': sender,
+      'message': message.text,
+      'time': timeOfMessage,
+    });
     
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
@@ -509,23 +508,23 @@ class Scenario {
 
     try {
       buttons = [{
-          content_type: "text",
-          title: "Có",
-          image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-          payload: 'QnA_YES'
-        },
-        {
-          content_type: "text",
-          title: "Không",
-          image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-          payload: 'QnA_NO'
-        },
-        {
-          content_type: 'text',
-          title: 'Maybe',
-          image_url: 'https://icons8.com/icon/46457/question-mark-outline',
-          payload: 'QnA_noanswer'
-        }
+        content_type: "text",
+        title: "Có",
+        image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+        payload: 'QnA_YES'
+      },
+      {
+        content_type: "text",
+        title: "Không",
+        image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+        payload: 'QnA_NO'
+      },
+      {
+        content_type: 'text',
+        title: 'Maybe',
+        image_url: 'https://icons8.com/icon/46457/question-mark-outline',
+        payload: 'QnA_noanswer'
+      }
       ];
 
       f.quick(sender, {
@@ -546,20 +545,20 @@ class Scenario {
       data = {
         text: 'Bạn muốn đăng ký dịch vụ nào của VietinBank?',
         buttons: [{
-            type: 'web_url',
-            title: 'FinBot',
-            url: 'http://hungpt.handcraft.com/index.html?fbid=' + sender
-          },
-          {
-            type: 'web_url',
-            title: 'iPay',
-            url: 'https://ebanking.vietinbank.vn/register/'
-          },
-          {
-            type: 'web_url',
-            title: 'eFAST',
-            url: 'https://www.vietinbank.vn/web/home/vn/product/dang-ky-truc-tuyen.html'
-          }
+          type: 'web_url',
+          title: 'FinBot',
+          url: 'http://hungpt.handcraft.com/index.html?fbid=' + sender
+        },
+        {
+          type: 'web_url',
+          title: 'iPay',
+          url: 'https://ebanking.vietinbank.vn/register/'
+        },
+        {
+          type: 'web_url',
+          title: 'eFAST',
+          url: 'https://www.vietinbank.vn/web/home/vn/product/dang-ky-truc-tuyen.html'
+        }
         ]
       }
 
@@ -581,12 +580,12 @@ class Scenario {
           payload: {
             template_type: "generic",
             elements: [{
-                title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
-                image_url: "http://cafefcdn.com/thumb_w/650/2017/vtb-1482312845555-1491215019360.jpg",
-                subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
-                default_action: {
-                  type: "web_url",
-                  url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html"
+              title: "VietinBank SME Club: Sự đón nhận từ cộng đồng doanh nghiệp",
+              image_url: "http://cafefcdn.com/thumb_w/650/2017/vtb-1482312845555-1491215019360.jpg",
+              subtitle: "Vừa ra mắt trong tháng 7/2017, VietinBank SME Club - Câu lạc bộ các thành viên là khách hàng doanh nghiệp vừa và nhỏ (SME) đã nhận được những lời ngợi khen từ khách hàng...",
+              default_action: {
+                type: "web_url",
+                url: "http://www.vietinbank.vn/vn/tin-tuc/VietinBank-SME-Club-Su-don-nhan-tu-cong-dong-doanh-nghiep-20170909135227.html"
                   //messenger_extensions: true,
                   //webview_height_ratio: "tall",
                   //fallback_url: "https://ebanking.vietinbank.vn/rcas/portal/web/retail/bflogin"
@@ -643,36 +642,36 @@ class Scenario {
                   payload: "NEWS_BOT"
                 }]
               }
-            ]
+              ]
+            }
           }
         }
       }
-    }
 
-    console.log('--> news data: ' + JSON.stringify(obj));
+      console.log('--> news data: ' + JSON.stringify(obj));
 
-    f.sendNews(obj)
+      f.sendNews(obj)
       .catch(error => console.log('news: ' + error));
-  }
-
-  showLocation(sender, f) {
-    let buttons = '';
-    let text = '';
-    let data = '';
-    try {
-      buttons = [{
-        content_type: "location",
-      }];
-      text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
-
-      f.quick(sender, {
-        text,
-        buttons
-      });
-    } catch (e) {
-      console.log(e);
     }
-  }
+
+    showLocation(sender, f) {
+      let buttons = '';
+      let text = '';
+      let data = '';
+      try {
+        buttons = [{
+          content_type: "location",
+        }];
+        text = 'Hãy gửi vị trí bạn muốn tìm các địa điểm giao dịch gần nhất của VietinBank';
+
+        f.quick(sender, {
+          text,
+          buttons
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
 
 
   //ATM by street name
@@ -749,7 +748,7 @@ class Scenario {
           }
 
           f.sendNews(obj)
-            .catch(error => console.log('getAtmLocation: ' + error));
+          .catch(error => console.log('getAtmLocation: ' + error));
         } else {
           f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
         }
@@ -841,7 +840,7 @@ class Scenario {
           }
 
           f.sendNews(obj)
-            .catch(error => console.log('getAtmLocation: ' + error));
+          .catch(error => console.log('getAtmLocation: ' + error));
         } else {
           f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
         }
