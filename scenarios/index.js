@@ -174,7 +174,7 @@ class Scenario {
 
       //       var sender_info = f.getSenderName(sender);
 
-      // 		console.log('getSenderName: ' + JSON.stringify(sender_info));
+      //    console.log('getSenderName: ' + JSON.stringify(sender_info));
       //     console.log(sender_info);
 
       var request = require("request");
@@ -286,6 +286,7 @@ class Scenario {
 
                 } else {
                   f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+                  return;
                 }
 
                 return locations;
@@ -341,10 +342,7 @@ class Scenario {
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
-            console.log('ATM: ');
-            console.log(atm);
-
-            if (items.length > 0 && items[items.length -1].missing.length > 0 && atm == ''){
+            if (items.length > 0 && items[items.length -1].missing.length > 0){
               var conditions = ['amount', 'acc_number', 'bank'];
               var missing = items[items.length -1].missing;
               var fulfilled = items[items.length -1].fulfilled;
