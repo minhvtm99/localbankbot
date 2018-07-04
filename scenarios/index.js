@@ -207,10 +207,17 @@ class Scenario {
 
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
-          var atm_criteria = {'sender': sender}
+          var transfer = extractProperty(msg_tagged, 'transfer');
+          var amount = extractProperty(msg_tagged, 'amount');
+          var acc_number = extractProperty(msg_tagged, 'acc_number');
+          var bank = extractProperty(msg_tagged, 'bank');
+
+          var atm_criteria = {'sender': sender};
           
           sortMessage('time');
-          
+
+          if (transfer !== '' && amount !== '' && acc_number && '' && bank !== '' ){
+
           findMessage(atm_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
@@ -319,6 +326,7 @@ class Scenario {
             console.error('The promise was rejected', err, err.stack);
           });
 
+}
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
