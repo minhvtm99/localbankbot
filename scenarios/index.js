@@ -204,7 +204,7 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-          var transfer = extractProperty(msg_tagged, 'transfer');
+
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender}
@@ -213,7 +213,7 @@ class Scenario {
           
           findMessage(atm_criteria).then(function(items) {
 
-            if (items.length > 0 && items[items.length -1].request == 'findATM' && transfer == ''){
+            if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
             }
@@ -222,6 +222,7 @@ class Scenario {
             console.log("STREET : " + street_name);
             
             if (street_name !== '' && atm !== '') {
+            //log message
               logMessage({
               'sender': sender,
               'message': message.text,
@@ -317,6 +318,7 @@ class Scenario {
           });
 
 //CASE transfer money
+          var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
             logMessage({
               'sender': sender,
