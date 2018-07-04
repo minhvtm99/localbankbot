@@ -338,11 +338,13 @@ class Scenario {
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
           findMessage(transfer_criteria).then(function(items) {
-            console.log(dict);
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
-            if (items.length > 0 && items[items.length -1].missing.length > 0){
+            console.log('ATM: ');
+            console.log(atm);
+
+            if (items.length > 0 && items[items.length -1].missing.length > 0 && atm !== ''){
               var conditions = ['amount', 'acc_number', 'bank'];
               var missing = items[items.length -1].missing;
               var fulfilled = items[items.length -1].fulfilled;
