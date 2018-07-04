@@ -218,6 +218,8 @@ class Scenario {
 
           if (transfer == '' && amount == '' && acc_number == '' && bank == '' ){
 
+          console.log("AAAAAAAAAAAAAAAA");
+
           findMessage(atm_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
