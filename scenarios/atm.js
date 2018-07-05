@@ -1,5 +1,5 @@
 'use strict';
-
+//fuuuu
 class Atm {
 	constructor(f) {
 		console.log('Scenario ATM starting...');
