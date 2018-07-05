@@ -99,8 +99,6 @@ class Scenario {
       var request = require("request");
       let msg_content = message.text;
       let msg_time = timeOfMessage;
-
-
        
       var options = {
         method: 'POST',
@@ -128,10 +126,10 @@ class Scenario {
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
-          var search_result;
+          mongo.sortMessage('time');
 
           findMessage(atm_criteria).then(function(items) {
-            search_result = items;
+
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
@@ -170,14 +168,10 @@ class Scenario {
               
               f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
               return;
-            }            
-                  
+            }                   
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
-
-          console.log("SEARCH RESULT: ");
-          console.log(search_result);
 
           //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
