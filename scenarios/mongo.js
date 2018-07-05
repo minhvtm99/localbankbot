@@ -102,4 +102,3 @@ MongoClient.connect(url, {
 });
 }
 
-module.exports = mongo;
