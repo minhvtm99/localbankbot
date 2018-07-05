@@ -1,5 +1,5 @@
 'use strict';
-
+const config = require('./bankbot-master/config');
 const FBeamer = require('./bankbot-master/fbeamer');
 const f = new FBeamer(config.FB);
 const Atm = new Atm(f);
