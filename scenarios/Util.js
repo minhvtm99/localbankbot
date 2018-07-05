@@ -1,16 +1,16 @@
 'use strict';
-var request = require("request");
+const request = require("request");
 
 function getMyBody (options, callback) {
-	  request(options, function(error, response, body) {
-	    if (error || response.statusCode !== 200) {
-	      return callback(error || {
-	        statusCode: response.statusCode
-	      });
-	    } 
-	    callback(null, body);
-	  });
-	}
+  request(options, function(error, response, body) {
+    if (error || response.statusCode !== 200) {
+      return callback(error || {
+        statusCode: response.statusCode
+      });
+    } 
+    callback(null, body);
+  });
+}
 
 class Util {
 	constructor() {
@@ -32,18 +32,18 @@ class Util {
         },
         json: true
       };
-		
+	  console.log(msg_content);		
       return getMyBody(options, function(err, body) {
         if (err) {
+        	console.log(err);	
           return '';
         } else {
           let msg_tagged = body.categorized_msg;
+          console.log(msg_tagged);
           return msg_tagged;
          }
        });
  	}
-
-    
 
 	extractProperty(msg_tagged, property) {
 	  var result = '';
