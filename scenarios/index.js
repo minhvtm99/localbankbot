@@ -1,8 +1,6 @@
 'use strict';
-const config = require('./bankbot-master/config');
-const FBeamer = require('./bankbot-master/fbeamer');
-const f = new FBeamer(config.FB);
-const Atm = new Atm(f);
+
+const Atm = new Atm();
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -236,10 +234,10 @@ class Scenario {
               
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
-            Atm.findGeoLoc(sender, street_name, f);
+            //             this.findGeoLoc(sender, street_name, f);
 
             //big test
-           
+            Atm.findGeoLoc(sender, street_name, f);
 
             //end test
             console.log("end call find Geocode");

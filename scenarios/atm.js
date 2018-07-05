@@ -2,7 +2,7 @@
 
 class Atm {
 	constructor(f) {
-		console.log('Scenario starting...');
+		console.log('Scenario ATM starting...');
 	}
 
 	showLocation(sender, f) {
