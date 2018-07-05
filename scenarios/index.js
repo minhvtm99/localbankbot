@@ -1,5 +1,8 @@
 'use strict';
 
+const FBeamer = require('./fbeamer');
+const f = new FBeamer(config.FB);
+const Atm = new Atm(f);
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -96,15 +99,15 @@ MongoClient.connect(url, {
 
 function deleteMessage(message){
   var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+var url = "mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev";
 
 MongoClient.connect(url, {
     useNewUrlParser: true
   }, function(err, db) {
   if (err) throw err;
-  var dbo = db.db("mydb");
+  var dbo = db.db("bankbotdev");
 
-  dbo.collection("customers").deleteOne(message, function(err, obj) {
+  dbo.collection("customers").deleteMany(message, function(err, obj) {
     if (err) throw err;
     console.log("1 document deleted");
     db.close();
@@ -207,10 +210,11 @@ class Scenario {
 
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
-          var atm_criteria = {'sender': sender}
+
+          var atm_criteria = {'sender': sender};
           
           sortMessage('time');
-          
+
           findMessage(atm_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
@@ -232,69 +236,10 @@ class Scenario {
               
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
-            //             this.findGeoLoc(sender, street_name, f);
+            Atm.findGeoLoc(sender, street_name, f);
 
             //big test
-            var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-            var url = encodeURI(unencoded);
-
-            console.log("aaaaaa:" + url);
-            var https = require('https');
-
-            https.get(url, function(response) {
-              var body = '';
-              response.on('data', function(chunk) {
-                body += chunk;
-              });
-
-              response.on('end', function() {
-                var places = JSON.parse(body);
-
-                //console.log(places);
-
-                var locations = places.results;
-
-                let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
-                let buttons = [];
-                for (var i = 0; i < locations.length; i++) {
-                  var loc = locations[i];
-                  console.log(loc);
-
-                  text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
-                  console.log(text);
-
-                  buttons.push({
-                    content_type: 'text',
-                    title: i,
-                    image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                    payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
-                  });
-                }
-                console.log(buttons);
-                if (buttons.length > 0) {
-
-                  try {
-                    f.quick(sender, {
-                      text,
-                      buttons
-                    });
-
-                  } catch (e) {
-
-                    console.log(JSON.stringify(e));
-                  }
-
-                } else {
-                  f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-                  return;
-                }
-
-                return locations;
-              });
-            }).on('error', function(e) {
-              console.log("getAtmLocation Got error: " + e.message);
-              return;
-            });
+           
 
             //end test
             console.log("end call find Geocode");
@@ -310,7 +255,7 @@ class Scenario {
               'request': 'findATM'
             });
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
-
+            return;
           }
 
                    
