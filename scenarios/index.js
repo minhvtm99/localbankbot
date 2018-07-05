@@ -36,7 +36,7 @@ function findMessage(query) {
 
 
 // get property
-/*
+
 function extractProperty(msg_tagged, property) {
 
   var street_name = '';
@@ -49,8 +49,8 @@ function extractProperty(msg_tagged, property) {
   console.log("Desired property: " + street_name);
   return street_name;
 }
-*/
-/*
+
+
 var request = require("request");
 
 function getMyBody(options, callback) {
@@ -63,7 +63,7 @@ function getMyBody(options, callback) {
     callback(null, body);
   });
 }
-*/
+
 //Scen class
 class Scenario {
   constructor(f) {
