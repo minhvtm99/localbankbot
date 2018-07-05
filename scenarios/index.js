@@ -1,6 +1,7 @@
 'use strict';
 
-const Atm = new Atm(f);
+const Atm = require('./Atm.js');
+const atm = new Atm(f);
 
 const mongo = require('./mongo');
 mongo.doConnect()
