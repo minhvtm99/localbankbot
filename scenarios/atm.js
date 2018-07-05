@@ -183,4 +183,4 @@ findGeoLoc(sender, street, f) {
 }
 }
 
-module.exports = Atm;
+module.exports = atm;

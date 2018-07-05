@@ -1,6 +1,6 @@
 'use strict';
 
-const Atm = new Atm();
+const Atm = new atm();
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -169,15 +169,10 @@ class Scenario {
       let text = '';
       let data = '';
       console.log(message.text);
-      console.log(JSON.stringify(message));
-      
+      console.log(JSON.stringify(message));   
       console.log("TIME: " + timeOfMessage);
 
-      //       var sender_info = f.getSenderName(sender);
-
-      //    console.log('getSenderName: ' + JSON.stringify(sender_info));
-      //     console.log(sender_info);
-
+      // get tagged message
       var request = require("request");
       let msg_content = message.text;
       let msg_time = timeOfMessage;
@@ -208,7 +203,6 @@ class Scenario {
 
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
-
           var atm_criteria = {'sender': sender};
           
           sortMessage('time');
