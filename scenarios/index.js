@@ -3,6 +3,9 @@
 const Atm = require('./atm.js');
 const atm = new Atm();
 
+const Util = require('./Util.js');
+const util = new Util();
+
 const mongo = require('./mongo');
 mongo.doConnect()
 mongo.createCollection()
@@ -33,6 +36,7 @@ function findMessage(query) {
 
 
 // get property
+/*
 function extractProperty(msg_tagged, property) {
 
   var street_name = '';
@@ -45,7 +49,8 @@ function extractProperty(msg_tagged, property) {
   console.log("Desired property: " + street_name);
   return street_name;
 }
-
+*/
+/*
 var request = require("request");
 
 function getMyBody(options, callback) {
@@ -58,7 +63,7 @@ function getMyBody(options, callback) {
     callback(null, body);
   });
 }
-
+*/
 //Scen class
 class Scenario {
   constructor(f) {
@@ -94,7 +99,9 @@ class Scenario {
       var request = require("request");
       let msg_content = message.text;
       let msg_time = timeOfMessage;
-      
+
+
+       
       var options = {
         method: 'POST',
         url: 'https://bankbotapi.herokuapp.com/message_categorize',
@@ -121,10 +128,10 @@ class Scenario {
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
-          mongo.sortMessage('time');
+          var search_result;
 
           findMessage(atm_criteria).then(function(items) {
-
+            search_result = items;
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
@@ -163,10 +170,14 @@ class Scenario {
               
               f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
               return;
-            }                   
+            }            
+                  
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
+
+          console.log("SEARCH RESULT: ");
+          console.log(search_result);
 
           //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
