@@ -1,6 +1,6 @@
 'use strict';
 
-const Atm = require('./Atm.js');
+const Atm = require('./atm.js');
 const atm = new Atm(f);
 
 const mongo = require('./mongo');
