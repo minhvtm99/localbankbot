@@ -37,32 +37,32 @@ function findMessage(query) {
 
 // get property
 
-function extractProperty(msg_tagged, property) {
+// function extractProperty(msg_tagged, property) {
 
-  var street_name = '';
-  var i;
-  for (i = 0; i < msg_tagged.length; i++) {
-    if (msg_tagged[i][1] === property) {
-      street_name += msg_tagged[i][0] + ' ';
-    }
-  }
-  console.log("Desired property: " + street_name);
-  return street_name;
-}
+//   var street_name = '';
+//   var i;
+//   for (i = 0; i < msg_tagged.length; i++) {
+//     if (msg_tagged[i][1] === property) {
+//       street_name += msg_tagged[i][0] + ' ';
+//     }
+//   }
+//   console.log("Desired property: " + street_name);
+//   return street_name;
+// }
 
 
-var request = require("request");
+// var request = require("request");
 
-function getMyBody(options, callback) {
-  request(options, function(error, response, body) {
-    if (error || response.statusCode !== 200) {
-      return callback(error || {
-        statusCode: response.statusCode
-      });
-    }
-    callback(null, body);
-  });
-}
+// function getMyBody(options, callback) {
+//   request(options, function(error, response, body) {
+//     if (error || response.statusCode !== 200) {
+//       return callback(error || {
+//         statusCode: response.statusCode
+//       });
+//     }
+//     callback(null, body);
+//   });
+// }
 
 //Scen class
 class Scenario {
@@ -98,6 +98,9 @@ class Scenario {
       // get tagged message
       var request = require("request");
       let msg_content = message.text;
+      var search = util.getMessageTags(msg_content);
+      console.log("Search Result: ");
+      console.log(search);
       let msg_time = timeOfMessage;
        
       var options = {
@@ -123,14 +126,12 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-          var street_name = extractProperty(msg_tagged, 'Name');
-          var atm = extractProperty(msg_tagged, 'ATM');
+          var street_name = util.extractProperty(msg_tagged, 'Name');
+          var atm = util.extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
           mongo.sortMessage('time');
-          var search = 'SSSS';
 
           findMessage(atm_criteria).then(function(items) {
-            search = items;
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
@@ -175,11 +176,9 @@ class Scenario {
             console.error('The promise was rejected', err, err.stack);
           });
 
-          console.log("Search Result: ");
-          console.log(search);
 
           //CASE transfer money
-          var transfer = extractProperty(msg_tagged, 'transfer');
+          var transfer = util.extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
             mongo.logMessage({
               'sender': sender,
@@ -213,7 +212,7 @@ class Scenario {
               for (i = 0; i < conditions.length; i++ ){
                 var cond = conditions[i];
                 console.log("condition: " + cond);
-                var prop = extractProperty(msg_tagged, cond);
+                var prop = util.extractProperty(msg_tagged, cond);
                 console.log("property: " + prop);
                 if(prop !== ''){
                   fulfilled[cond] = prop;
