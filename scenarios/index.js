@@ -193,6 +193,8 @@ class Scenario {
 
           findMessage(transfer_criteria).then(function(items) {
 
+            console.log("AAAAAAAAAAAAA");
+
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
             if (items.length > 0 && items[items.length -1].missing.length > 0){
