@@ -117,70 +117,61 @@ class Atm {
 }
 
 findGeoLoc(sender, street, f) {
+  return new Promise((resolve, reject) => {
+  	var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+  	var url = encodeURI(unencoded);
+  	console.log("aaaaaa:" + url);
+  	
+    var https = require('https');
+  	https.get(url, function(response) {
+  		var body = '';
+  		response.on('data', function(chunk) {
+  			body += chunk;
+  		});
 
-	var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-	var url = encodeURI(unencoded);
+  		response.on('end', function() {
+  			var places = JSON.parse(body);
+            //console.log(places);
+            var locations = places.results;
+            let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
+            let buttons = [];
+            for (var i = 0; i < locations.length; i++) {
+            	var loc = locations[i];
+            	console.log(loc);
+            	var j = i + 1;
 
-	console.log("aaaaaa:" + url);
-	var https = require('https');
+            	text += ' Chọn ' + j + ' để tìm ATM ở ' + loc.formatted_address;
+            	console.log(text);
 
-	https.get(url, function(response) {
-		var body = '';
-		response.on('data', function(chunk) {
-			body += chunk;
-		});
-
-		response.on('end', function() {
-			var places = JSON.parse(body);
-
-                //console.log(places);
-
-                var locations = places.results;
-
-                let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
-                let buttons = [];
-                for (var i = 0; i < locations.length; i++) {
-                	var loc = locations[i];
-                	console.log(loc);
-                	var j = i + 1;
-
-                	text += ' Chọn ' + j + ' để tìm ATM ở ' + loc.formatted_address;
-                	console.log(text);
-
-                	buttons.push({
-                		content_type: 'text',
-                		title: j,
-                		image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                		payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
-                	});
-                }
-                console.log(buttons);
-                if (buttons.length > 0) {
-
-                	try {
-                		f.quick(sender, {
-                			text,
-                			buttons
-                		});
-
-                	} catch (e) {
-
-                		console.log(JSON.stringify(e));
-                	}
-
-                } else {
-                	f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-                	return;
-                }
-
-                return locations;
-            });
-	}).on('error', function(e) {
-		console.log("getAtmLocation Got error: " + e.message);
-		return;
-	});
-
-}
+            	buttons.push({
+            		content_type: 'text',
+            		title: j,
+            		image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+            		payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
+            	});
+            }
+            console.log(buttons);
+            if (buttons.length > 0) {
+            	try {
+            		f.quick(sender, {
+            			text,
+            			buttons
+            		});
+            	} catch (e) {
+            		console.log(JSON.stringify(e));
+            	}
+            } else {
+            	f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+            	return;
+            }
+            resolve(locations);
+        });
+    	}).on('error', function(e) {
+    		console.log("getAtmLocation Got error: " + e.message);
+    		reject(e);
+    	});
+    });
+  }
 }
 
 module.exports = Atm;

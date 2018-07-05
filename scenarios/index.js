@@ -118,11 +118,9 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
-          
           mongo.sortMessage('time');
 
           findMessage(atm_criteria).then(function(items) {
@@ -132,48 +130,45 @@ class Scenario {
                 atm = 'ATM';
             }
             
-            
             console.log("STREET : " + street_name);
             
             if (street_name !== '' && atm !== '') {
             //log message
               mongo.logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-            });
+                'sender': sender,
+                'message': message.text,
+                'message tagged': msg_tagged,
+                'time': msg_time
+              });
               
-            //f.txt(sender, "AAAAAAA" );
-            console.log("call find Geocode " + street_name);
-            //             this.findGeoLoc(sender, street_name, f);
+              //f.txt(sender, "AAAAAAA" );
+              console.log("call find Geocode " + street_name);
 
-            //big test
-            Atm.findGeoLoc(sender, street_name, f);
+              //big test
+              atm.findGeoLoc(sender, street_name, f);
 
-            //end test
-            console.log("end call find Geocode");
-            return;
+              //end test
+              console.log("end call find Geocode");
+              return;
 
-          } else if (atm !== '' && street_name == '') {
+            } else if (atm !== '' && street_name == '') {
 
-            mongo.logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'findATM'
-            });
-            f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
-            return;
-          }
-
-                   
+              mongo.logMessage({
+                'sender': sender,
+                'message': message.text,
+                'message tagged': msg_tagged,
+                'time': msg_time,
+                'request': 'findATM'
+              });
+              
+              f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
+              return;
+            }                   
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
 
-//CASE transfer money
+          //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
             mongo.logMessage({
