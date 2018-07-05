@@ -98,9 +98,18 @@ class Scenario {
       // get tagged message
       var request = require("request");
       let msg_content = message.text;
-      var search = util.getMessageTags(msg_content);
+
+      var search = util.getMessageTags(msg_content)
+                            .then(message_categorize => {
+                              return message_categorize;
+                            })
+                            .catch(error => {
+                              return '';
+                            });
+
       console.log("Search Result: ");
       console.log(search);
+
       let msg_time = timeOfMessage;
        
       var options = {
