@@ -1,6 +1,6 @@
 'use strict';
 
-const Atm = new atm();
+const Atm = new Atm(f);
 
 //Get entities
 const firstEntity = (entities, name) => {
