@@ -2,8 +2,8 @@
 
 // const Atm = new Atm(f);
 const mongo = require('./mongo')
-mongo.doConnect()
-mongo. createCollection()
+// mongo.doConnect()
+// mongo. createCollection()
 
 //Get entities
 const firstEntity = (entities, name) => {
