@@ -24,8 +24,6 @@ class Atm {
 		}
 	}
 
-
-
   getAtmLocation(sender, lat, long, f) {
   	var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
   	var location = lat + ',' + long;
