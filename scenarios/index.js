@@ -1,9 +1,11 @@
 'use strict';
 
 // const Atm = new Atm(f);
+
+//Connect mongo
 const mongo = require('./mongo')
-// mongo.doConnect()
-// mongo. createCollection()
+mongo.doConnect()
+mongo. createCollection()
 
 //Get entities
 const firstEntity = (entities, name) => {
@@ -107,9 +109,9 @@ class Scenario {
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
           
-          sortMessage('time');
+          mongo.sortMessage('time');
 
-          findMessage(atm_criteria).then(function(items) {
+          mongo.findMessage(atm_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
@@ -121,7 +123,7 @@ class Scenario {
             
             if (street_name !== '' && atm !== '') {
             //log message
-              logMessage({
+              mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -141,7 +143,7 @@ class Scenario {
 
           } else if (atm !== '' && street_name == '') {
 
-            logMessage({
+            mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -160,7 +162,7 @@ class Scenario {
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-            logMessage({
+            mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -173,11 +175,11 @@ class Scenario {
 
           }
 
-          sortMessage('time');
+          mongo.sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
-          findMessage(transfer_criteria).then(function(items) {
+          mongo.findMessage(transfer_criteria).then(function(items) {
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
@@ -204,7 +206,7 @@ class Scenario {
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
-            logMessage({
+            mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,

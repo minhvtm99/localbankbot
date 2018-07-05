@@ -103,3 +103,6 @@ MongoClient.connect(url, {
 
 module.exports.doConnect = doConnect;
 module.exports.createCollection = createCollection;
+module.exports.logMessage = logMessage;
+module.exports.sortMessage = sortMessage;
+module.exports.deleteMessage = deleteMessage;
