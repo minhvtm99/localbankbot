@@ -1,6 +1,17 @@
 'use strict';
 var request = require("request");
 
+function getMyBody (options, callback) {
+	  request(options, function(error, response, body) {
+	    if (error || response.statusCode !== 200) {
+	      return callback(error || {
+	        statusCode: response.statusCode
+	      });
+	    } 
+	    callback(null, body);
+	  });
+	}
+
 class Util {
 	constructor() {
 		console.log('Scenario ATM starting...');
@@ -22,7 +33,7 @@ class Util {
         json: true
       };
 		
-      return this.getMyBody(options, function(err, body) {
+      return getMyBody(options, function(err, body) {
         if (err) {
           return '';
         } else {
@@ -32,16 +43,7 @@ class Util {
        });
  	}
 
-    getMyBody (options, callback) {
-	  request(options, function(error, response, body) {
-	    if (error || response.statusCode !== 200) {
-	      return callback(error || {
-	        statusCode: response.statusCode
-	      });
-	    } 
-	    callback(null, body);
-	  });
-	}
+    
 
 	extractProperty(msg_tagged, property) {
 	  var result = '';
