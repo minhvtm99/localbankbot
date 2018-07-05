@@ -56,16 +56,16 @@ function findMessage(query) {
 
 // var request = require("request");
 
-// function getMyBody(options, callback) {
-//   request(options, function(error, response, body) {
-//     if (error || response.statusCode !== 200) {
-//       return callback(error || {
-//         statusCode: response.statusCode
-//       });
-//     }
-//     callback(null, body);
-//   });
-// }
+function getMyBody(options, callback) {
+  request(options, function(error, response, body) {
+    if (error || response.statusCode !== 200) {
+      return callback(error || {
+        statusCode: response.statusCode
+      });
+    }
+    callback(null, body);
+  });
+}
 
 //Scen class
 class Scenario {
