@@ -1,12 +1,9 @@
 'use strict';
 
 // const Atm = new Atm(f);
-
-//Connect mongo
-const mongo = require('./mongo')
+const mongo = require('./mongo');
 mongo.doConnect()
-mongo. createCollection()
-
+mongo.createCollection()
 //Get entities
 const firstEntity = (entities, name) => {
   return entities &&
@@ -15,7 +12,22 @@ const firstEntity = (entities, name) => {
     entities[name] &&
     entities[name][0];
 }
-//mongodb
+
+var MongoClient = require('mongodb').MongoClient;
+
+function findMessage(query) {
+  return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
+    //var collection = db.collection('customers');
+    var dbo = db.db("bankbotdev");
+    return dbo.collection("customers").find(query).toArray();
+
+    //return collection.find({'request':'findATM'}).toArray();
+  }).then(function(items) {
+    return items;
+  });
+}
+
+
 
 
 // get property
@@ -111,7 +123,7 @@ class Scenario {
           
           mongo.sortMessage('time');
 
-          mongo.findMessage(atm_criteria).then(function(items) {
+          findMessage(atm_criteria).then(function(items) {
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
@@ -162,7 +174,7 @@ class Scenario {
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-            mongo.logMessage({
+            logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -179,7 +191,7 @@ class Scenario {
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
-          mongo.findMessage(transfer_criteria).then(function(items) {
+          findMessage(transfer_criteria).then(function(items) {
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
