@@ -10,7 +10,7 @@ server.use();
 
 const PORT = process.env.PORT || 3000;
 // FBeamer
-const FBeamer = require('./bankbot-master/fbeamer');
+const FBeamer = require('./fbeamer');
 const f = new FBeamer(config.FB);
 
 // Scenarios
