@@ -12,7 +12,6 @@ function doConnect() {
     db.close();
   });
 }
-doConnect()
 
 function createCollection() {
   var MongoClient = require('mongodb').MongoClient;
@@ -32,7 +31,6 @@ function createCollection() {
 
 }
 
-createCollection()
 
 function logMessage(message) {
   var MongoClient = require('mongodb').MongoClient;
@@ -104,3 +102,4 @@ MongoClient.connect(url, {
 
 
 module.exports.doConnect = doConnect;
+module.exports.createCollection = createCollection;
