@@ -36,13 +36,14 @@ class Util {
 
 		  console.log(msg_content);		
 	      request(options, function(error, response, body) {
-		    if (!error && response.statusCode === 200) {
+		    	if (!error && response.statusCode === 200) {
 					//console.log('getProfile:'+id+'>>>'+JSON.stringify(body));
 					resolve(body.categorized_msg);
 				} else {
 					//console.log('getProfile:'+id+'>>>'+JSON.stringify(error));
 					reject(error);
 				}
+			 }
 		  });
   	  }
  	}
