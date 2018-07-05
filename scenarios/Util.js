@@ -1,5 +1,5 @@
 'use strict';
- var request = require("request");
+var request = require("request");
 
 class Util {
 	constructor() {
@@ -22,14 +22,14 @@ class Util {
         json: true
       };
 		
-      this.getMyBody(options, function(err, body) {
+      return this.getMyBody(options, function(err, body) {
         if (err) {
           return '';
         } else {
           let msg_tagged = body.categorized_msg;
           return msg_tagged;
-     		 }
-    	});
+         }
+       });
  	}
 
     getMyBody (options, callback) {
