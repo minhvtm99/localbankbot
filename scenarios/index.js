@@ -1,7 +1,7 @@
 'use strict';
 
 // const Atm = new Atm(f);
-const mongo = require('./mongo.js')
+const mongo = require('./mongo')
 //Get entities
 const firstEntity = (entities, name) => {
   return entities &&

@@ -102,3 +102,5 @@ MongoClient.connect(url, {
 });
 }
 
+
+module.exports.doConnect = doConnect;
