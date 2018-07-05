@@ -127,8 +127,10 @@ class Scenario {
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
           mongo.sortMessage('time');
+          var search = 'SSSS';
 
           findMessage(atm_criteria).then(function(items) {
+            search = items;
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
@@ -172,6 +174,9 @@ class Scenario {
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
+
+          console.log("Search Result: ");
+          console.log(search);
 
           //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
