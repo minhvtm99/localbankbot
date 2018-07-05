@@ -43,9 +43,8 @@ class Util {
 					//console.log('getProfile:'+id+'>>>'+JSON.stringify(error));
 					reject(error);
 				}
-			 }
-		  });
-  	  }
+		    });
+  	  });
  	}
 
 	extractProperty(msg_tagged, property) {
