@@ -1,7 +1,7 @@
 'use strict';
 
-const Atm = new Atm(f);
-
+// const Atm = new Atm(f);
+const mongo = require('./mongo.js')
 //Get entities
 const firstEntity = (entities, name) => {
   return entities &&
@@ -23,7 +23,7 @@ function doConnect() {
     db.close();
   });
 }
-doConnect()
+mongo.doConnect()
 
 function createCollection() {
   var MongoClient = require('mongodb').MongoClient;
