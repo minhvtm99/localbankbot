@@ -174,7 +174,7 @@ class Scenario {
 //CASE transfer money
           var transfer = extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-            logMessage({
+            mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
