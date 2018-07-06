@@ -1,6 +1,8 @@
 'use strict';
 
 const mongo = require('./mongo');
+const Util = require('./Util.js');
+const util = new Util();
 
 function findMessage(query) {
   return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
@@ -35,7 +37,7 @@ class Transfer{
 	        for (i = 0; i < conditions.length; i++){
 	          	var cond = conditions[i];
 	            console.log("condition: " + cond);
-	            var prop = extractProperty(msg_tagged, cond);
+	            var prop = util.extractProperty(msg_tagged, cond);
 	            console.log("property: " + prop);
 	            if(prop !== ''){
 	              fulfilled[cond] = prop;
