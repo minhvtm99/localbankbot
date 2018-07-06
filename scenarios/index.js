@@ -142,7 +142,14 @@ class Scenario {
 
           var atm_criteria = {'sender': sender};
           findMessage(atm_criteria).then(function(items) {
-            atm.findAtm(sender, msg_tagged, items);             
+            console.log("CCCCCC");
+            try{
+            atm.findAtm(sender, msg_tagged, items);    
+            }
+            catch(error){
+              console.error(error);
+            }         
+
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
