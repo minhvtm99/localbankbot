@@ -169,7 +169,7 @@ class Scenario {
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
           findMessage(transfer_criteria).then(function(items) {
-              transfer.transferMoney(sender, msg_tagged);
+              transfer.transferMoney(sender, msg_tagged, items);
 
 
           //   console.log("AAAAAAAAAAAAA");
