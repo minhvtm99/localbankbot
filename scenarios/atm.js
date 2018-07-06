@@ -45,9 +45,13 @@ class Atm {
           });
 
           response.on('end', function() {
-            var places = JSON.parse(body);
+                var places = JSON.parse(body);
                 //console.log(places);
                 var locations = places.results;
+
+
+            });
+
                 let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
                 for (var i = 0; i < locations.length; i++) {
                   var loc = locations[i];
@@ -66,8 +70,7 @@ class Atm {
                 }
                 console.log(buttons);
                 return text, buttons;
-                resolve(locations);
-            });
+                
           }).on('error', function(e) {
             console.log("getAtmLocation Got error: " + e.message);
             reject(e);
