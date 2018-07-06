@@ -26,25 +26,25 @@ class Transfer{
 
             var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
 
-            if (items.length > 0 && items[items.length -1].missing.length > 0){
-              var conditions = ['amount', 'acc_number', 'bank'];
-              var missing = items[items.length -1].missing;
-              var fulfilled = items[items.length -1].fulfilled;
-              //find missing condition  
-              var i;
-              for (i = 0; i < conditions.length; i++ ){
-                var cond = conditions[i];
-                console.log("condition: " + cond);
-                var prop = extractProperty(msg_tagged, cond);
-                console.log("property: " + prop);
-                if(prop !== ''){
-                  fulfilled[cond] = prop;
-                  var index = missing.indexOf(cond);
-                  if (index > -1) {
-                  missing.splice(index, 1);
-                  }
-                }
-              }
+        if (items.length > 0 && items[items.length -1].missing.length > 0){
+            var conditions = ['amount', 'acc_number', 'bank'];
+	        var missing = items[items.length -1].missing;
+	        var fulfilled = items[items.length -1].fulfilled;
+	          //find missing condition  
+	        var i;
+	        for (i = 0; i < conditions.length; i++){
+	          	var cond = conditions[i];
+	            console.log("condition: " + cond);
+	            var prop = extractProperty(msg_tagged, cond);
+	            console.log("property: " + prop);
+	            if(prop !== ''){
+	              fulfilled[cond] = prop;
+	              var index = missing.indexOf(cond);
+	              if (index > -1) {
+	              missing.splice(index, 1);
+	              }
+	            }
+	          }
 
             console.log("FULFILLED: ");
             console.log(fulfilled);
@@ -80,7 +80,7 @@ class Transfer{
               // f.txt(sender, text);
               return text;
             }
-            }
+       }
                               
 	}
 }

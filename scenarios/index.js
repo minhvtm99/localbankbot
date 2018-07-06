@@ -168,9 +168,14 @@ class Scenario {
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
               console.log("BBBBBBBBBB");
-              var reply = transfer.transferMoney(sender, msg_tagged, items);
-              console.log(reply);
-              f.txt(sender, reply);
+              try {
+                var reply = transfer.transferMoney(sender, msg_tagged, items);
+                console.log(reply);
+                f.txt(sender, reply);
+              }
+              catch(error){
+                console.error(error);
+              }
 
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
