@@ -20,7 +20,7 @@ class Transfer{
   	}
 
 
-  	transferMoney(sender, msg_tagged, items){
+  	transferMoney(sender, message, msg_time, msg_tagged, items){
 
         console.log("AAAAAAAAAAAAA");
 

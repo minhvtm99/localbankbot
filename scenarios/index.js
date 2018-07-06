@@ -178,7 +178,7 @@ class Scenario {
               console.log(msg_tagged);
               console.log(items);
               try {
-                var reply = transfer.transferMoney(sender, msg_tagged, items);
+                var reply = transfer.transferMoney(sender, message, msg_time, msg_tagged, items);
                 console.log(reply);
                 f.txt(sender, reply);
               }
