@@ -1,5 +1,7 @@
 'use strict';
 const mongo = require('./mongo');
+const Util = require('./Util.js');
+const util = new Util();
 
 class Atm {
 	constructor() {
