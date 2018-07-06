@@ -147,6 +147,10 @@ class Scenario {
              var reply;
              var button;
               reply, button = atm.findAtm(sender, message, msg_time, msg_tagged, items);  
+              console.log("ATM return: ");
+              console.log(reply);
+              console.log(button);
+              
                 if (buttons.length > 0) {
                   try {
                     f.quick(sender, {
