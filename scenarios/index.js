@@ -56,16 +56,16 @@ function findMessage(query) {
 
 // var request = require("request");
 
-function getMyBody(options, callback) {
-  request(options, function(error, response, body) {
-    if (error || response.statusCode !== 200) {
-      return callback(error || {
-        statusCode: response.statusCode
-      });
-    }
-    callback(null, body);
-  });
-}
+// function getMyBody(options, callback) {
+//   request(options, function(error, response, body) {
+//     if (error || response.statusCode !== 200) {
+//       return callback(error || {
+//         statusCode: response.statusCode
+//       });
+//     }
+//     callback(null, body);
+//   });
+// }
 
 //Scen class
 class Scenario {
@@ -102,16 +102,16 @@ class Scenario {
       var request = require("request");
       let msg_content = message.text;
 
-      // var search = util.getMessageTags(msg_content)
-      //                       .then(message_categorize => {
-      //                         return message_categorize;
-      //                       })
-      //                       .catch(error => {
-      //                         return '';
-      //                       });
+      var search = util.getMessageTags(msg_content)
+                            .then(message_categorize => {
+                              return message_categorize;
+                            })
+                            .catch(error => {
+                              return '';
+                            });
 
-      // console.log("Search Result: ");
-      // console.log(search);
+      console.log("Search Result: ");
+      console.log(search);
 
       let msg_time = timeOfMessage;
        
