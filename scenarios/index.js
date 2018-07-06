@@ -7,7 +7,7 @@ const Util = require('./Util.js');
 const util = new Util();
 
 const Transfer = require('./transfer.js');
-const transfer = new Transfer();
+const transferCase = new Transfer();
 
 const mongo = require('./mongo');
 mongo.doConnect()
@@ -178,7 +178,7 @@ class Scenario {
               console.log(msg_tagged);
               console.log(items);
               try {
-                var reply = transfer.transferMoney(sender, message, msg_time, msg_tagged, items);
+                var reply = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items);
                 console.log(reply);
                 f.txt(sender, reply);
               }
