@@ -144,7 +144,7 @@ class Scenario {
           findMessage(atm_criteria).then(function(items) {
             console.log("CCCCCC");
             try{
-            atm.findAtm(sender, message, msg_tagged, items);    
+            atm.findAtm(sender, message, msg_time, msg_tagged, items);    
             }
             catch(error){
               console.error(error);
