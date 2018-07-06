@@ -138,12 +138,12 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-          var street_name = util.extractProperty(msg_tagged, 'Name');
-          var atm = util.extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
           mongo.sortMessage('time');
 
           findMessage(atm_criteria).then(function(items) {
+            var street_name = util.extractProperty(msg_tagged, 'Name');
+            var atm = util.extractProperty(msg_tagged, 'ATM');
 
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
