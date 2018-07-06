@@ -19,27 +19,7 @@ class Transfer{
     	console.log('Scenario Transfer starting...');
   	}
 
-  	transferMoney(sender, msg_tagged){
-          var transfer = extractProperty(msg_tagged, 'transfer');
-          if (transfer !== ''){
-            mongo.logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'transfer',
-              'missing':['amount', 'acc_number', 'bank'],
-              'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
-
-            });
-
-          }
-
-          mongo.sortMessage('time');
-
-          var transfer_criteria = {'sender':sender, 'request':'transfer'};
-
-          findMessage(transfer_criteria).then(function(items) {
+  	transferMoney(sender, msg_tagged, items){
 
             console.log("AAAAAAAAAAAAA");
 
@@ -98,10 +78,6 @@ class Transfer{
             }
             }
                               
-          }, function(err) {
-            console.error('The promise was rejected', err, err.stack);
-          });
-
 	}
 }
 

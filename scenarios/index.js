@@ -149,28 +149,28 @@ class Scenario {
 
 
           //CASE transfer money
-          transfer.transferMoney(sender, msg_tagged);
+          var transfer = util.extractProperty(msg_tagged, 'transfer');
+          if (transfer !== ''){
+            mongo.logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'transfer',
+              'missing':['amount', 'acc_number', 'bank'],
+              'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
 
-          // var transfer = util.extractProperty(msg_tagged, 'transfer');
-          // if (transfer !== ''){
-          //   mongo.logMessage({
-          //     'sender': sender,
-          //     'message': message.text,
-          //     'message tagged': msg_tagged,
-          //     'time': msg_time,
-          //     'request': 'transfer',
-          //     'missing':['amount', 'acc_number', 'bank'],
-          //     'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
+            });
 
-          //   });
+          }
 
-          // }
+          mongo.sortMessage('time');
 
-          // mongo.sortMessage('time');
+          var transfer_criteria = {'sender':sender, 'request':'transfer'};
 
-          // var transfer_criteria = {'sender':sender, 'request':'transfer'};
+          findMessage(transfer_criteria).then(function(items) {
+              transfer.transferMoney(sender, msg_tagged);
 
-          // findMessage(transfer_criteria).then(function(items) {
 
           //   console.log("AAAAAAAAAAAAA");
 
@@ -229,9 +229,9 @@ class Scenario {
           //   }
           //   }
                               
-          // }, function(err) {
-          //   console.error('The promise was rejected', err, err.stack);
-          // });
+          }, function(err) {
+            console.error('The promise was rejected', err, err.stack);
+          });
 
         
         }
