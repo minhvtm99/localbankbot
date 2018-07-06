@@ -98,22 +98,24 @@ class Scenario {
       console.log(JSON.stringify(message));   
       console.log("TIME: " + timeOfMessage);
 
+      transfer.reply(sender, f);
+
       // get tagged message
       var request = require("request");
       let msg_content = message.text;
-
-      // var search = util.getMessageTags(msg_content)
-      //                       .then(message_categorize => {
-      //                         return message_categorize;
-      //                       })
-      //                       .catch(error => {
-      //                         return '';
-      //                       });
-
-      // console.log("Search Result: ");
-      // console.log(search);
-
       let msg_time = timeOfMessage;
+
+      /*
+      var search = util.getMessageTags(msg_content)
+                             .then(message_categorize => {
+                               return message_categorize;
+                             })
+                             .catch(error => {
+                               return '';
+                            });
+      console.log("Search Result: ");
+      console.log(search);
+      */
        
       var options = {
         method: 'POST',
@@ -138,9 +140,9 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-          var atm_criteria = {'sender': sender};
           mongo.sortMessage('time');
 
+          var atm_criteria = {'sender': sender};
           findMessage(atm_criteria).then(function(items) {
             atm.findAtm(sender, msg_tagged, items);             
           }, function(err) {
@@ -161,73 +163,13 @@ class Scenario {
               'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
 
             });
-
           }
 
           mongo.sortMessage('time');
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
-
           findMessage(transfer_criteria).then(function(items) {
               transfer.transferMoney(sender, msg_tagged, items);
-
-
-          //   console.log("AAAAAAAAAAAAA");
-
-          //   var dict = {'amount':'số tiền', 'acc_number':'số tài khoản', 'bank':'tên ngân hàng'};
-
-          //   if (items.length > 0 && items[items.length -1].missing.length > 0){
-          //     var conditions = ['amount', 'acc_number', 'bank'];
-          //     var missing = items[items.length -1].missing;
-          //     var fulfilled = items[items.length -1].fulfilled;
-          //     //find missing condition  
-          //     var i;
-          //     for (i = 0; i < conditions.length; i++ ){
-          //       var cond = conditions[i];
-          //       console.log("condition: " + cond);
-          //       var prop = util.extractProperty(msg_tagged, cond);
-          //       console.log("property: " + prop);
-          //       if(prop !== ''){
-          //         fulfilled[cond] = prop;
-          //         var index = missing.indexOf(cond);
-          //         if (index > -1) {
-          //         missing.splice(index, 1);
-          //         }
-          //       }
-          //     }
-
-          //   console.log("FULFILLED: ");
-          //   console.log(fulfilled);
-
-          //   mongo.logMessage({
-          //     'sender': sender,
-          //     'message': message.text,
-          //     'message tagged': msg_tagged,
-          //     'time': msg_time,
-          //     'request': 'transfer',
-          //     'missing':missing,
-          //     'fulfilled':fulfilled
-          //   })
-
-          //   if (missing.length == 0){
-          //     f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
-          //     //get info from fulfilled
-
-          //     //delete request from log after processing 
-          //   }
-          //   else {
-          //      console.log(missing);
-
-          //     var text = "Bạn vui lòng gửi thêm thông tin về ";
-          //     var missing_item;
-          //     for (i = 0; i < missing.length; i++){
-          //       var missing_item = missing[i];
-          //       text += dict[missing_item] + ', ';
-          //     }
-          //     text += 'mà bạn muốn chuyển tiền';
-          //     f.txt(sender, text);
-          //   }
-          //   }
                               
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
@@ -324,10 +266,10 @@ class Scenario {
 
         console.log("COORDS: " + lat + ", " + long);
 
-        //         this.getAtmLocation(sender, lat, long, f);
-        var st = "Nguyen Hue";
+        this.getAtmLocation(sender, lat, long, f);
+        // var st = "Nguyen Hue";
         //       this.findATMnear(sender,st,f );
-        this.findGeoLoc(sender, st, f);
+        // this.findGeoLoc(sender, st, f);
         return;
       }
       console.log("ATTACH" + JSON.stringify(attach[0]));

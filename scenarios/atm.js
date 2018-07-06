@@ -6,7 +6,7 @@ class Atm {
 		console.log('Scenario ATM starting...');
 	}
 
-  findAtm(msg_tagged, items){
+  findAtm(sender, msg_tagged, items){
       var street_name = util.extractProperty(msg_tagged, 'Name');
       var atm = util.extractProperty(msg_tagged, 'ATM');
 

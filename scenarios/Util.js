@@ -14,7 +14,7 @@ function getMyBody (options, callback) {
 
 class Util {
 	constructor() {
-		console.log('Scenario ATM starting...');
+		console.log('Util starting...');
 	}
 
 	 // get tagged message

@@ -19,6 +19,11 @@ class Transfer{
     	console.log('Scenario Transfer starting...');
   	}
 
+  	reply(sender, text, f){
+  		f.txt(sender, "OK");
+  	}
+
+  	
   	transferMoney(sender, msg_tagged, items){
 
             console.log("AAAAAAAAAAAAA");
