@@ -98,8 +98,6 @@ class Scenario {
       console.log(JSON.stringify(message));   
       console.log("TIME: " + timeOfMessage);
 
-      transfer.reply(sender, f);
-
       // get tagged message
       var request = require("request");
       let msg_content = message.text;
@@ -169,8 +167,11 @@ class Scenario {
 
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
-              transfer.transferMoney(sender, msg_tagged, items);
-                              
+              console.log("BBBBBBBBBB");
+              var reply = transfer.transferMoney(sender, msg_tagged, items);
+              console.log(reply);
+              f.txt(sender, reply);
+
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });

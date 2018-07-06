@@ -19,11 +19,7 @@ class Transfer{
     	console.log('Scenario Transfer starting...');
   	}
 
-  	reply(sender, text, f){
-  		f.txt(sender, "OK");
-  	}
 
-  	
   	transferMoney(sender, msg_tagged, items){
 
             console.log("AAAAAAAAAAAAA");
@@ -64,9 +60,11 @@ class Transfer{
             })
 
             if (missing.length == 0){
-              f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
-              //get info from fulfilled
+              // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
 
+              //get info from fulfilled
+              var text_reply = "Yêu cầu chuyển tiền đang được xử lý";
+              return text_reply;
               //delete request from log after processing 
             }
             else {
@@ -79,7 +77,8 @@ class Transfer{
                 text += dict[missing_item] + ', ';
               }
               text += 'mà bạn muốn chuyển tiền';
-              f.txt(sender, text);
+              // f.txt(sender, text);
+              return text;
             }
             }
                               
