@@ -168,6 +168,8 @@ class Scenario {
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
               console.log("BBBBBBBBBB");
+              console.log(msg_tagged);
+              console.log(items);
               try {
                 var reply = transfer.transferMoney(sender, msg_tagged, items);
                 console.log(reply);
