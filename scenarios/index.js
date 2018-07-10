@@ -375,7 +375,7 @@ class Scenario {
   }
 
 
-  processQuickreply(sender, message, timeOfMessage,f) {
+  processQuickreply(sender, message, timeOfMessage, f) {
     //console.log('processQuickreply WIT resp :');
     let buttons = '';
     let text = '';
@@ -394,11 +394,11 @@ class Scenario {
         f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
       }
 
-      if (quickReply.payload === 'QnA_NO') {
+      else if (quickReply.payload === 'QnA_NO') {
         f.txt(sender, "Okay, have a good day");
       }
 
-      if (quickReply.payload.includes('geoCode')) {
+      else if (quickReply.payload.includes('geoCode')) {
         var geoCode = quickReply.payload.split(' ');
         let lat = geoCode[2];
         let long = geoCode[3];
@@ -407,7 +407,11 @@ class Scenario {
         //return;
 
       }
+      else {
+
+      }
     }
+    return;
   }
 
   processAttachment(sender, message, f) {
