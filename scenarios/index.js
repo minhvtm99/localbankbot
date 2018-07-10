@@ -138,7 +138,7 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-          f.findATM(sender,, message, msg_time, msg_tagged );
+          f.findATM(sender, message, msg_time, msg_tagged );
 
 
           //CASE transfer money
