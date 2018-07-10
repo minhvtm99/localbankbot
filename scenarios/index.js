@@ -138,11 +138,11 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-           var street_name = extractProperty(msg_tagged, 'Name');
-          var atm = extractProperty(msg_tagged, 'ATM');
+           var street_name = util.extractProperty(msg_tagged, 'Name');
+          var atm = util.extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
           
-          sortMessage('time');
+          mongo.sortMessage('time');
           
           findMessage(atm_criteria).then(function(items) {
 
@@ -156,7 +156,7 @@ class Scenario {
             
             if (street_name !== '' && atm !== '') {
             //log message
-              logMessage({
+              mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -235,7 +235,7 @@ class Scenario {
 
           } else if (atm !== '' && street_name == '') {
 
-            logMessage({
+            mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
