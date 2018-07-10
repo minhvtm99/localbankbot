@@ -4,11 +4,11 @@ const Util = require('./Util.js');
 const util = new Util();
 
 class Atm {
-	constructor() {
+	constructor(f) {
 		console.log('Scenario ATM starting...');
 	}
 
-  findAtm(sender, message, msg_time, msg_tagged, items){
+  findAtm(sender, message, msg_time, msg_tagged, items, f){
       var street_name = util.extractProperty(msg_tagged, 'Name');
       var atm = util.extractProperty(msg_tagged, 'ATM');
 
@@ -32,7 +32,6 @@ class Atm {
         console.log("call find Geocode " + street_name);
 
         //big test
-        var buttons = [];
         var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
         var url = encodeURI(unencoded);
         console.log("aaaaaa:" + url);
@@ -45,10 +44,11 @@ class Atm {
           });
 
           response.on('end', function() {
-                var places = JSON.parse(body);
+            var places = JSON.parse(body);
                 //console.log(places);
                 var locations = places.results;
                 let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
+                let buttons = [];
                 for (var i = 0; i < locations.length; i++) {
                   var loc = locations[i];
                   console.log(loc);
@@ -65,8 +65,20 @@ class Atm {
                   });
                 }
                 console.log(buttons);
-                return text, buttons;
-
+                if (buttons.length > 0) {
+                  try {
+                    f.quick(sender, {
+                      text,
+                      buttons
+                    });
+                  } catch (e) {
+                    console.log(JSON.stringify(e));
+                  }
+                } else {
+                  f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+                  return;
+                }
+                resolve(locations);
             });
           }).on('error', function(e) {
             console.log("getAtmLocation Got error: " + e.message);
@@ -86,8 +98,8 @@ class Atm {
           'request': 'findATM'
         });
         
-        var reply = "Bạn muốn tìm ATM ở khu vực nào?";
-        return reply, buttons;
+        f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
+        return;
       }      
   }
 
