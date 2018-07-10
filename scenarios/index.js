@@ -310,6 +310,7 @@ class Scenario {
             });
           }
 
+          mongo.sortMessage('time');
           var dayoff_criteria = {'sender':sender, 'request':'dayoff'};
           findMessage(dayoff_criteria).then(function(items) {
             if (items.length > 0){
