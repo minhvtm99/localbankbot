@@ -397,13 +397,14 @@ class Scenario {
       if (quickReply.payload === 'QnA_NO') {
         f.txt(sender, "Okay, have a good day");
       }
+
       if (quickReply.payload.includes('geoCode')) {
         var geoCode = quickReply.payload.split(' ');
         let lat = geoCode[2];
         let long = geoCode[3];
         console.log(lat + long);
         this.getAtmLocation(sender, lat, long, f);
-        return;
+        //return;
 
       }
     }
