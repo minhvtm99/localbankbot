@@ -138,13 +138,13 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-           var street_name = util.extractProperty(msg_tagged, 'Name');
+          var street_name = util.extractProperty(msg_tagged, 'Name');
           var atm = util.extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
 
-          if (atm !== ''){
-            mongo.deleteMessage({'sender':sender, 'request':'transfer'});
-          }
+          // if (atm !== ''){
+          //   mongo.deleteMessage({'sender':sender, 'request':'transfer'});
+          // }
           
           mongo.sortMessage('time');
           
@@ -261,8 +261,7 @@ class Scenario {
           //CASE transfer money
           var transfer = util.extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-
-            mongo.deleteMessage({'sender': sender, 'request':'findATM'});
+          //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
             mongo.logMessage({
               'sender': sender,
               'message': message.text,
