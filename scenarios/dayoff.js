@@ -70,7 +70,7 @@ class Dayoff {
  	}
 
  	dayoffType(){
- 		buttons = [{
+ 		let buttons = [{
           content_type: "text",
           title: "Nghỉ theo chế độ",
           image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
