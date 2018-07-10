@@ -324,6 +324,7 @@ class Scenario {
                   f.txt(sender, reply);
                 } else {
                     let text = "Bạn muốn nghỉ theo hình thức nào?";
+                    let buttons = dayoffCase.dayoffType();
                     f.quick(sender, {
                       text,
                       reply
