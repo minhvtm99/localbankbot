@@ -138,40 +138,7 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-          mongo.sortMessage('time');
-
-          var atm_criteria = {'sender': sender};
-          findMessage(atm_criteria).then(function(items) {
-            console.log("CCCCCC");
-            try{
-             var reply;
-             var button;
-              reply, button = atm.findAtm(sender, message, msg_time, msg_tagged, items);  
-              console.log("ATM return: ");
-              console.log(reply);
-              console.log(button);
-              
-                if (buttons.length > 0) {
-                  try {
-                    f.quick(sender, {
-                      reply,
-                      buttons
-                    });
-                  } catch (e) {
-                    console.log(JSON.stringify(e));
-                  }
-                } else {
-                  f.txt(sender, reply);
-                  return;                  
-                }
-            }
-            catch(error){
-              console.error(error);
-            }         
-
-          }, function(err) {
-            console.error('The promise was rejected', err, err.stack);
-          });
+          f.findATM(sender,, message, msg_time, msg_tagged );
 
 
           //CASE transfer money
@@ -190,8 +157,8 @@ class Scenario {
           }
 
           mongo.sortMessage('time');
-
-          var transfer_criteria = {'sender':sender, 'request':'transfer'};
+ 
+         var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
               console.log("BBBBBBBBBB");
               console.log(msg_tagged);
@@ -723,6 +690,121 @@ class Scenario {
       return;
     });
 
+  }
+
+  findATM(sender, message, msg_time, msg_tagged, f){
+          var street_name = extractProperty(msg_tagged, 'Name');
+          var atm = extractProperty(msg_tagged, 'ATM');
+          var atm_criteria = {'sender': sender}
+          
+          sortMessage('time');
+          
+          findMessage(atm_criteria).then(function(items) {
+
+            if (items.length > 0 && items[items.length -1].request == 'findATM'){
+                street_name = message.text;
+                atm = 'ATM';
+            }
+            
+            
+            console.log("STREET : " + street_name);
+            
+            if (street_name !== '' && atm !== '') {
+            //log message
+              logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+            });
+              
+            //f.txt(sender, "AAAAAAA" );
+            console.log("call find Geocode " + street_name);
+            //             this.findGeoLoc(sender, street_name, f);
+
+            //big test
+            var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
+            var url = encodeURI(unencoded);
+
+            console.log("aaaaaa:" + url);
+            var https = require('https');
+
+            https.get(url, function(response) {
+              var body = '';
+              response.on('data', function(chunk) {
+                body += chunk;
+              });
+
+              response.on('end', function() {
+                var places = JSON.parse(body);
+
+                //console.log(places);
+
+                var locations = places.results;
+
+                let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
+                let buttons = [];
+                for (var i = 0; i < locations.length; i++) {
+                  var loc = locations[i];
+                  console.log(loc);
+
+                  text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
+                  console.log(text);
+
+                  buttons.push({
+                    content_type: 'text',
+                    title: i,
+                    image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+                    payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
+                  });
+                }
+                console.log(buttons);
+                if (buttons.length > 0) {
+
+                  try {
+                    f.quick(sender, {
+                      text,
+                      buttons
+                    });
+
+                  } catch (e) {
+
+                    console.log(JSON.stringify(e));
+                  }
+
+                } else {
+                  f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
+                  return;
+                }
+
+                return locations;
+              });
+            }).on('error', function(e) {
+              console.log("getAtmLocation Got error: " + e.message);
+              return;
+            });
+
+            //end test
+            console.log("end call find Geocode");
+            return;
+
+          } else if (atm !== '' && street_name == '') {
+
+            logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'findATM'
+            });
+            f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
+
+          }
+
+                   
+          }, function(err) {
+            console.error('The promise was rejected', err, err.stack);
+          });
   }
 
 }
