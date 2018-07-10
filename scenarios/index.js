@@ -143,13 +143,13 @@ class Scenario {
           var atm = util.extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
 
-          if (atm !== ''){
-            mongo.deleteMessage({'sender':sender, 'request':'transfer'});
-          }
+          // if (atm !== ''){
+          //   mongo.deleteMessage({'sender':sender, 'request':'transfer'});
+          // }
 
-          if (transfer !== ''){
-            mongo.deleteMessage({'sender': sender, 'request':'findATM'});
-          }
+          // if (transfer !== ''){
+          //   mongo.deleteMessage({'sender': sender, 'request':'findATM'});
+          // }
           
           mongo.sortMessage('time');
           
