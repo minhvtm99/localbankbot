@@ -297,7 +297,7 @@ class Scenario {
 
           //CASE take day off
           var dayoff = util.extractProperty(msg_tagged, 'dayoff');
-          if (transfer !== ''){
+          if (dayoff !== ''){
           //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
             mongo.logMessage({
               'sender': sender,
