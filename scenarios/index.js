@@ -144,14 +144,26 @@ class Scenario {
           findMessage(atm_criteria).then(function(items) {
             console.log("CCCCCC");
             try{
-             // var reply;
-             // var button;
-             console.log("AAAAAA");
-              atm.findAtm(sender, message, msg_time, msg_tagged, items, f);  
-              // console.log("ATM return: ");
-              // console.log(reply);
-              // console.log(button);
-
+             var reply;
+             var button;
+              reply, button = atm.findAtm(sender, message, msg_time, msg_tagged, items);  
+              console.log("ATM return: ");
+              console.log(reply);
+              console.log(button);
+              
+                if (buttons.length > 0) {
+                  try {
+                    f.quick(sender, {
+                      reply,
+                      buttons
+                    });
+                  } catch (e) {
+                    console.log(JSON.stringify(e));
+                  }
+                } else {
+                  f.txt(sender, reply);
+                  return;                  
+                }
             }
             catch(error){
               console.error(error);
