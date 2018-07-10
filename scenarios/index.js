@@ -149,6 +149,7 @@ class Scenario {
           mongo.sortMessage('time');
           
           findMessage(atm_criteria).then(function(items) {
+          console.log(items);
           if (items.length > 0){
 
             if (items[items.length -1].request == 'findATM'){
