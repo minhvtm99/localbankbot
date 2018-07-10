@@ -324,7 +324,19 @@ class Scenario {
                   f.txt(sender, reply);
                 } else {
                     let text = "Bạn muốn nghỉ theo hình thức nào?";
-                    let buttons = dayoffCase.dayoffType();
+                    let buttons = [{
+                        content_type: "text",
+                        title: "Nghỉ theo chế độ",
+                        image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+                        payload: 'WithSalary'
+                      },
+                      {
+                        content_type: "text",
+                        title: "Nghỉ không lương",
+                        image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+                        payload:"NoSalary"
+                      }];   
+                                      
                     f.quick(sender, {
                       text,
                       reply
