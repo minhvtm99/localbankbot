@@ -150,8 +150,7 @@ class Scenario {
           
           findMessage(atm_criteria).then(function(items) {
           console.log(items);
-          if (items.length > 0){
-
+                
             if (items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
@@ -251,8 +250,7 @@ class Scenario {
 
           }
 
-        }
-                   
+                           
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });

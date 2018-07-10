@@ -100,6 +100,7 @@ MongoClient.connect(url, {
 });
 }
 
+// deleteMessage("request":'findATM');
 
 module.exports.doConnect = doConnect;
 module.exports.createCollection = createCollection;
