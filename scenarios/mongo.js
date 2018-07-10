@@ -94,12 +94,13 @@ MongoClient.connect(url, {
 
   dbo.collection("customers").deleteMany(message, function(err, obj) {
     if (err) throw err;
-    console.log(obj.result.n + " document(s) deleted");
+    console.log("1 document(s) deleted");
     db.close();
   });
 });
 }
 
+// deleteMessage({'request':'transfer'});
 
 module.exports.doConnect = doConnect;
 module.exports.createCollection = createCollection;
