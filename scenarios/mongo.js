@@ -94,7 +94,7 @@ MongoClient.connect(url, {
 
   dbo.collection("customers").deleteMany(message, function(err, obj) {
     if (err) throw err;
-    console.log("1 document deleted");
+    console.log(obj.result.n + " document(s) deleted");
     db.close();
   });
 });

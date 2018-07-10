@@ -138,12 +138,17 @@ class Scenario {
           console.log(msg_tagged);
 
           // CASE find ATM
-           var street_name = util.extractProperty(msg_tagged, 'Name');
+          var street_name = util.extractProperty(msg_tagged, 'Name');
+          var transfer = util.extractProperty(msg_tagged, 'transfer');
           var atm = util.extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender};
 
           if (atm !== ''){
             mongo.deleteMessage({'sender':sender, 'request':'transfer'});
+          }
+
+          if (transfer !== ''){
+            mongo.deleteMessage({'sender': sender, 'request':'findATM'});
           }
           
           mongo.sortMessage('time');
@@ -277,7 +282,7 @@ class Scenario {
 
           mongo.sortMessage('time');
  
-         var transfer_criteria = {'sender':sender, 'request':'transfer'};
+          var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
             if (items.length > 0){
               console.log("BBBBBBBBBB");
@@ -296,6 +301,10 @@ class Scenario {
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
+
+          //CASE DAY OFF
+          var dayoff = util.extractProperty(msg_tagged, 'dayoff');
+
 
         
         }
