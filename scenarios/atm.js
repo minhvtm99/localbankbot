@@ -69,7 +69,7 @@ function getMyBody(options, callback) {
 
 //Scen class
 class Scenario {
-  constructor(f) {
+  constructor() {
     console.log('Scenario starting...');
   }
 
