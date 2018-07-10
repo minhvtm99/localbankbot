@@ -149,8 +149,9 @@ class Scenario {
           mongo.sortMessage('time');
           
           findMessage(atm_criteria).then(function(items) {
+          if (items.length > 0){
 
-            if (items.length > 0 && items[items.length -1].request == 'findATM'){
+            if (items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
             }
@@ -159,7 +160,6 @@ class Scenario {
             console.log("STREET : " + street_name);
             
             if (street_name !== '' && atm !== '') {
-            //log message
               mongo.logMessage({
               'sender': sender,
               'message': message.text,
@@ -250,10 +250,13 @@ class Scenario {
 
           }
 
+        }
                    
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
           });
+
+
 
           //CASE transfer money
           var transfer = util.extractProperty(msg_tagged, 'transfer');
@@ -276,6 +279,7 @@ class Scenario {
  
          var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
+            if (items.length > 0){
               console.log("BBBBBBBBBB");
               console.log(msg_tagged);
               console.log(items);
@@ -287,6 +291,7 @@ class Scenario {
               catch(error){
                 console.error(error);
               }
+            }
 
           }, function(err) {
             console.error('The promise was rejected', err, err.stack);
