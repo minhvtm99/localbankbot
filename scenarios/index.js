@@ -102,6 +102,18 @@ class Scenario {
       var request = require("request");
       let msg_content = message.text;
       let msg_time = timeOfMessage;
+
+      /*
+      var search = util.getMessageTags(msg_content)
+                             .then(message_categorize => {
+                               return message_categorize;
+                             })
+                             .catch(error => {
+                               return '';
+                            });
+      console.log("Search Result: ");
+      console.log(search);
+      */
        
       var options = {
         method: 'POST',
@@ -129,10 +141,6 @@ class Scenario {
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
           var atm_criteria = {'sender': sender}
-
-          // if (atm !== ''){
-          //   mongo.deleteMessage({'sender':sender, 'request':'transfer'});
-          // }
           
           sortMessage('time');
           
@@ -243,11 +251,9 @@ class Scenario {
             console.error('The promise was rejected', err, err.stack);
           });
 
-
           //CASE transfer money
           var transfer = util.extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
-            mongo.deleteMessage({'sender':sender, 'request':'findATM'});
             mongo.logMessage({
               'sender': sender,
               'message': message.text,
