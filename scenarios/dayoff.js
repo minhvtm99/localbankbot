@@ -1,3 +1,9 @@
+'use strict';
+
+const mongo = require('./mongo');
+const Util = require('./Util.js');
+const util = new Util();
+
 class Dayoff {
   constructor() {
     console.log('Scenario Dayoff starting...');
@@ -60,8 +66,25 @@ class Dayoff {
               // f.txt(sender, text);
               return text;
             }		
-	}
+		}
+ 	}
 
- }
+ 	dayoffType(){
+ 		text = "Bạn chọn hình thức nghỉ nào?";
+ 		buttons = [{
+          content_type: "Nghỉ theo chế độ",
+          title: "",
+          image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+          payload: 'QnA_YES'
+        },
+        {
+          content_type: "text",
+          title: "Nghỉ không lương",
+          image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+          payload
+        }];
+        return buttons;
+ 	}
+}
 
 module.exports = Dayoff;
