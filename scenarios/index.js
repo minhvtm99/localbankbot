@@ -140,7 +140,7 @@ class Scenario {
           // CASE find ATM
           var street_name = extractProperty(msg_tagged, 'Name');
           var atm = extractProperty(msg_tagged, 'ATM');
-          var atm_criteria = {'sender': sender}
+          var atm_criteria = {'sender': sender};
           
           sortMessage('time');
           
