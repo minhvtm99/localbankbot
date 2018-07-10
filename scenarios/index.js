@@ -9,6 +9,9 @@ const util = new Util();
 const Transfer = require('./transfer.js');
 const transferCase = new Transfer();
 
+const Dayoff = require('./dayoff.js');
+const dayoffCase = new Dayoff();
+
 const mongo = require('./mongo');
 mongo.doConnect()
 mongo.createCollection()
@@ -319,8 +322,12 @@ class Scenario {
                 if (reply !== ''){
                   f.txt(sender, reply);
                 } else {
-                  f.quick(sender, {"Bạn muốn nghỉ theo hình thức nào?", reply});
-                }
+                    let text = "Bạn muốn nghỉ theo hình thức nào?";
+                    f.quick(sender, {
+                      text,
+                      reply
+                    });
+                  }
 
               }
               catch(error){
