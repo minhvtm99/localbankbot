@@ -381,7 +381,7 @@ class Scenario {
     let text = '';
     let data = '';
     
-    logMessage({
+    mongo.logMessage({
       'sender': sender,
       'message': message.text,
       'time': timeOfMessage,
