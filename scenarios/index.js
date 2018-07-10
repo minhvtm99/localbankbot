@@ -149,8 +149,6 @@ class Scenario {
           mongo.sortMessage('time');
           
           findMessage(atm_criteria).then(function(items) {
-          console.log(items);
-
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
@@ -165,7 +163,7 @@ class Scenario {
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
-            });
+              });
               
             //f.txt(sender, "AAAAAAA" );
             console.log("call find Geocode " + street_name);
@@ -274,8 +272,7 @@ class Scenario {
           }
 
           mongo.sortMessage('time');
- 
-         var transfer_criteria = {'sender':sender, 'request':'transfer'};
+          var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
             if (items.length > 0){
               console.log("BBBBBBBBBB");
@@ -295,7 +292,45 @@ class Scenario {
             console.error('The promise was rejected', err, err.stack);
           });
 
-        
+          //CASE take day off
+          var dayoff = util.extractProperty(msg_tagged, 'dayoff');
+          if (transfer !== ''){
+          //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
+            mongo.logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'dayoff',
+              'missing':['date', 'reason'],
+              'fulfilled': {'date': null, 'reason' : null}
+            });
+          }
+
+          var dayoff_criteria = {'sender':sender, 'request':'dayoff'};
+          findMessage(dayoff_criteria).then(function(items) {
+            if (items.length > 0){
+              console.log("DAYOFF");
+              console.log(msg_tagged);
+              console.log(items);
+              try {
+                var reply = dayoffCase.requestReason(sender, message, msg_time, msg_tagged, items);
+                console.log(reply);
+                if (reply !== ''){
+                  f.txt(sender, reply);
+                } else {
+                  f.quick(sender, {"Bạn muốn nghỉ theo hình thức nào?", reply});
+                }
+
+              }
+              catch(error){
+                console.error(error);
+              }
+            }
+
+          }, function(err) {
+            console.error('The promise was rejected', err, err.stack);
+          });
         }
       });
 
@@ -339,11 +374,11 @@ class Scenario {
     let text = '';
     let data = '';
     
-               logMessage({
-              'sender': sender,
-              'message': message.text,
-              'time': timeOfMessage,
-            });
+    logMessage({
+      'sender': sender,
+      'message': message.text,
+      'time': timeOfMessage,
+    });
     
     if (message && message.quick_reply) {
       let quickReply = message.quick_reply;
@@ -810,122 +845,6 @@ class Scenario {
     });
 
   }
-
-  findATM(sender, message, msg_time, msg_tagged, f){
-          var street_name = extractProperty(msg_tagged, 'Name');
-          var atm = extractProperty(msg_tagged, 'ATM');
-          var atm_criteria = {'sender': sender}
-          
-          sortMessage('time');
-          
-          findMessage(atm_criteria).then(function(items) {
-
-            if (items.length > 0 && items[items.length -1].request == 'findATM'){
-                street_name = message.text;
-                atm = 'ATM';
-            }
-            
-            
-            console.log("STREET : " + street_name);
-            
-            if (street_name !== '' && atm !== '') {
-            //log message
-              logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-            });
-              
-            //f.txt(sender, "AAAAAAA" );
-            console.log("call find Geocode " + street_name);
-            //             this.findGeoLoc(sender, street_name, f);
-
-            //big test
-            var unencoded = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + street_name + '&key=AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-            var url = encodeURI(unencoded);
-
-            console.log("aaaaaa:" + url);
-            var https = require('https');
-
-            https.get(url, function(response) {
-              var body = '';
-              response.on('data', function(chunk) {
-                body += chunk;
-              });
-
-              response.on('end', function() {
-                var places = JSON.parse(body);
-
-                //console.log(places);
-
-                var locations = places.results;
-
-                let text = "Bạn muốn tìm ATM ở địa chỉ cụ thể nào sau đây?";
-                let buttons = [];
-                for (var i = 0; i < locations.length; i++) {
-                  var loc = locations[i];
-                  console.log(loc);
-
-                  text += ' Chọn ' + i + ' để tìm ATM ở ' + loc.formatted_address;
-                  console.log(text);
-
-                  buttons.push({
-                    content_type: 'text',
-                    title: i,
-                    image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                    payload: 'geoCode : ' + loc.geometry.location.lat + ' ' + loc.geometry.location.lng
-                  });
-                }
-                console.log(buttons);
-                if (buttons.length > 0) {
-
-                  try {
-                    f.quick(sender, {
-                      text,
-                      buttons
-                    });
-
-                  } catch (e) {
-
-                    console.log(JSON.stringify(e));
-                  }
-
-                } else {
-                  f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-                  return;
-                }
-
-                return locations;
-              });
-            }).on('error', function(e) {
-              console.log("getAtmLocation Got error: " + e.message);
-              return;
-            });
-
-            //end test
-            console.log("end call find Geocode");
-            return;
-
-          } else if (atm !== '' && street_name == '') {
-
-            logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'findATM'
-            });
-            f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
-
-          }
-
-                   
-          }, function(err) {
-            console.error('The promise was rejected', err, err.stack);
-          });
-  }
-
 }
 
 module.exports = Scenario;

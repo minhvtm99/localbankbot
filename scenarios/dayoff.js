@@ -41,7 +41,7 @@ class Dayoff {
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
-              'request': 'transfer',
+              'request': 'dayoff',
               'missing':missing,
               'fulfilled':fulfilled
             });
@@ -70,21 +70,21 @@ class Dayoff {
  	}
 
  	dayoffType(){
- 		text = "Bạn chọn hình thức nghỉ nào?";
  		buttons = [{
-          content_type: "Nghỉ theo chế độ",
-          title: "",
+          content_type: "text",
+          title: "Nghỉ theo chế độ",
           image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-          payload: 'QnA_YES'
+          payload: 'WithSalary'
         },
         {
           content_type: "text",
           title: "Nghỉ không lương",
           image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-          payload
+          payload:"NoSalary"
         }];
         return buttons;
  	}
 }
+
 
 module.exports = Dayoff;
