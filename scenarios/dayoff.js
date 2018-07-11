@@ -41,7 +41,7 @@ class Dayoff {
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
-              'request': 'dayoff',
+              'request': 'request dayoff',
               'missing':missing,
               'fulfilled':fulfilled
             });

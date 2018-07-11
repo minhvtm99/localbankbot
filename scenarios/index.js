@@ -297,21 +297,23 @@ class Scenario {
 
           //CASE take day off
           var dayoff = util.extractProperty(msg_tagged, 'dayoff');
-          if (dayoff !== ''){
+          var req = util.extractProperty(msg_tagged, 'request');
+
+          if (dayoff !== '' && req !== ''){
           //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
             mongo.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
               'time': msg_time,
-              'request': 'dayoff',
+              'request': 'request dayoff',
               'missing':['date', 'reason'],
               'fulfilled': {'date': null, 'reason' : null}
             });
           }
 
           mongo.sortMessage('time');
-          var dayoff_criteria = {'sender':sender, 'request':'dayoff'};
+          var dayoff_criteria = {'sender':sender, 'request':'request dayoff'};
           findMessage(dayoff_criteria).then(function(items) {
             if (items.length > 0){
               console.log("DAYOFF");
