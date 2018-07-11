@@ -100,7 +100,7 @@ MongoClient.connect(url, {
 });
 }
 
-deleteMessage({"request":'transfer'});
+deleteMessage({"request":{ $ne: "food" }});
 
 module.exports.doConnect = doConnect;
 module.exports.createCollection = createCollection;
