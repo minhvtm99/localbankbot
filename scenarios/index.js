@@ -107,20 +107,7 @@ class Scenario {
       // get tagged message
       var request = require("request");
       let msg_content = message.text;
-      let msg_time = timeOfMessage;
-
-      /*
-      var search = util.getMessageTags(msg_content)
-                             .then(message_categorize => {
-                               return message_categorize;
-                             })
-                             .catch(error => {
-                               return '';
-                            });
-      console.log("Search Result: ");
-      console.log(search);
-      */
-       
+      let msg_time = timeOfMessage;     
       var options = {
         method: 'POST',
         url: 'https://bankbotapi.herokuapp.com/message_categorize',
@@ -155,7 +142,7 @@ class Scenario {
             model.deleteMessage({"request":{ $ne: "findATM" }});
           } 
           else if (transfer !== ''){
-            model.deleteMessage({"request":{ $ne: "transfer" }});
+            // model.deleteMessage({"request":{ $ne: "transfer" }});
             model.logMessage({
               'sender': sender,
               'message': message.text,
