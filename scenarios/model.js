@@ -25,10 +25,18 @@ class Model {
     console.log("DELETEEEEEE");
     var collection = db.collection('customers');
     collection.deleteMany(message, function(err, result) {
-      if (err) throw err;
-      console.log("1 document deleted");
+      if (err) {
+        console.log(err);
+      } 
+
+      else{
+      console.log(result);
+      // console.log("1 document deleted");
+      }
     });
 }
+
+
 
 sortMessage(property){
   var mysort = { property: 1 };
@@ -48,6 +56,27 @@ logMessage(message) {
       db.close();
     });
 }
+
+findUserKBConfig(sender) {
+   return new Promise(function(resolve, reject) {
+     var collection = db.collection('user_kb');
+     var query = {
+       uid: sender
+     };
+     
+     collection.find(query).toArray(function(err, result) {
+       if (err) {
+         console.log(err);
+         return reject(err);
+       } else {
+
+         //console.log('findUserKBConfig:' + JSON.stringify(result));
+          resolve(result);
+         
+       }
+     });
+   });
+ }
 /*
  add(field, content, tag) {
    var collection = db.collection('questions');
