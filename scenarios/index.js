@@ -339,7 +339,7 @@ class Scenario {
               console.log(msg_tagged);
               console.log(items);
               try {
-                var reply = dayoffCase.requestReason(sender, message, msg_time, msg_tagged, items);
+                var reply = dayoffCase.requestReason(sender, message, msg_time, msg_tagged, items, model);
                 console.log(reply);
                 if (reply !== ''){
                   f.txt(sender, reply);

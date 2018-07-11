@@ -5,16 +5,16 @@
 
 const Util = require('./Util.js');
 const util = new Util();
-var model;
+//var model;
 
 
 class Dayoff {
   constructor(model) {
-  	model = model;
+  	//model = model;
     console.log('Scenario Dayoff starting...');
   }
 
-	requestReason(sender, message, msg_time, msg_tagged, items){
+	requestReason(sender, message, msg_time, msg_tagged, items, model){
 
         var dict = {'reason':'lý do xin nghỉ', 'date':'thời gian xin nghỉ'};
 
