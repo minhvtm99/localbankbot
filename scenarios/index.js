@@ -140,17 +140,27 @@ class Scenario {
           let msg_tagged = body.categorized_msg;
           console.log(msg_tagged);
 
-          // CASE find ATM
+          // Extract property to find intent
           var street_name = util.extractProperty(msg_tagged, 'Name');
           var atm = util.extractProperty(msg_tagged, 'ATM');
-          var atm_criteria = {'sender': sender};
+          var transfer = util.extractProperty(msg_tagged, 'transfer');
+          var dayoff = util.extractProperty(msg_tagged, 'dayoff');
+          var req = util.extractProperty(msg_tagged, 'request');
 
-          // if (atm !== ''){
-          //   mongo.deleteMessage({'sender':sender, 'request':'transfer'});
-          // }
-          
-          mongo.sortMessage('time');
-          
+          // Delete all other intents 
+          if (atm !== ''){
+            mongo.deleteMessage({"request":{ $ne: "findATM" }});
+          } 
+          else if (transfer !== ''){
+            mongo.deleteMessage({"request":{ $ne: "transfer" }});            
+          }
+          else if (dayoff !== '' && req !== ''){
+            mongo.deleteMessage({"request":{ $ne: "request dayoff" }});            
+          }
+
+          // CASE find ATM
+          var atm_criteria = {'sender': sender};
+          mongo.sortMessage('time');          
           findMessage(atm_criteria).then(function(items) {
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
@@ -259,7 +269,6 @@ class Scenario {
 
 
           //CASE transfer money
-          var transfer = util.extractProperty(msg_tagged, 'transfer');
           if (transfer !== ''){
           //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
             mongo.logMessage({
@@ -296,11 +305,8 @@ class Scenario {
           });
 
           //CASE take day off
-          var dayoff = util.extractProperty(msg_tagged, 'dayoff');
-          var req = util.extractProperty(msg_tagged, 'request');
 
           if (dayoff !== '' && req !== ''){
-          //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
             mongo.logMessage({
               'sender': sender,
               'message': message.text,
