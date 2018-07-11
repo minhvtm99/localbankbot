@@ -22,6 +22,7 @@ class Model {
  }
  
  deleteMessage(message) {
+    console.log("DELETEEEEEE");
     var collection = db.collection('customers');
     collection.deleteMany(message, function(err, result) {
       if (err) throw err;
