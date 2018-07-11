@@ -53,7 +53,7 @@ class Transfer{
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
-            mondel.logMessage({
+            model.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
