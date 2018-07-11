@@ -1,5 +1,8 @@
 'use strict';
 
+const Model = require('./model.js');
+var model = new Model();
+
 const Atm = require('./atm.js');
 const atm = new Atm();
 
@@ -10,10 +13,9 @@ const Transfer = require('./transfer.js');
 const transferCase = new Transfer();
 
 const Dayoff = require('./dayoff.js');
-const dayoffCase = new Dayoff();
+const dayoffCase = new Dayoff(model);
 
-const Model = require('./model.js');
-const model = new Model();
+
 
 // const mongo = require('./mongo');
 // mongo.doConnect()

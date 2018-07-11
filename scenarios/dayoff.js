@@ -1,13 +1,16 @@
 'use strict';
 
-const Model = require('./model.js');
-const model = new Model();
+//const Model = require('./model.js');
+//const model = new Model();
 
 const Util = require('./Util.js');
 const util = new Util();
+var model;
+
 
 class Dayoff {
-  constructor() {
+  constructor(model) {
+  	model = model;
     console.log('Scenario Dayoff starting...');
   }
 
