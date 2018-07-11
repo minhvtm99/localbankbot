@@ -10,7 +10,7 @@ const Util = require('./Util.js');
 const util = new Util();
 
 const Transfer = require('./transfer.js');
-const transferCase = new Transfer();
+const transferCase = new Transfer(model);
 
 const Dayoff = require('./dayoff.js');
 const dayoffCase = new Dayoff(model);
@@ -144,7 +144,7 @@ class Scenario {
             model.deleteMessage({"request":{ $ne: "findATM" }});
           } 
           else if (transfer !== ''){
-            // model.deleteMessage({"request":{ $ne: "transfer" }});
+            model.deleteMessage({"request":{ $ne: "transfer" }});
             model.logMessage({
               'sender': sender,
               'message': message.text,
@@ -304,7 +304,7 @@ class Scenario {
               console.log(msg_tagged);
               console.log(items);
               try {
-                var reply = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items);
+                var reply = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items, model);
                 console.log(reply);
                 f.txt(sender, reply);
               }

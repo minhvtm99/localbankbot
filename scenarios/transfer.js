@@ -1,7 +1,7 @@
 'use strict';
 
-const Model = require('./model.js');
-const model = new Model();
+// const Model = require('./model.js');
+// const model = new Model();
 
 const Util = require('./Util.js');
 const util = new Util();
@@ -19,12 +19,12 @@ function findMessage(query) {
 }
 
 class Transfer{
-	constructor() {
+	constructor(model) {
     	console.log('Scenario Transfer starting...');
   	}
 
 
-  	transferMoney(sender, message, msg_time, msg_tagged, items){
+  	transferMoney(sender, message, msg_time, msg_tagged, items, model){
 
         console.log("AAAAAAAAAAAAA");
 
