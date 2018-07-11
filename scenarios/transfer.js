@@ -1,6 +1,8 @@
 'use strict';
 
-const mongo = require('./mongo');
+const Model = require('./model.js');
+const model = new Model();
+
 const Util = require('./Util.js');
 const util = new Util();
 
@@ -51,7 +53,7 @@ class Transfer{
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
-            mongo.logMessage({
+            mondel.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -59,7 +61,7 @@ class Transfer{
               'request': 'transfer',
               'missing':missing,
               'fulfilled':fulfilled
-            })
+            });
 
             if (missing.length == 0){
               // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");

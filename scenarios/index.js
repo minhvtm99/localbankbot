@@ -12,9 +12,12 @@ const transferCase = new Transfer();
 const Dayoff = require('./dayoff.js');
 const dayoffCase = new Dayoff();
 
-const mongo = require('./mongo');
-mongo.doConnect()
-mongo.createCollection()
+const Model = require('./model.js');
+const model = new Model();
+
+// const mongo = require('./mongo');
+// mongo.doConnect()
+// mongo.createCollection()
 //Get entities
 const firstEntity = (entities, name) => {
   return entities &&
@@ -149,11 +152,11 @@ class Scenario {
 
           // Delete all other intents 
           if (atm !== ''){
-            mongo.deleteMessage({"request":{ $ne: "findATM" }});
+            model.deleteMessage({"request":{ $ne: "findATM" }});
           } 
           else if (transfer !== ''){
-            mongo.deleteMessage({"request":{ $ne: "transfer" }});
-            mongo.logMessage({
+            model.deleteMessage({"request":{ $ne: "transfer" }});
+            model.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -164,8 +167,8 @@ class Scenario {
             });
           }
           else if (dayoff !== '' && req !== ''){
-            mongo.deleteMessage({"request":{ $ne: "request dayoff" }});    
-            mongo.logMessage({
+            model.deleteMessage({"request":{ $ne: "request dayoff" }});    
+            model.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -181,7 +184,7 @@ class Scenario {
 
           // CASE find ATM
           var atm_criteria = {'sender': sender};
-          mongo.sortMessage('time');          
+          model.sortMessage('time');          
           findMessage(atm_criteria).then(function(items) {
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
@@ -192,7 +195,7 @@ class Scenario {
             console.log("STREET : " + street_name);
             
             if (street_name !== '' && atm !== '') {
-              mongo.logMessage({
+              model.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -271,7 +274,7 @@ class Scenario {
 
           } else if (atm !== '' && street_name == '') {
 
-            mongo.logMessage({
+            model.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
@@ -304,7 +307,7 @@ class Scenario {
           //   });
           // }
 
-          mongo.sortMessage('time');
+          model.sortMessage('time');
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
           findMessage(transfer_criteria).then(function(items) {
             if (items.length > 0){
@@ -339,7 +342,7 @@ class Scenario {
           //   });
           // }
 
-          mongo.sortMessage('time');
+          model.sortMessage('time');
           var dayoff_criteria = {'sender':sender, 'request':'request dayoff'};
           findMessage(dayoff_criteria).then(function(items) {
             if (items.length > 0){
@@ -424,7 +427,7 @@ class Scenario {
     let text = '';
     let data = '';
     
-    mongo.logMessage({
+    model.logMessage({
       'sender': sender,
       'message': message.text,
       'time': timeOfMessage,

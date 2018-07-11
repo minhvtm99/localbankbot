@@ -1,6 +1,8 @@
 'use strict';
 
-const mongo = require('./mongo');
+const Model = require('./model.js');
+const model = new Model();
+
 const Util = require('./Util.js');
 const util = new Util();
 
@@ -36,7 +38,7 @@ class Dayoff {
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
-            mongo.logMessage({
+            model.logMessage({
               'sender': sender,
               'message': message.text,
               'message tagged': msg_tagged,
