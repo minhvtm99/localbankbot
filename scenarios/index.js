@@ -339,7 +339,7 @@ class Scenario {
                                       
                     f.quick(sender, {
                       text,
-                      reply
+                      buttons
                     });
                   }
 
@@ -419,8 +419,16 @@ class Scenario {
         console.log(lat + long);
         this.getAtmLocation(sender, lat, long, f);
         //return;
-
       }
+
+      else if (quickReply.payload === 'WithSalary') {
+        f.txt(sender, "Yêu cầu nghỉ theo chế độ đang được xử lý");
+        //return;
+      }     
+      else if (quickReply.payload === 'NoSalary') {
+        f.txt(sender, "Yêu cầu nghỉ không lương đang được xử lý");
+        //return;
+      }       
       else {
 
       }
