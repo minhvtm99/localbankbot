@@ -152,10 +152,14 @@ class Scenario {
             mongo.deleteMessage({"request":{ $ne: "findATM" }});
           } 
           else if (transfer !== ''){
-            mongo.deleteMessage({"request":{ $ne: "transfer" }});            
+            mongo.deleteMessage({"request":{ $ne: "transfer" }});
+            
           }
           else if (dayoff !== '' && req !== ''){
             mongo.deleteMessage({"request":{ $ne: "request dayoff" }});            
+          }
+          else {
+
           }
 
           // CASE find ATM
