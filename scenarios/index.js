@@ -174,7 +174,7 @@ class Scenario {
           // CASE find ATM
           var atm_criteria = {'sender': sender};
           model.sortMessage('time');          
-          findMessage(atm_criteria).then(function(items) {
+          model.findMessage(atm_criteria).then(function(items) {
             if (items.length > 0 && items[items.length -1].request == 'findATM'){
                 street_name = message.text;
                 atm = 'ATM';
@@ -275,7 +275,7 @@ class Scenario {
           }
 
                            
-          }, function(err) {
+          }, catch(err) {
             console.error('The promise was rejected', err, err.stack);
           });
 

@@ -75,6 +75,22 @@ findUserKBConfig(sender) {
      });
    });
  }
+
+
+findMessage(query) {
+  return new Promise(function(resolve, reject) {
+     var collection = db.db("bankbotdev").collection('customers');
+     
+     collection.find(query).toArray(function(err, result) {
+       if (err) {
+         console.log(err);
+         return reject(err);
+       } else {
+          resolve(result);  
+       }
+     });
+   });
+}
 /*
  add(field, content, tag) {
    var collection = db.collection('questions');
