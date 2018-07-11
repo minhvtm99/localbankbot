@@ -40,7 +40,7 @@ class Model {
 
 sortMessage(property){
   var mysort = { property: 1 };
-  var collection = db.collection('customers');
+  var collection = db.db("bankbotdev").collection("customers");
   collection.find().sort(mysort).toArray(function(err, result) {
     if (err) throw err;
      console.log("SORTED !");
