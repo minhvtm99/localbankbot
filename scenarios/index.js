@@ -275,8 +275,8 @@ class Scenario {
           }
 
                            
-          }, catch(err) {
-            console.error('The promise was rejected', err, err.stack);
+          }).catch(function(reason) {
+           console.error(reason);
           });
 
 
