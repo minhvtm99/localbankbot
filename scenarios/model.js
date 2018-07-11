@@ -40,7 +40,7 @@ class Model {
 
 sortMessage(property){
   var mysort = { property: 1 };
-  var collection = db.db("bankbotdev").collection("customers");
+    var collection = db.db("bankbotdev").collection("customers");
   collection.find().sort(mysort).toArray(function(err, result) {
     if (err) throw err;
      console.log("SORTED !");
@@ -53,7 +53,6 @@ logMessage(message) {
     collection.insertOne(message, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
-      db.close();
     });
 }
 
