@@ -153,10 +153,27 @@ class Scenario {
           } 
           else if (transfer !== ''){
             mongo.deleteMessage({"request":{ $ne: "transfer" }});
-            
+            mongo.logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'transfer',
+              'missing':['amount', 'acc_number', 'bank'],
+              'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
+            });
           }
           else if (dayoff !== '' && req !== ''){
-            mongo.deleteMessage({"request":{ $ne: "request dayoff" }});            
+            mongo.deleteMessage({"request":{ $ne: "request dayoff" }});    
+            mongo.logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'request dayoff',
+              'missing':['date', 'reason'],
+              'fulfilled': {'date': null, 'reason' : null}
+            });       
           }
           else {
 
@@ -273,19 +290,19 @@ class Scenario {
 
 
           //CASE transfer money
-          if (transfer !== ''){
-          //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
-            mongo.logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'transfer',
-              'missing':['amount', 'acc_number', 'bank'],
-              'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
+          // if (transfer !== ''){
+          // //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
+          //   mongo.logMessage({
+          //     'sender': sender,
+          //     'message': message.text,
+          //     'message tagged': msg_tagged,
+          //     'time': msg_time,
+          //     'request': 'transfer',
+          //     'missing':['amount', 'acc_number', 'bank'],
+          //     'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
 
-            });
-          }
+          //   });
+          // }
 
           mongo.sortMessage('time');
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
@@ -310,17 +327,17 @@ class Scenario {
 
           //CASE take day off
 
-          if (dayoff !== '' && req !== ''){
-            mongo.logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'request dayoff',
-              'missing':['date', 'reason'],
-              'fulfilled': {'date': null, 'reason' : null}
-            });
-          }
+          // if (dayoff !== '' && req !== ''){
+          //   mongo.logMessage({
+          //     'sender': sender,
+          //     'message': message.text,
+          //     'message tagged': msg_tagged,
+          //     'time': msg_time,
+          //     'request': 'request dayoff',
+          //     'missing':['date', 'reason'],
+          //     'fulfilled': {'date': null, 'reason' : null}
+          //   });
+          // }
 
           mongo.sortMessage('time');
           var dayoff_criteria = {'sender':sender, 'request':'request dayoff'};
