@@ -23,7 +23,7 @@ class Model {
  
  deleteMessage(message) {
     console.log("DELETEEEEEE");
-    var collection = db.collection('customers');
+    var collection = db.db("bankbotdev").collection("customers");
     collection.deleteMany(message, function(err, result) {
       if (err) {
         console.log(err);
@@ -49,7 +49,7 @@ sortMessage(property){
 }
 
 logMessage(message) {
-    var collection = db.collection('customers');
+    var collection = db.db("bankbotdev").collection("customers");
     collection.insertOne(message, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
