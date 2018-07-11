@@ -29,22 +29,6 @@ const firstEntity = (entities, name) => {
     entities[name][0];
 }
 
-var MongoClient = require('mongodb').MongoClient;
-
-function findMessage(query) {
-  return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
-    //var collection = db.collection('customers');
-    var dbo = db.db("bankbotdev");
-    return dbo.collection("customers").find(query).toArray();
-
-    //return collection.find({'request':'findATM'}).toArray();
-  }).then(function(items) {
-    return items;
-  });
-}
-
-
-
 
 // get property
 
@@ -298,7 +282,7 @@ class Scenario {
 
           model.sortMessage('time');
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
-          findMessage(transfer_criteria).then(function(items) {
+          model.findMessage(transfer_criteria).then(function(items) {
             if (items.length > 0){
               console.log("BBBBBBBBBB");
               console.log(msg_tagged);
@@ -333,7 +317,7 @@ class Scenario {
 
           model.sortMessage('time');
           var dayoff_criteria = {'sender':sender, 'request':'request dayoff'};
-          findMessage(dayoff_criteria).then(function(items) {
+          model.findMessage(dayoff_criteria).then(function(items) {
             if (items.length > 0){
               console.log("DAYOFF");
               console.log(msg_tagged);
