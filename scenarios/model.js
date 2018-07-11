@@ -29,9 +29,8 @@ class Model {
         console.log(err);
       } 
 
-      else{
-      console.log(result);
-      // console.log("1 document deleted");
+      else {
+      console.log(obj.result.n + " document deleted");
       }
     });
 }
