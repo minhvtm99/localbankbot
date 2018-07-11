@@ -30,7 +30,7 @@ class Model {
       } 
 
       else {
-      console.log(obj.result.n + " document deleted");
+      console.log(result.result.n + " document deleted");
       }
     });
 }
