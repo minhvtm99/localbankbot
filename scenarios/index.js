@@ -301,6 +301,14 @@ class Scenario {
                 if (reply !== ''){
                   f.txt(sender, reply);
                 } else {
+
+                    var reason =  items[items.length -1].fulfilled['reason'];
+                    var date =  items[items.length -1].fulfilled['date'];
+
+                    console.log(reason);
+                    console.log(date);
+                    console.log(typeof reason);
+
                     let text = "Bạn muốn nghỉ theo hình thức nào?";
                     let buttons = [{
                         content_type: "text",
