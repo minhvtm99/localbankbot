@@ -125,10 +125,10 @@ class Scenario {
 
           // Delete all other intents 
           if (atm !== ''){
-            model.deleteMessage({"request":{ $ne: "findATM" }});
+            model.deleteMessage({"request":{ $ne: "" }});
           } 
           else if (transfer !== ''){
-            model.deleteMessage({"request":{ $ne: "transfer" }});
+            model.deleteMessage({"request":{ $ne: "" }});
             model.logMessage({
               'sender': sender,
               'message': message.text,
@@ -140,7 +140,7 @@ class Scenario {
             });
           }
           else if (dayoff !== '' && req !== ''){
-            model.deleteMessage({"request":{ $ne: "request dayoff" }});    
+            model.deleteMessage({"request":{ $ne: "" }});    
             model.logMessage({
               'sender': sender,
               'message': message.text,
@@ -266,20 +266,6 @@ class Scenario {
 
 
           //CASE transfer money
-          // if (transfer !== ''){
-          // //  mongo.deleteMessage({'sender': sender, 'request':'findATM'});
-          //   mongo.logMessage({
-          //     'sender': sender,
-          //     'message': message.text,
-          //     'message tagged': msg_tagged,
-          //     'time': msg_time,
-          //     'request': 'transfer',
-          //     'missing':['amount', 'acc_number', 'bank'],
-          //     'fulfilled': {'amount': null, 'acc_number': null, 'bank' : null}
-
-          //   });
-          // }
-
           model.sortMessage('time');
           var transfer_criteria = {'sender':sender, 'request':'transfer'};
           model.findMessage(transfer_criteria).then(function(items) {
@@ -302,19 +288,6 @@ class Scenario {
           });
 
           //CASE take day off
-
-          // if (dayoff !== '' && req !== ''){
-          //   mongo.logMessage({
-          //     'sender': sender,
-          //     'message': message.text,
-          //     'message tagged': msg_tagged,
-          //     'time': msg_time,
-          //     'request': 'request dayoff',
-          //     'missing':['date', 'reason'],
-          //     'fulfilled': {'date': null, 'reason' : null}
-          //   });
-          // }
-
           model.sortMessage('time');
           var dayoff_criteria = {'sender':sender, 'request':'request dayoff'};
           model.findMessage(dayoff_criteria).then(function(items) {
