@@ -20,7 +20,7 @@ class Dayoff {
 	        var fulfilled = items[items.length -1].fulfilled;
         	var date = ''
         	date = util.extractProperty(msg_tagged, 'date');
-        	if (date !== '' && m){
+        	if (date !== '' && missing.includes('date')){
         		fulfilled['date'] = date;
         		var idx = missing.indexOf(date);
         		if (idx > -1){
