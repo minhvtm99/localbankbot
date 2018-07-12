@@ -17,9 +17,12 @@ class Dayoff {
 	requestReason(sender, message, msg_time, msg_tagged, items, model){
 
         var dict = {'reason':'lý do xin nghỉ', 'date':'thời gian xin nghỉ'};
+        if (items[items.length -2].missing.includes('reason')){
+        	var reason = message.text;
+        }
 
         if (items.length > 0 && items[items.length -1].missing.length > 0){
-            var conditions = ['date', 'reason'];
+        	var conditions = ['date'];
 	        var missing = items[items.length -1].missing;
 	        var fulfilled = items[items.length -1].fulfilled;
 	          //find missing condition  
@@ -38,6 +41,9 @@ class Dayoff {
 	            }
 	          }
 
+	        if (reason !== ''){
+	        	fulfilled['reason'] = reason;
+	        }
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
@@ -51,26 +57,22 @@ class Dayoff {
               'fulfilled':fulfilled
             });
 
+            var text;
             if (missing.length == 0){
               // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
-
               //get info from fulfilled
-              let emp = '';
-              return emp;
+              text = '';
               //delete request from log after processing 
             }
-            else {
-               console.log(missing);
-
-              var text = "Bạn vui lòng gửi thêm thông tin về ";
-              var missing_item;
-              for (i = 0; i < missing.length; i++){
-                var missing_item = missing[i];
-                text += dict[missing_item] + ', ';
-              }
-              // f.txt(sender, text);
-              return text;
-            }		
+            else if (missing.includes('reason')){
+              console.log(missing);
+              text = "Bạn vui lòng gửi thêm thông tin về lý do xin nghỉ";
+          	}
+            else{
+              text = "Bạn vui lòng gửi thêm thông tin về thời gian xin nghỉ";
+            }
+            		
+	      return text;      
 		}
  	}
 

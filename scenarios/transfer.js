@@ -6,18 +6,6 @@
 const Util = require('./Util.js');
 const util = new Util();
 
-function findMessage(query) {
-  return MongoClient.connect("mongodb://minhvtm99:alexisozil99@ds117691.mlab.com:17691/bankbotdev").then(function(db) {
-    //var collection = db.collection('customers');
-    var dbo = db.db("bankbotdev");
-    return dbo.collection("customers").find(query).toArray();
-
-    //return collection.find({'request':'findATM'}).toArray();
-  }).then(function(items) {
-    return items;
-  });
-}
-
 class Transfer{
 	constructor(model) {
     	console.log('Scenario Transfer starting...');
