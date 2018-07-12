@@ -409,6 +409,7 @@ class Scenario {
 
       else if (quickReply.payload.includes('WithSalary') || quickReply.payload.includes('NoSalary')) {
         var pack = quickReply.payload.split(' ');
+        console.log(pack);
         let salary = pack[0];
         let reason = pack[1];
         let date = pack[2];
@@ -429,7 +430,7 @@ class Scenario {
           }];   
                           
         f.quick('1687931741303780', {
-          text,
+          text_to_manager,
           buttons
         });
       }           
