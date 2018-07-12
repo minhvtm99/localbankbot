@@ -416,6 +416,7 @@ class Scenario {
         let sender = pack[3];
         let text_to_manager = '';
         text_to_manager += "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
+
         let buttons = [{
             content_type: "text",
             title: "Approve",
@@ -429,10 +430,17 @@ class Scenario {
             payload: 'reject'
           }];   
         console.log(typeof sender); 
-        f.quick(1687931741303780, {
-          text_to_manager,
-          buttons
-        });
+
+
+        try {
+          f.quick('1687931741303780', {
+            text_to_manager,
+            buttons
+          });
+
+        } catch (e) {
+          console.log(JSON.stringify(e));
+        }
       }           
       else {
 
