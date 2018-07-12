@@ -314,13 +314,13 @@ class Scenario {
                         content_type: "text",
                         title: "Nghỉ theo chế độ",
                         image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                        payload: 'WithSalary'
+                        payload: 'WithSalary, ' + reason + ', ' + date + ', ' + sender
                       },
                       {
                         content_type: "text",
                         title: "Nghỉ không lương",
                         image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-                        payload:"NoSalary"
+                        payload: 'WithSalary, ' + reason + ', ' + date + ', ' + sender
                       }];   
                                       
                     f.quick(sender, {
@@ -407,14 +407,32 @@ class Scenario {
         //return;
       }
 
-      else if (quickReply.payload === 'WithSalary') {
-        f.txt(sender, "Yêu cầu nghỉ theo chế độ đang được xử lý");
-        //return;
-      }     
-      else if (quickReply.payload === 'NoSalary') {
-        f.txt(sender, "Yêu cầu nghỉ không lương đang được xử lý");
-        //return;
-      }       
+      else if (quickReply.payload.includes('WithSalary') || quickReply.payload.includes('NoSalary')) {
+        var pack = quickReply.payload.split(' ');
+        let salary = pack[0];
+        let reason = pack[1];
+        let date = pack[2];
+        let sender = pack[3];
+        let text_to_manager = '';
+        text_to_manager += "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
+        let buttons = [{
+            content_type: "text",
+            title: "Approve",
+            image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+            payload: 'approve'
+          },
+          {
+            content_type: "Reject",
+            title: "Nghỉ không lương",
+            image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+            payload: 'reject'
+          }];   
+                          
+        f.quick('1687931741303780', {
+          text,
+          buttons
+        });
+      }           
       else {
 
       }
