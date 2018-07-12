@@ -49,7 +49,9 @@ class Dayoff {
 	        if (reason !== ''){
 	        	fulfilled['reason'] = reason;
 	        	let idx = missing.indexOf('reason');
-	        	missing.splice(idx, 1);
+	        	if (idx > -1){
+	        		missing.splice(idx, 1);
+	        	}
 	        }
 
 	        console.log("AFTER REMOVE: ");
