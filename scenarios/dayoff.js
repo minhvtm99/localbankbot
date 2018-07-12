@@ -17,8 +17,10 @@ class Dayoff {
 	requestReason(sender, message, msg_time, msg_tagged, items, model){
 
         var dict = {'reason':'lý do xin nghỉ', 'date':'thời gian xin nghỉ'};
+       	var reason = '';
+
         if (items.length > 1 && items[items.length -2].missing.includes('reason')){
-        	var reason = message.text;
+        	reason = message.text;
         }
 
         if (items.length > 0 && items[items.length -1].missing.length > 0){
