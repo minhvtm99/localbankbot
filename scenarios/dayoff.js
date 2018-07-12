@@ -28,48 +28,48 @@ class Dayoff {
         		} 
         	}
 
-        var reason = '';	
-        console.log("PREV MESSAGE");
-        console.log(items[items.length -2]);
+	        var reason = '';	
+	        console.log("PREV MESSAGE");
+	        console.log(items[items.length -2]);
 
-        if (items.length > 1 && items[items.length -2].missing.includes('reason')){
-        	reason = message.text;
-        }
+	        if (items.length > 1 && items[items.length -1].missing.includes('reason')){
+	        	reason = message.text;
+	        }
 
-        if (reason !== ''){
-        	fulfilled['reason'] = reason;
-			var idx = missing.indexOf('reason');
-			if (idx > -1){
-				missing.splice(idx, 1); 
-			}       	
-        }
+	        if (reason !== ''){
+	        	fulfilled['reason'] = reason;
+				var idx = missing.indexOf('reason');
+				if (idx > -1){
+					missing.splice(idx, 1); 
+				}       	
+	        }
 
-	    model.logMessage({
-	      'sender': sender,
-	      'message': message.text,
-	      'message tagged': msg_tagged,
-	      'time': msg_time,
-	      'request': 'request dayoff',
-	      'missing':missing,
-	      'fulfilled':fulfilled
-	    });
+		    model.logMessage({
+		      'sender': sender,
+		      'message': message.text,
+		      'message tagged': msg_tagged,
+		      'time': msg_time,
+		      'request': 'request dayoff',
+		      'missing':missing,
+		      'fulfilled':fulfilled
+		    });
 
-        var text;
-        if (missing.length == 0){
-          // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
-          //get info from fulfilled
-          text = '';
-          //delete request from log after processing 
-        }
-        else if (missing.includes('reason')){
-          console.log(missing);
-          text = "Bạn vui lòng gửi thêm thông tin về lý do xin nghỉ";
-      	}
-        else{
-          text = "Bạn vui lòng gửi thêm thông tin về thời gian xin nghỉ";
-        }
-        		
-      return text;
+	        var text;
+	        if (missing.length == 0){
+	          // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
+	          //get info from fulfilled
+	          text = '';
+	          //delete request from log after processing 
+	        }
+	        else if (missing.includes('reason')){
+	          console.log(missing);
+	          text = "Bạn vui lòng gửi thêm thông tin về lý do xin nghỉ";
+	      	}
+	        else{
+	          text = "Bạn vui lòng gửi thêm thông tin về thời gian xin nghỉ";
+	        }
+	        		
+	      return text;
 
  	}
  }
