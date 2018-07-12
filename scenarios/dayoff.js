@@ -22,7 +22,7 @@ class Dayoff {
         	date = util.extractProperty(msg_tagged, 'date');
         	if (date !== '' && missing.includes('date')){
         		fulfilled['date'] = date;
-        		var idx = missing.indexOf(date);
+        		var idx = missing.indexOf('date');
         		if (idx > -1){
         			missing.splice(idx, 1);
         		} 
