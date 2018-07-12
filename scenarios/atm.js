@@ -1,5 +1,7 @@
 'use strict';
-const mongo = require('./mongo');
+const Model = require('./model.js');
+const model = new Model();
+
 const Util = require('./Util.js');
 const util = new Util();
 

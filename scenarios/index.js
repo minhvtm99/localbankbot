@@ -408,7 +408,7 @@ class Scenario {
       }
 
       else if (quickReply.payload.includes('WithSalary') || quickReply.payload.includes('NoSalary')) {
-        var pack = quickReply.payload.split(' ');
+        var pack = quickReply.payload.split(', ');
         console.log(pack);
         let salary = pack[0];
         let reason = pack[1];
@@ -428,8 +428,8 @@ class Scenario {
             image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
             payload: 'reject'
           }];   
-                          
-        f.quick('1687931741303780', {
+        console.log(typeof sender); 
+        f.quick(1687931741303780, {
           text_to_manager,
           buttons
         });
