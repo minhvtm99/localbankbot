@@ -15,79 +15,61 @@ class Dayoff {
   }
 
 	requestReason(sender, message, msg_time, msg_tagged, items, model){
+        if (items.length > 0 && items[items.length -1].missing.length > 0){
+	        var missing = items[items.length -1].missing;
+	        var fulfilled = items[items.length -1].fulfilled;
+        	var date = ''
+        	date = extractProperty(msg_tagged, 'date');
+        	if (date !== '' && m){
+        		fulfilled['date'] = date;
+        		var idx = missing.indexOf(date);
+        		if (idx > -1){
+        			missing.splice(idx, 1);
+        		} 
+        	}
 
-        var dict = {'reason':'lý do xin nghỉ', 'date':'thời gian xin nghỉ'};
-       	var reason = '';
-
+        var reason = '';	
         if (items.length > 1 && items[items.length -2].missing.includes('reason')){
         	reason = message.text;
         }
 
-        if (items.length > 0 && items[items.length -1].missing.length > 0){
-        	var conditions = ['date'];
-	        var missing = items[items.length -1].missing;
-	        var fulfilled = items[items.length -1].fulfilled;
-	          //find missing condition  
-	        var i;
-	        for (i = 0; i < conditions.length; i++){
-	          	var cond = conditions[i];
-	            console.log("condition: " + cond);
-	            var prop = util.extractProperty(msg_tagged, cond);
-	            console.log("property: " + prop);
-	            if(prop !== ''){
-	              fulfilled[cond] = prop;
-	              var index = missing.indexOf(cond);
-	              if (index > -1) {
-	              	missing.splice(index, 1);
-	              }
-	            }
-	          }
+        if (reason !== ''){
+        	fulfilled['reason'] = reason;
+			var idx = missing.indexOf('reason');
+			if (idx > -1){
+				missing.splice(idx, 1); 
+			}       	
+        }
 
-	        console.log("BEFORE REMOVE: ");
-	        console.log(missing);
+	    model.logMessage({
+	      'sender': sender,
+	      'message': message.text,
+	      'message tagged': msg_tagged,
+	      'time': msg_time,
+	      'request': 'request dayoff',
+	      'missing':missing,
+	      'fulfilled':fulfilled
+	    });
 
-	        if (reason !== ''){
-	        	fulfilled['reason'] = reason;
-	        	let idx = missing.indexOf('reason');
-	        	if (idx > -1){
-	        		missing.splice(idx, 1);
-	        	}
-	        }
+        var text;
+        if (missing.length == 0){
+          // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
+          //get info from fulfilled
+          text = '';
+          //delete request from log after processing 
+        }
+        else if (missing.includes('reason')){
+          console.log(missing);
+          text = "Bạn vui lòng gửi thêm thông tin về lý do xin nghỉ";
+      	}
+        else{
+          text = "Bạn vui lòng gửi thêm thông tin về thời gian xin nghỉ";
+        }
+        		
+      return text;
 
-	        console.log("AFTER REMOVE: ");
-	        console.log(missing);
-	        
-            console.log("FULFILLED: ");
-            console.log(fulfilled);
-
-            model.logMessage({
-              'sender': sender,
-              'message': message.text,
-              'message tagged': msg_tagged,
-              'time': msg_time,
-              'request': 'request dayoff',
-              'missing':missing,
-              'fulfilled':fulfilled
-            });
-
-            var text;
-            if (missing.length == 0){
-              // f.txt(sender, "Yêu cầu chuyển tiền đang được xử lý");
-              //get info from fulfilled
-              text = '';
-              //delete request from log after processing 
-            }
-            else if (missing.includes('reason')){
-              console.log(missing);
-              text = "Bạn vui lòng gửi thêm thông tin về lý do xin nghỉ";
-          	}
-            else{
-              text = "Bạn vui lòng gửi thêm thông tin về thời gian xin nghỉ";
-            }
-            		
-	      return text;      
-		}
  	}
+ }
 
  	dayoffType(){
  		let buttons = [{
