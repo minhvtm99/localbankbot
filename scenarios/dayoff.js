@@ -36,14 +36,17 @@ class Dayoff {
 	              fulfilled[cond] = prop;
 	              var index = missing.indexOf(cond);
 	              if (index > -1) {
-	              missing.splice(index, 1);
+	              	missing.splice(index, 1);
 	              }
 	            }
 	          }
 
 	        if (reason !== ''){
 	        	fulfilled['reason'] = reason;
+	        	let idx = missing.indexOf('reason');
+	        	missing.splice(idx, 1);
 	        }
+	        
             console.log("FULFILLED: ");
             console.log(fulfilled);
 
