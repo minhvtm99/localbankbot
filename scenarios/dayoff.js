@@ -30,7 +30,7 @@ class Dayoff {
 
 	        var reason = '';	
 	        console.log("PREV MESSAGE");
-	        console.log(items[items.length -2]);
+	        console.log(items[items.length -1]);
 
 	        if (items.length > 1 && items[items.length -1].missing.includes('reason')){
 	        	reason = message.text;
