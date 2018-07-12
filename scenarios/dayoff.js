@@ -41,11 +41,17 @@ class Dayoff {
 	            }
 	          }
 
+	        console.log("BEFORE REMOVE: ");
+	        console.log(missing);
+
 	        if (reason !== ''){
 	        	fulfilled['reason'] = reason;
 	        	let idx = missing.indexOf('reason');
 	        	missing.splice(idx, 1);
 	        }
+
+	        console.log("AFTER REMOVE: ");
+	        console.log(missing);
 	        
             console.log("FULFILLED: ");
             console.log(fulfilled);
