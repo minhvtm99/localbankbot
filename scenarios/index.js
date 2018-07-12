@@ -432,15 +432,10 @@ class Scenario {
         console.log(typeof sender); 
 
 
-        try {
-          f.quick('1687931741303780', {
-            text_to_manager,
-            buttons
-          });
-
-        } catch (e) {
-          console.log(JSON.stringify(e));
-        }
+        f.quick(sender, {
+          text_to_manager,
+          buttons
+        });
       }           
       else {
 
