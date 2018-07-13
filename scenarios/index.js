@@ -416,7 +416,7 @@ class Scenario {
         f.txt(recipient, text_to_recipient);
         if (decision == 'reject'){
           console.log("RRRRRRRRRRRRRRRRRRR");
-          var reject_package = dayoffCase.rejectReason();
+          var reject_package = dayoffCase.rejectReason(model);
           console.log(reject_package);   
           let text_to_manager = reject_package[0];
           let buttons = reject_package[1];    
