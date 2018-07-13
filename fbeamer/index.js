@@ -342,6 +342,24 @@ class FBeamer {
 			.catch(error => console.log('quick: ' + error));
 	}
 
+	fast(id, data) {
+		//console.log('quick obj: ' + JSON.stringify(data));
+
+		let obj = {
+			recipient: {
+				id
+			},
+			message: {
+				text: data.text_to_manager,
+				quick_replies: data.buttons
+			}
+		}
+
+		//console.log('quick obj: ' + JSON.stringify(obj));
+
+		this.sendMessage(obj)
+			.catch(error => console.log('fast: ' + error));
+	}	
 }
 
 module.exports = FBeamer;
