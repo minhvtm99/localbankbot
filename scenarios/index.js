@@ -374,7 +374,7 @@ class Scenario {
     let text = '';
     let data = '';
         let txt = "AAAAAAAAAAAAAAAAA"
-        let buttons = [{
+        let butt = [{
             content_type: "text",
             title: "Approve",
             image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
@@ -389,7 +389,7 @@ class Scenario {
 
         f.quick(sender, {
           txt,
-          buttons
+          butt
         });
     
     model.logMessage({
