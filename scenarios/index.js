@@ -416,10 +416,25 @@ class Scenario {
         f.txt(recipient, text_to_recipient);
         if (decision == 'reject'){
           console.log("RRRRRRRRRRRRRRRRRRR");
-          var reject_package = dayoffCase.rejectReason(model);
-          console.log(reject_package);   
-          let text_to_manager = reject_package[0];
-          let buttons = reject_package[1];    
+          var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ: Chọn 1 nếu nhân viên đã hết số ngày phép; Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt; Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
+          var buttons = [{
+              content_type: "text",
+              title: "1",
+              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+              payload: 'rejectReason, đã hết số ngày phép'
+            },
+          {
+              content_type: "text",
+              title: "2",
+              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+              payload: 'rejectReason, ngày mai cơ quan có việc cần bạn có mặt'
+            },
+            {
+              content_type: "text",
+              title: "3",
+              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+              payload: 'rejectReason, lý do nghỉ không được phê duyệt'
+            }];    
           f.fast(sender, {
             text_to_manager,
             buttons
