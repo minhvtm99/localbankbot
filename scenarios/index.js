@@ -373,7 +373,7 @@ class Scenario {
     let buttons = '';
     let text = '';
     let data = '';
-        let text = "AAAAAAAAAAAAAAAAA"
+        let txt = "AAAAAAAAAAAAAAAAA"
         let buttons = [{
             content_type: "text",
             title: "Approve",
@@ -388,7 +388,7 @@ class Scenario {
           }];   
 
         f.quick(sender, {
-          text,
+          txt,
           buttons
         });
     
