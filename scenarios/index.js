@@ -412,7 +412,7 @@ class Scenario {
         console.log(pack);
         let decision = pack[0];
         let recipient = pack[1];
-        dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
+        var dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
         let text = "Yêu cầu xin nghỉ của bạn " + dict[decision];
         f.txt(recipient, text);
       }
