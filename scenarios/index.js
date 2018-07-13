@@ -395,13 +395,13 @@ class Scenario {
             payload: 'approve'
           },
           {
-            content_type: "Reject",
-            title: "Nghỉ không lương",
+            content_type: "text",
+            title: "Reject",
             image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
             payload: 'reject'
           }];   
 
-        f.btn(sender, {
+        f.quick(sender, {
           text_to_manager,
           buttons
         });
