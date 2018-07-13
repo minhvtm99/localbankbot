@@ -3,8 +3,8 @@
 const Model = require('./model.js');
 var model = new Model();
 
-const Atm = require('./atm.js');
-const atm = new Atm();
+// const Atm = require('./atm.js');
+// const atm = new Atm();
 
 const Util = require('./Util.js');
 const util = new Util();
@@ -15,11 +15,6 @@ const transferCase = new Transfer(model);
 const Dayoff = require('./dayoff.js');
 const dayoffCase = new Dayoff(model);
 
-
-
-// const mongo = require('./mongo');
-// mongo.doConnect()
-// mongo.createCollection()
 //Get entities
 const firstEntity = (entities, name) => {
   return entities &&
@@ -30,24 +25,7 @@ const firstEntity = (entities, name) => {
 }
 
 
-// get property
-
-// function extractProperty(msg_tagged, property) {
-
-//   var street_name = '';
-//   var i;
-//   for (i = 0; i < msg_tagged.length; i++) {
-//     if (msg_tagged[i][1] === property) {
-//       street_name += msg_tagged[i][0] + ' ';
-//     }
-//   }
-//   console.log("Desired property: " + street_name);
-//   return street_name;
-// }
-
-
 var request = require("request");
-
 function getMyBody(options, callback) {
   request(options, function(error, response, body) {
     if (error || response.statusCode !== 200) {
@@ -373,25 +351,7 @@ class Scenario {
     let buttons = '';
     let text = '';
     let data = '';
-        let txt = "AAAAAAAAAAAAAAAAA"
-        let butt = [{
-            content_type: "text",
-            title: "Approve",
-            image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-            payload: 'approve'
-          },
-          {
-            content_type: "Reject",
-            title: "Nghỉ không lương",
-            image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-            payload: 'reject'
-          }];   
 
-        f.quick(sender, {
-          txt,
-          butt
-        });
-    
     model.logMessage({
       'sender': sender,
       'message': message.text,
@@ -441,7 +401,7 @@ class Scenario {
             payload: 'reject'
           }];   
 
-        f.quick(sender, {
+        f.fast(sender, {
           text_to_manager,
           buttons
         });
@@ -657,91 +617,6 @@ class Scenario {
 
 
   //ATM by street name
-  findATMnear(sender, location, f) {
-    var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
-    var types = 'atm';
-    var https = require('https');
-    var radius = 1000
-    var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + "key=" + key + "&query=ATM+VietinBank+" + location + "&radius=" + radius + "&types=" + types + "&language=vi";
-    console.log(url);
-
-    https.get(url, function(response) {
-      var body = '';
-      response.on('data', function(chunk) {
-        body += chunk;
-      });
-
-      response.on('end', function() {
-        var places = JSON.parse(body);
-
-        console.log(places);
-
-        var locations = places.results;
-
-        var displayIndex = 5;
-        if (displayIndex > locations.length) {
-          displayIndex = locations.length;
-        }
-
-        var arrayLocationDisplay = [];
-
-        for (var i = 0; i < displayIndex; i++) {
-          var displayLoc = locations[i];
-          //console.log('getAtmLocation: ' + i + ' >>> ' + JSON.stringify(displayLoc));
-          var targetLoc = displayLoc.geometry.location.lat + ',' + displayLoc.geometry.location.lng;
-          var gmapUrl = "https://www.aworkoutroutine.com/push-pull-legs-split/";
-          var imgUrl = "https://www.maketecheasier.com/assets/uploads/2017/07/google-maps-alternatives-featured.jpg";
-
-          arrayLocationDisplay.push({
-            title: displayLoc.name,
-            image_url: imgUrl,
-            subtitle: displayLoc.vicinity,
-            default_action: {
-              type: "web_url",
-              url: gmapUrl,
-              //messenger_extensions: true,
-              //webview_height_ratio: "tall",
-              //fallback_url: "https://peterssendreceiveapp.ngrok.io/"
-            },
-            buttons: [{
-              type: "web_url",
-              url: gmapUrl,
-              title: "Chỉ dẫn"
-            }]
-          });
-
-        }
-        console.log(arrayLocationDisplay);
-
-        if (arrayLocationDisplay.length > 0) {
-          var obj = {
-            recipient: {
-              id: sender
-            },
-            message: {
-              attachment: {
-                type: "template",
-                payload: {
-                  template_type: "generic",
-                  elements: arrayLocationDisplay
-                }
-              }
-            }
-          }
-
-          f.sendNews(obj)
-            .catch(error => console.log('getAtmLocation: ' + error));
-        } else {
-          f.txt(sender, 'Không tìm thấy địa điểm nào phù hợp với yêu cầu của anh/chị');
-        }
-
-        return locations;
-      });
-    }).on('error', function(e) {
-      console.log("getAtmLocation Got error: " + e.message);
-      return;
-    });
-  }
 
   getAtmLocation(sender, lat, long, f) {
     var key = 'AIzaSyApV3JtRmRTaLNo-sQOpy8t0regdrri7Sk';
