@@ -417,25 +417,28 @@ class Scenario {
         f.txt(recipient, text_to_recipient);
         if (decision == 'reject'){
           console.log("RRRRRRRRRRRRRRRRRRR");
-          var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ: Chọn 1 nếu nhân viên đã hết số ngày phép; Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt; Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
-          var buttons = [{
-              content_type: "text",
-              title: "1",
-              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'Reason, đã hết số ngày phép, ' + recipient
-            },
-          {
-              content_type: "text",
-              title: "2",
-              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'Reason, ngày mai cơ quan có việc cần bạn có mặt, ' + recipient 
-            },
-            {
-              content_type: "text",
-              title: "3",
-              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'Reason, lý do nghỉ không được phê duyệt, ' + recipient
-            }];    
+          var pack = dayoffCase.rejectReason(model);
+          var text_to_manager = pack[0];
+          var buttons = text[1];
+          // var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ: Chọn 1 nếu nhân viên đã hết số ngày phép; Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt; Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
+          // var buttons = [{
+          //     content_type: "text",
+          //     title: "1",
+          //     image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+          //     payload: 'Reason, đã hết số ngày phép, ' + recipient
+          //   },
+          // {
+          //     content_type: "text",
+          //     title: "2",
+          //     image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+          //     payload: 'Reason, trong thời gian nêu trên cơ quan có việc cần bạn có mặt, ' + recipient 
+          //   },
+          //   {
+          //     content_type: "text",
+          //     title: "3",
+          //     image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+          //     payload: 'Reason, lý do nghỉ không được phê duyệt, ' + recipient
+          //   }];    
           f.fast(sender, {
             text_to_manager,
             buttons

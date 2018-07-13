@@ -96,22 +96,22 @@ class Dayoff {
 	        content_type: "text",
 	        title: "1",
 	        image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-	        payload: 'rejectReason, đã hết số ngày phép'
+	        payload: 'Reason, đã hết số ngày phép'
 	      },
 		  {
 	        content_type: "text",
 	        title: "2",
 	        image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-	        payload: 'rejectReason, ngày mai cơ quan có việc cần bạn có mặt'
+	        payload: 'Reason, ngày mai cơ quan có việc cần bạn có mặt'
 	      },
 	      {
 	        content_type: "text",
 	        title: "3",
 	        image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-	        payload: 'rejectReason, lý do nghỉ không được phê duyệt'
+	        payload: 'Reason, lý do nghỉ không được phê duyệt'
 	      }];   
 	                      
-	    var rejectPackage = [text, reason];
+	    var rejectPackage = [text, buttons];
 	    return rejectPackage;
  	}
 }
