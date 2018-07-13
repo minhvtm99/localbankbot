@@ -149,7 +149,8 @@ class Scenario {
               title: "Các chính sách HR",
               image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
               payload: 'greeting, HRpolicy' 
-            }];  
+            }]; 
+            f.quick(sender, {text, buttons}); 
           }
 
           // CASE find ATM
