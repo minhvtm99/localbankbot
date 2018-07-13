@@ -386,7 +386,7 @@ class Scenario {
         let date = pack[2];
         let sender = pack[3];
         //let text_to_manager = '';
-        let text_to_manager = "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
+        let text = "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
         console.log(text_to_manager);
         let buttons = [{
             content_type: "text",
@@ -402,7 +402,7 @@ class Scenario {
           }];   
 
         f.quick(sender, {
-          text_to_manager,
+          text,
           buttons
         });
       }           
