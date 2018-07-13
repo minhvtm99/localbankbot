@@ -373,6 +373,8 @@ class Scenario {
     // let text = '';
     // let data = '';
     var managerID = '1972070776158761';
+    var sender_name = f.getSenderName(sender);
+
     model.logMessage({
       'sender': sender,
       'message': message.text,
@@ -407,7 +409,7 @@ class Scenario {
         let date = pack[2];
         let sender = pack[3];
         //let text_to_manager = '';
-        let text_to_manager = "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
+        let text_to_manager = "Nhân viên " + sender_name + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
         console.log(text_to_manager);
         let buttons = [{
             content_type: "text",
