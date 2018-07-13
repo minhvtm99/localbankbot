@@ -408,6 +408,8 @@ class Scenario {
       }           
       else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
         var pack = quickReply.payload.split(', ');
+        console.log("DECISION");
+        console.log(pack);
         let decision = pack[0];
         let recipient = pack[1];
         dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
