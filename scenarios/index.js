@@ -142,7 +142,7 @@ class Scenario {
               content_type: "text",
               title: "Số ngày nghỉ phép còn lại",
               image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-              payload: 'greeting, dayoffLeft ' 
+              payload: 'greeting, dayoffLeft' 
             },
             {
               content_type: "text",
