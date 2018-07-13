@@ -400,6 +400,7 @@ class Scenario {
             image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
             payload: 'reject, ' + sender
           }];   
+
         f.txt(sender, "Yêu cầu xin nghỉ đã được chuyển tới quản lý");
         f.fast(managerID, {
           text_to_manager,
@@ -408,13 +409,20 @@ class Scenario {
       }           
       else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
         var pack = quickReply.payload.split(', ');
-        console.log("DECISION");
-        console.log(pack);
         let decision = pack[0];
         let recipient = pack[1];
         var dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
-        let text = "Yêu cầu xin nghỉ của bạn " + dict[decision];
-        f.txt(recipient, text);
+        let text_to_recipient = "Yêu cầu xin nghỉ của bạn " + dict[decision];
+        f.txt(recipient, text_to_recipient);
+        if (decision == 'reject'){
+          var reject_package = dayoffCase.rejectReason();   
+          let text = reject_package[0];
+          let buttons = reject_package[1];    
+          f.quick(sender, {
+            text,
+            buttons
+          });
+        }
       }
     }
     return;
