@@ -373,6 +373,24 @@ class Scenario {
     let buttons = '';
     let text = '';
     let data = '';
+        let text = "AAAAAAAAAAAAAAAAA"
+        let buttons = [{
+            content_type: "text",
+            title: "Approve",
+            image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+            payload: 'approve'
+          },
+          {
+            content_type: "Reject",
+            title: "Nghỉ không lương",
+            image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+            payload: 'reject'
+          }];   
+
+        f.quick(sender, {
+          text,
+          buttons
+        });
     
     model.logMessage({
       'sender': sender,
@@ -407,8 +425,8 @@ class Scenario {
         let reason = pack[1];
         let date = pack[2];
         let sender = pack[3];
-        let text_to_manager = '';
-        text_to_manager += "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
+        //let text_to_manager = '';
+        let text_to_manager = "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
         console.log(text_to_manager);
         let buttons = [{
             content_type: "text",
