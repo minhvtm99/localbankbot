@@ -411,7 +411,8 @@ class Scenario {
         let decision = pack[0];
         let recipient = pack[1];
         dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
-        f.txt(recipient, "Yêu cầu xin nghỉ của bạn " + dict[decision]);
+        let text = "Yêu cầu xin nghỉ của bạn " + dict[decision];
+        f.txt(recipient, text);
       }
     }
     return;
