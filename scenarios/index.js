@@ -131,6 +131,7 @@ class Scenario {
             });       
           }
           else if (greeting !== '') {
+            model.deleteMessage({"request":{ $ne: "" }});    
             let text = 'Xin chào! Tôi có thể giúp gì cho bạn?'
             let buttons =  [{
               content_type: "text",
