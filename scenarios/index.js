@@ -406,7 +406,8 @@ class Scenario {
           text_to_manager,
           buttons
         });
-      }           
+      }    
+
       else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
         var pack = quickReply.payload.split(', ');
         let decision = pack[0];
@@ -421,25 +422,33 @@ class Scenario {
               content_type: "text",
               title: "1",
               image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'rejectReason, đã hết số ngày phép'
+              payload: 'Reason, đã hết số ngày phép, ' + recipient
             },
           {
               content_type: "text",
               title: "2",
               image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'rejectReason, ngày mai cơ quan có việc cần bạn có mặt'
+              payload: 'Reason, ngày mai cơ quan có việc cần bạn có mặt, ' + recipient 
             },
             {
               content_type: "text",
               title: "3",
               image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'rejectReason, lý do nghỉ không được phê duyệt'
+              payload: 'Reason, lý do nghỉ không được phê duyệt, ' + recipient
             }];    
           f.fast(sender, {
             text_to_manager,
             buttons
           });
         }
+      }
+      else if(quickReply.payload.includes('Reason')){
+        var pack = quickReply.payload.split(', ');
+        let reason = pack[1];
+        let recipient = pack[2]
+        let text_to_recipient = "Yêu cầu xin nghỉ của bạn bị từ chối do " + reason;
+        f.txt(recipient, text_to_recipient);
+        f.txt(sender, "Lý do từ chối yêu cầu nghỉ phép đã được gửi lại cho nhân viên");
       }
     }
     return;
