@@ -400,7 +400,7 @@ class Scenario {
             image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
             payload: 'reject, ' + sender
           }];   
-
+        f.txt(sender, "Yêu cầu xin nghỉ đã được chuyển tới quản lý");
         f.fast(managerID, {
           text_to_manager,
           buttons
