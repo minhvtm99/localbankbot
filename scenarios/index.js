@@ -351,7 +351,7 @@ class Scenario {
     // let buttons = '';
     // let text = '';
     // let data = '';
-
+    var managerID = '1972070776158761';
     model.logMessage({
       'sender': sender,
       'message': message.text,
@@ -392,22 +392,26 @@ class Scenario {
             content_type: "text",
             title: "Approve",
             image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-            payload: 'approve'
+            payload: 'approve, ' + sender
           },
           {
             content_type: "text",
             title: "Reject",
             image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-            payload: 'reject'
+            payload: 'reject, ' + sender
           }];   
 
-        f.fast('1972070776158761', {
+        f.fast(managerID, {
           text_to_manager,
           buttons
         });
       }           
-      else {
-        f.txt(sender, 'hello');
+      else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
+        var pack = quickReply.payload.split(', ');
+        let decision = pack[0];
+        let recipient = pack[1];
+        dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
+        f.txt(recipient, "Yêu cầu xin nghỉ của bạn " + dict[decision]);
       }
     }
     return;
