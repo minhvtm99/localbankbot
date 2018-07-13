@@ -355,7 +355,7 @@ class Scenario {
     model.logMessage({
       'sender': sender,
       'message': message.text,
-      'time': timeOfMessage,
+      'time': timeOfMessage
     });
     
     if (message && message.quick_reply) {
