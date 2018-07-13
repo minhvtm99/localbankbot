@@ -100,6 +100,7 @@ class Scenario {
           var transfer = util.extractProperty(msg_tagged, 'transfer');
           var dayoff = util.extractProperty(msg_tagged, 'dayoff');
           var req = util.extractProperty(msg_tagged, 'request');
+          var greeting = util.extractProperty(msg_tagged, 'greeting');
 
           // Delete all other intents 
           if (atm !== ''){
@@ -129,8 +130,26 @@ class Scenario {
               'fulfilled': {'date': null, 'reason' : null}
             });       
           }
-          else {
-
+          else if (greeting !== '') {
+            let text = 'Xin chào! Tôi có thể giúp gì cho bạn?'
+            let buttons =  [{
+              content_type: "text",
+              title: "Xin nghỉ phép",
+              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+              payload: 'greeting, request dayoff' 
+            },
+            {
+              content_type: "text",
+              title: "Số ngày nghỉ phép còn lại",
+              image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+              payload: 'greeting, dayoffLeft ' 
+            },
+            {
+              content_type: "text",
+              title: "Các chính sách HR",
+              image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+              payload: 'greeting, HRpolicy' 
+            }];  
           }
 
           // CASE find ATM
@@ -449,6 +468,19 @@ class Scenario {
         let text_to_recipient = "Yêu cầu xin nghỉ của bạn bị từ chối do " + reason;
         f.txt(recipient, text_to_recipient);
         f.txt(sender, "Lý do từ chối yêu cầu nghỉ phép đã được gửi lại cho nhân viên");
+      }
+      else if(quickReply.payload.includes('greeting')){
+        var pack = quickReply.payload.split(', ');
+        var request = pack[1];
+        if (request == 'request dayoff'){
+          f.txt(sender, "Bạn hãy gửi yêu cầu để tôi chuyển cho quản lý"); 
+        }
+        else if (request == 'dayoffLeft'){
+          f.txt(sender, "Bạn còn 12 ngày nghỉ phép năm nay");
+        }
+        else{
+          this.news(sender, f);
+        }
       }
     }
     return;
