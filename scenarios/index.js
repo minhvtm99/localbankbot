@@ -255,9 +255,7 @@ class Scenario {
               'request': 'findATM'
             });
             f.txt(sender, "Bạn muốn tìm ATM ở khu vực nào?");
-
           }
-
                            
           }).catch(function(reason) {
            console.error(reason);
@@ -304,11 +302,6 @@ class Scenario {
 
                     var reason =  items[items.length -1].fulfilled['reason'];
                     var date =  items[items.length -1].fulfilled['date'];
-
-                    console.log(reason);
-                    console.log(date);
-                    console.log(typeof reason);
-
                     let text = "Bạn muốn nghỉ theo hình thức nào?";
                     let buttons = [{
                         content_type: "text",
@@ -416,7 +409,7 @@ class Scenario {
         let sender = pack[3];
         let text_to_manager = '';
         text_to_manager += "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
-
+        console.log(text_to_manager);
         let buttons = [{
             content_type: "text",
             title: "Approve",
@@ -429,8 +422,6 @@ class Scenario {
             image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
             payload: 'reject'
           }];   
-        console.log(typeof sender); 
-
 
         f.quick(sender, {
           text_to_manager,

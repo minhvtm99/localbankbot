@@ -36,7 +36,7 @@ class Dayoff {
 	        	reason = message.text;
 	        }
 
-	        if (reason !== ''){
+	        if (reason !== '' && fulfilled['reason'] == null){
 	        	fulfilled['reason'] = reason;
 				var idx = missing.indexOf('reason');
 				if (idx > -1){
