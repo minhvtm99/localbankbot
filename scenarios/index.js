@@ -407,7 +407,7 @@ class Scenario {
         });
       }           
       else {
-
+        f.txt(sender, 'hello');
       }
     }
     return;
