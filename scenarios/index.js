@@ -348,9 +348,9 @@ class Scenario {
 
   processQuickreply(sender, message, timeOfMessage, f) {
     //console.log('processQuickreply WIT resp :');
-    let buttons = '';
-    let text = '';
-    let data = '';
+    // let buttons = '';
+    // let text = '';
+    // let data = '';
 
     model.logMessage({
       'sender': sender,
