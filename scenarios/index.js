@@ -401,7 +401,7 @@ class Scenario {
             payload: 'reject'
           }];   
 
-        f.fast(sender, {
+        f.btn(sender, {
           text_to_manager,
           buttons
         });
