@@ -515,7 +515,12 @@ class Scenario {
                }
                console.log('Message sent: %s', info.messageId);
 
-             // end send mail  
+             // end send mail 
+             // Preview only available when sending through an Ethereal account
+               console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+             });
+           });
         }    
 
         else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
