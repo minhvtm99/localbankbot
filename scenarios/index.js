@@ -373,7 +373,29 @@ class Scenario {
     // let text = '';
     // let data = '';
     var managerID = '1972070776158761';
-    var sender_name = f.getSenderName(sender);
+    var sender_name = '';
+
+    f.getProfile(id)
+          .then(profile => {
+            const {
+              first_name,
+              last_name,
+              profile_pic,
+              gender,
+              id,
+              timezone
+            } = profile;
+            
+            console.log('getSenderName: ' + JSON.stringify(profile));
+            console.log('first_name: ' + first_name);
+            sender_name = first_name;
+          })
+          .catch(error => {
+            return '';
+          });
+    console.log("NAME: ");      
+    console.log(sender_name);
+
 
     model.logMessage({
       'sender': sender,
@@ -401,15 +423,16 @@ class Scenario {
         //return;
       }
 
-      else if (quickReply.payload.includes('WithSalary') || quickReply.payload.includes('NoSalary')) {
+      else if (quickReply.payload.includes('Salary')) {
         var pack = quickReply.payload.split(', ');
         console.log(pack);
         let salary = pack[0];
         let reason = pack[1];
         let date = pack[2];
         let sender = pack[3];
+        let dict = {"WithSalary":"theo chế độ", "NoSalary":"không lương"};
         //let text_to_manager = '';
-        let text_to_manager = "Nhân viên " + sender + ' ' + ' xin nghỉ phép thời gian: ' + date +  ' với lý do: ' + reason;
+        let text_to_manager = "Nhân viên " + sender_name + ' ' + ' xin nghỉ phép ' + dict[salary] + ' thời gian: ' + date +  ' với lý do: ' + reason;
         console.log(text_to_manager);
         let buttons = [{
             content_type: "text",
