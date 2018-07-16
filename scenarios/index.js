@@ -375,7 +375,7 @@ class Scenario {
     var managerID = '1972070776158761';
     var sender_name = '';
 
-    f.getProfile(id)
+    f.getProfile(sender)
           .then(profile => {
             const {
               first_name,
