@@ -52,28 +52,49 @@ class Scenario {
       //
       if (postback && postback.payload) {
         console.log('postback.payload :' + postback.payload);
-          f.getProfile(sender)
-                .then(profile => {
-                  const {
-                    first_name,
-                    last_name,
-                    profile_pic,
-                    gender,
-                    id,
-                    timezone
-                  } = profile;
-                  
-                  console.log('getSenderName: ' + JSON.stringify(profile));
-                  console.log('first_name: ' + first_name);
-                  model.logMessage({
-                    'sender': sender,
-                    'senderName': first_name + ' ' + last_name,
-                    'request':'initialize' 
-                  }); 
-                })
-                .catch(error => {
-                  console.log(error);
-                });       
+        f.getProfile(sender)
+              .then(profile => {
+                const {
+                  first_name,
+                  last_name,
+                  profile_pic,
+                  gender,
+                  id,
+                  timezone
+                } = profile;
+                
+                console.log('getSenderName: ' + JSON.stringify(profile));
+                console.log('first_name: ' + first_name);
+                model.logMessage({
+                  'sender': sender,
+                  'senderName': first_name + ' ' + last_name,
+                  'request':'initialize' 
+                }); 
+              })
+              .catch(error => {
+                console.log(error);
+              });
+              
+        let text = 'Xin chào! Tôi có thể giúp gì cho bạn?'
+        let buttons =  [{
+          content_type: "text",
+          title: "Xin nghỉ phép",
+          image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+          payload: 'greeting, request dayoff' 
+        },
+        {
+          content_type: "text",
+          title: "Số ngày nghỉ còn lại",
+          image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+          payload: 'greeting, dayoffLeft' 
+        },
+        {
+          content_type: "text",
+          title: "Các chính sách HR",
+          image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+          payload: 'greeting, HRpolicy' 
+        }]; 
+        f.quick(sender, {text, buttons});        
         }
     });
   }
@@ -404,11 +425,8 @@ class Scenario {
     if (message && message.quick_reply) {
 
       model.findMessage({'sender':sender, 'request':'initialize'}).then(function(items) {
-        console.log("FINDDĐ");
-        console.log(items);
-
+        sender_name = items[items.length-1].senderName;
         let quickReply = message.quick_reply;
-
         if (quickReply.payload === 'QnA_YES') {
           f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
         }
