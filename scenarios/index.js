@@ -67,7 +67,8 @@ class Scenario {
                   console.log('first_name: ' + first_name);
                   model.logMessage({
                     'sender': sender,
-                    'senderName': first_name + ' ' + last_name 
+                    'senderName': first_name + ' ' + last_name,
+                    'request':'initialize' 
                   }); 
                 })
                 .catch(error => {
@@ -123,10 +124,10 @@ class Scenario {
 
           // Delete all other intents 
           if (atm !== ''){
-            model.deleteMessage({"request":{ $ne: "" }});
+            model.deleteMessage({"request":{ $ne: "initialize" }});
           } 
           else if (transfer !== ''){
-            model.deleteMessage({"request":{ $ne: "" }});
+            model.deleteMessage({"request":{ $ne: "initialize" }});
             model.logMessage({
               'sender': sender,
               'message': message.text,
@@ -138,7 +139,7 @@ class Scenario {
             });
           }
           else if (dayoff !== '' && req !== ''){
-            model.deleteMessage({"request":{ $ne: "" }});    
+            model.deleteMessage({"request":{ $ne: "initialize" }});    
             model.logMessage({
               'sender': sender,
               'message': message.text,
@@ -150,7 +151,7 @@ class Scenario {
             });       
           }
           else if (greeting !== '') {
-            model.deleteMessage({"request":{ $ne: "" }});    
+            model.deleteMessage({"request":{ $ne: "initialize" }});    
             let text = 'Xin chào! Tôi có thể giúp gì cho bạn?'
             let buttons =  [{
               content_type: "text",
