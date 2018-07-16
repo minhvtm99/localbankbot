@@ -57,6 +57,7 @@ class Scenario {
               .then(profile => {
                 const {
                   name,
+                  email,
                   id
                 } = profile;
                 
