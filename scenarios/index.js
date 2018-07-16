@@ -486,7 +486,7 @@ class Scenario {
           f.txt(recipient, text_to_recipient);
           if (decision == 'reject'){
             console.log("RRRRRRRRRRRRRRRRRRR");
-            var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ: Chọn 1 nếu nhân viên đã hết số ngày phép; Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt; Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
+            var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ:\n Chọn 1 nếu nhân viên đã hết số ngày phép\n Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt\n Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
             var buttons = [{
                 content_type: "text",
                 title: "1",
