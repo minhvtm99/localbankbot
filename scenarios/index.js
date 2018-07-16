@@ -52,30 +52,28 @@ class Scenario {
       //
       if (postback && postback.payload) {
         console.log('postback.payload :' + postback.payload);
-            f.getProfile(sender)
-                  .then(profile => {
-                    const {
-                      first_name,
-                      last_name,
-                      profile_pic,
-                      gender,
-                      id,
-                      timezone
-                    } = profile;
-                    
-                    console.log('getSenderName: ' + JSON.stringify(profile));
-                    console.log('first_name: ' + first_name);
-                    model.logMessage({
-                      'sender': sender,
-                      'message': message.text,
-                      'senderName': first_name + ' ' + last_name ,
-                      'time': msg_time,
-                    }); 
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });       
-      }
+          f.getProfile(sender)
+                .then(profile => {
+                  const {
+                    first_name,
+                    last_name,
+                    profile_pic,
+                    gender,
+                    id,
+                    timezone
+                  } = profile;
+                  
+                  console.log('getSenderName: ' + JSON.stringify(profile));
+                  console.log('first_name: ' + first_name);
+                  model.logMessage({
+                    'sender': sender,
+                    'senderName': first_name + ' ' + last_name 
+                  }); 
+                })
+                .catch(error => {
+                  console.log(error);
+                });       
+        }
     });
   }
 
@@ -395,6 +393,7 @@ class Scenario {
     // let data = '';
     var managerID = '1972070776158761';
     var sender_name = '';
+    
 
     model.logMessage({
       'sender': sender,
@@ -403,117 +402,111 @@ class Scenario {
     });
     
     if (message && message.quick_reply) {
-      var name_criteria = {'sender':sender, 'senderName':1};
-      model.findMessage(name_criteria).then(function(items) {    
-        let quickReply = message.quick_reply;
-        sender_name = items[items.length-1].senderName;
+      let quickReply = message.quick_reply;
 
-        if (quickReply.payload === 'QnA_YES') {
-          f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
-        }
+      if (quickReply.payload === 'QnA_YES') {
+        f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
+      }
 
-        else if (quickReply.payload === 'QnA_NO') {
-          f.txt(sender, "Okay, have a good day");
-        }
+      else if (quickReply.payload === 'QnA_NO') {
+        f.txt(sender, "Okay, have a good day");
+      }
 
-        else if (quickReply.payload.includes('geoCode')) {
-          var geoCode = quickReply.payload.split(' ');
-          let lat = geoCode[2];
-          let long = geoCode[3];
-          console.log(lat + long);
-          this.getAtmLocation(sender, lat, long, f);
-          //return;
-        }
+      else if (quickReply.payload.includes('geoCode')) {
+        var geoCode = quickReply.payload.split(' ');
+        let lat = geoCode[2];
+        let long = geoCode[3];
+        console.log(lat + long);
+        this.getAtmLocation(sender, lat, long, f);
+        //return;
+      }
 
-        else if (quickReply.payload.includes('Salary')) {
-          var pack = quickReply.payload.split(', ');
-          console.log(pack);
-          let salary = pack[0];
-          let reason = pack[1];
-          let date = pack[2];
-          let sender = pack[3];
-          let dict = {"WithSalary":"theo chế độ", "NoSalary":"không lương"};
-          //let text_to_manager = '';
-          let text_to_manager = "Nhân viên " + sender_name + ' ' + ' xin nghỉ phép ' + dict[salary] + ' thời gian: ' + date +  ' với lý do: ' + reason;
-          console.log(text_to_manager);
-          let buttons = [{
+      else if (quickReply.payload.includes('Salary')) {
+        var pack = quickReply.payload.split(', ');
+        console.log(pack);
+        let salary = pack[0];
+        let reason = pack[1];
+        let date = pack[2];
+        let sender = pack[3];
+        let dict = {"WithSalary":"theo chế độ", "NoSalary":"không lương"};
+        //let text_to_manager = '';
+        let text_to_manager = "Nhân viên " + sender_name + ' ' + ' xin nghỉ phép ' + dict[salary] + ' thời gian: ' + date +  ' với lý do: ' + reason;
+        console.log(text_to_manager);
+        let buttons = [{
+            content_type: "text",
+            title: "Approve",
+            image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+            payload: 'approve, ' + sender
+          },
+          {
+            content_type: "text",
+            title: "Reject",
+            image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+            payload: 'reject, ' + sender
+          }];   
+
+        f.txt(sender, "Yêu cầu xin nghỉ đã được chuyển tới quản lý");
+        f.fast(managerID, {
+          text_to_manager,
+          buttons
+        });
+      }    
+
+      else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
+        var pack = quickReply.payload.split(', ');
+        let decision = pack[0];
+        let recipient = pack[1];
+        var dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
+        let text_to_recipient = "Yêu cầu xin nghỉ của bạn " + dict[decision];
+        f.txt(recipient, text_to_recipient);
+        if (decision == 'reject'){
+          console.log("RRRRRRRRRRRRRRRRRRR");
+          var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ: Chọn 1 nếu nhân viên đã hết số ngày phép; Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt; Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
+          var buttons = [{
               content_type: "text",
-              title: "Approve",
+              title: "1",
               image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-              payload: 'approve, ' + sender
+              payload: 'Reason, đã hết số ngày phép, ' + recipient
+            },
+          {
+              content_type: "text",
+              title: "2",
+              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+              payload: 'Reason, trong thời gian nêu trên cơ quan có việc cần bạn có mặt, ' + recipient 
             },
             {
               content_type: "text",
-              title: "Reject",
-              image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
-              payload: 'reject, ' + sender
-            }];   
-
-          f.txt(sender, "Yêu cầu xin nghỉ đã được chuyển tới quản lý");
-          f.fast(managerID, {
+              title: "3",
+              image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+              payload: 'Reason, lý do nghỉ không được phê duyệt, ' + recipient
+            }];    
+          f.fast(sender, {
             text_to_manager,
             buttons
           });
-        }    
-
-        else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
-          var pack = quickReply.payload.split(', ');
-          let decision = pack[0];
-          let recipient = pack[1];
-          var dict = {"approve":'được đồng ý', "reject":"bị từ chối"};
-          let text_to_recipient = "Yêu cầu xin nghỉ của bạn " + dict[decision];
-          f.txt(recipient, text_to_recipient);
-          if (decision == 'reject'){
-            console.log("RRRRRRRRRRRRRRRRRRR");
-            var text_to_manager = "Anh/chị hãy gửi lý do từ chối yêu cầu xin nghỉ: Chọn 1 nếu nhân viên đã hết số ngày phép; Chọn 2 nếu trong thời gian nghỉ cơ quan có việc cần nhân viên có mặt; Chọn 3 nếu lý do nghỉ của nhân viên không được phê duyệt";
-            var buttons = [{
-                content_type: "text",
-                title: "1",
-                image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                payload: 'Reason, đã hết số ngày phép, ' + recipient
-              },
-            {
-                content_type: "text",
-                title: "2",
-                image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                payload: 'Reason, trong thời gian nêu trên cơ quan có việc cần bạn có mặt, ' + recipient 
-              },
-              {
-                content_type: "text",
-                title: "3",
-                image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
-                payload: 'Reason, lý do nghỉ không được phê duyệt, ' + recipient
-              }];    
-            f.fast(sender, {
-              text_to_manager,
-              buttons
-            });
-          }
         }
-        else if(quickReply.payload.includes('Reason')){
-          var pack = quickReply.payload.split(', ');
-          let reason = pack[1];
-          let recipient = pack[2]
-          let text_to_recipient = "Yêu cầu xin nghỉ của bạn bị từ chối do " + reason;
-          f.txt(recipient, text_to_recipient);
-          f.txt(sender, "Lý do từ chối yêu cầu nghỉ phép đã được gửi lại cho nhân viên");
+      }
+      else if(quickReply.payload.includes('Reason')){
+        var pack = quickReply.payload.split(', ');
+        let reason = pack[1];
+        let recipient = pack[2]
+        let text_to_recipient = "Yêu cầu xin nghỉ của bạn bị từ chối do " + reason;
+        f.txt(recipient, text_to_recipient);
+        f.txt(sender, "Lý do từ chối yêu cầu nghỉ phép đã được gửi lại cho nhân viên");
+      }
+      else if(quickReply.payload.includes('greeting')){
+        var pack = quickReply.payload.split(', ');
+        var request = pack[1];
+        if (request == 'request dayoff'){
+          f.txt(sender, "Bạn hãy gửi yêu cầu để tôi chuyển cho quản lý"); 
         }
-        else if(quickReply.payload.includes('greeting')){
-          var pack = quickReply.payload.split(', ');
-          var request = pack[1];
-          if (request == 'request dayoff'){
-            f.txt(sender, "Bạn hãy gửi yêu cầu để tôi chuyển cho quản lý"); 
-          }
-          else if (request == 'dayoffLeft'){
-            f.txt(sender, "Bạn còn 12 ngày nghỉ phép năm nay");
-          }
-          else{
-            this.news(sender, f);
-          }
+        else if (request == 'dayoffLeft'){
+          f.txt(sender, "Bạn còn 12 ngày nghỉ phép năm nay");
         }
-      }, function(err) {
-        console.error('The promise was rejected', err, err.stack);
-      });
+        else{
+          this.news(sender, f);
+        }
+      }
     }
     return;
   }
