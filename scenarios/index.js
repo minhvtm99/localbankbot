@@ -52,31 +52,29 @@ class Scenario {
       //
       if (postback && postback.payload) {
         console.log('postback.payload :' + postback.payload);
-        if (postback.payload == "GET_STARTED"){
-            f.getProfile(id)
-                  .then(profile => {
-                    const {
-                      first_name,
-                      last_name,
-                      profile_pic,
-                      gender,
-                      id,
-                      timezone
-                    } = profile;
-                    
-                    console.log('getSenderName: ' + JSON.stringify(profile));
-                    console.log('first_name: ' + first_name);
-                    model.logMessage({
-                      'sender': sender,
-                      'message': message.text,
-                      'senderName': first_name + ' ' + last_name,
-                      'time': msg_time,
-                    }); 
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });       
-        }
+        f.getProfile(sender)
+              .then(profile => {
+                const {
+                  first_name,
+                  last_name,
+                  profile_pic,
+                  gender,
+                  id,
+                  timezone
+                } = profile;
+                
+                console.log('getSenderName: ' + JSON.stringify(profile));
+                console.log('first_name: ' + first_name);
+                model.logMessage({
+                  'sender': sender,
+                  'message': message.text,
+                  'senderName': first_name + ' ' + last_name,
+                  'time': msg_time,
+                }); 
+              })
+              .catch(error => {
+                console.log(error);
+              });       
       }
     });
   }
