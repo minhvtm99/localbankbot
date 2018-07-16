@@ -52,8 +52,31 @@ class Scenario {
       //
       if (postback && postback.payload) {
         console.log('postback.payload :' + postback.payload);
-
-
+        if (postback.payload == "GET_STARTED"){
+            f.getProfile(id)
+                  .then(profile => {
+                    const {
+                      first_name,
+                      last_name,
+                      profile_pic,
+                      gender,
+                      id,
+                      timezone
+                    } = profile;
+                    
+                    console.log('getSenderName: ' + JSON.stringify(profile));
+                    console.log('first_name: ' + first_name);
+                    model.logMessage({
+                      'sender': sender,
+                      'message': message.text,
+                      'senderName': first_name + ' ' + last_name,
+                      'time': msg_time,
+                    }); 
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });       
+        }
       }
     });
   }
@@ -375,24 +398,6 @@ class Scenario {
     var managerID = '1972070776158761';
     var sender_name = '';
 
-    f.getProfile(sender)
-          .then(profile => {
-            const {
-              first_name,
-              last_name,
-              profile_pic,
-              gender,
-              id,
-              timezone
-            } = profile;
-            
-            console.log('getSenderName: ' + JSON.stringify(profile));
-            console.log('first_name: ' + first_name);
-            sender_name = first_name;
-          })
-          .catch(error => {
-            return '';
-          });
     console.log("NAME: ");      
     console.log(sender_name);
 
