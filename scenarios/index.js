@@ -395,7 +395,6 @@ class Scenario {
     var managerID = '1972070776158761';
     var sender_name = '';
 
-
     model.logMessage({
       'sender': sender,
       'message': message.text,
@@ -404,7 +403,7 @@ class Scenario {
     
     if (message && message.quick_reply) {
 
-      model.findMessage({'sender':sender, 'senderName':1}).then(function(items) {
+      model.findMessage({'sender':sender, 'request':'initialize'}).then(function(items) {
         console.log("FINDDĐ");
         console.log(items);
 
