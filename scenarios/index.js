@@ -55,19 +55,15 @@ class Scenario {
         f.getProfile(sender)
               .then(profile => {
                 const {
-                  first_name,
-                  last_name,
-                  profile_pic,
-                  gender,
-                  id,
-                  timezone
+                  name,
+                  id
                 } = profile;
                 
                 console.log('getSenderName: ' + JSON.stringify(profile));
-                console.log('first_name: ' + first_name);
+                console.log('first_name: ' + name);
                 model.logMessage({
                   'sender': sender,
-                  'senderName': first_name + ' ' + last_name,
+                  'senderName': name,
                   'request':'initialize' 
                 }); 
               })
