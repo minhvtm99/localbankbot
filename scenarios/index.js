@@ -74,7 +74,7 @@ class Scenario {
               .catch(error => {
                 console.log(error);
               });
-              
+
         let text = 'Xin chào! Tôi có thể giúp gì cho bạn?'
         let buttons =  [{
           content_type: "text",
@@ -425,7 +425,9 @@ class Scenario {
     if (message && message.quick_reply) {
 
       model.findMessage({'sender':sender, 'request':'initialize'}).then(function(items) {
-        sender_name = items[items.length-1].senderName;
+        if (items.length > 0){
+          sender_name = items[items.length-1].senderName;
+        }
         let quickReply = message.quick_reply;
         if (quickReply.payload === 'QnA_YES') {
           f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
@@ -453,7 +455,7 @@ class Scenario {
           let sender = pack[3];
           let dict = {"WithSalary":"theo chế độ", "NoSalary":"không lương"};
           //let text_to_manager = '';
-          let text_to_manager = "Nhân viên " + sender_name + ' ' + ' xin nghỉ phép ' + dict[salary] + ' thời gian: ' + date +  ' với lý do: ' + reason;
+          let text_to_manager = "Nhân viên " + sender_name + " "  + " xin nghỉ phép " + dict[salary] + ".\n Thời gian: " + date +  ".\n Lý do: " + reason;
           console.log(text_to_manager);
           let buttons = [{
               content_type: "text",
