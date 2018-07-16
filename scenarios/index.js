@@ -67,9 +67,7 @@ class Scenario {
                 console.log('first_name: ' + first_name);
                 model.logMessage({
                   'sender': sender,
-                  'message': message.text,
-                  'senderName': first_name + ' ' + last_name,
-                  'time': msg_time,
+                  'senderName': first_name + ' ' + last_name
                 }); 
               })
               .catch(error => {
