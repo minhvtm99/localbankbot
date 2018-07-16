@@ -410,6 +410,7 @@ class Scenario {
     // let text = '';
     // let data = '';
     var managerID = '100023289979002';
+    var managerMail = 'pthung@VietinBank.vn';
     var sender_name = '';
 
     model.logMessage({
@@ -471,6 +472,50 @@ class Scenario {
             text_to_manager,
             buttons
           });
+
+          // sent mail to remind train bot
+           nodemailer.createTestAccount((err, account) => {
+             // create reusable transporter object using the default SMTP transport
+             let transporter = nodemailer.createTransport({
+               host: config.SMTP_SERVER,
+               port: 465,
+               secure: true, // true for 465, false for other ports
+               requireTLS: true,
+               auth: {
+                 user: config.SMTP_USER, // generated ethereal user
+                 pass: config.SMTP_PASS // generated ethereal password
+               }
+             });
+
+             let mailSubject = 'VietinBank HRBot: ' + text_to_manager;
+
+             let plaintTextContent = sender_name + ' notes: ' + text_to_manager + '\n';
+            
+
+             let htmlContent = '';
+             htmlContent = htmlContent + '<table rules="all" style="border-color: #666;" cellpadding="10">';
+             htmlContent = htmlContent + '<tr style=\'background: #ffa73c;\'><td> </td><td></td></tr>';
+             htmlContent = htmlContent + '<tr><td><strong>Notes:</strong> </td><td>' + text_to_manager + '</td></tr>';
+             htmlContent = htmlContent + '</table>';
+
+             // setup email data with unicode symbols
+             let mailOptions = {
+               from: '"VietinBank HR ChatBot" <vietinbankchatbot@gmail.com>', // sender address
+               to: managerMail, // list of receivers
+               subject: mailSubject, // Subject line
+               text: plaintTextContent, // plain text body
+               html: htmlContent // html body
+             };
+
+             console.log('Start sent from: %s', mailOptions.from);
+             // send mail with defined transport object
+             transporter.sendMail(mailOptions, (error, info) => {
+               if (error) {
+                 return console.log(error);
+               }
+               console.log('Message sent: %s', info.messageId);
+
+             // end send mail  
         }    
 
         else if (quickReply.payload.includes('approve') || quickReply.payload.includes('reject')){
