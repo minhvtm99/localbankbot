@@ -413,7 +413,7 @@ class Scenario {
     // let buttons = '';
     // let text = '';
     // let data = '';
-    var managerID = '1972070776158761';
+    var managerID = '100023289979002';
     var sender_name = '';
 
     model.logMessage({
@@ -424,7 +424,7 @@ class Scenario {
     
     if (message && message.quick_reply) {
 
-      model.findMessage({'sender':sender, 'request':'initialize'}).then(function(items) {
+      model.findMessage({'sender':sender, 'request':'initialize'}).then(function(items) {       
         if (items.length > 0){
           sender_name = items[items.length-1].senderName;
         }
