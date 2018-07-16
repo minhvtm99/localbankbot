@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('./config');
 const Model = require('./model.js');
 var model = new Model();
 
@@ -409,7 +410,12 @@ class Scenario {
     // let buttons = '';
     // let text = '';
     // let data = '';
-    var managerID = '100023289979002';
+    var managerID = '100023455158512';
+
+    if(sender == '100023455158512') {
+      managerID = '100023389924832';
+    }
+
     var managerMail = 'pthung@VietinBank.vn';
     var sender_name = '';
 
