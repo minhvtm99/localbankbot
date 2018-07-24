@@ -84,6 +84,7 @@ class Transfer {
 	      	}
 	      	else{
 	      	  text = 'Số tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
+	          console.log(text);	      	  
 	      	}
 
 	      return text;

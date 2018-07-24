@@ -310,12 +310,12 @@ class Scenario {
               console.log(msg_tagged);
               console.log(items);
               try {
-                var reply = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items, model);
-                if (reply !== ''){
+                var text = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items, model);
+                console.log(text); 
+                if (text !== ''){
                   f.txt(sender, reply);
                 }
                 else{
-                  let text = reply;
                   let buttons = [{
                       content_type: "text",
                       title: "Yes",
