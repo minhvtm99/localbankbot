@@ -38,11 +38,11 @@ class Transfer {
         		} 
         	}
 
-	        var amount = '';	
+	        var amount = util.extractProperty('amount');	
 	        console.log("PREV MESSAGE");
 	        console.log(items[items.length -1]);
 
-	        if (items.length > 1 && items[items.length -1].missing.includes('amount')){
+	        if ((items.length > 1 && items[items.length -1].missing.includes('amount')) || (amount !== '' && bank == '' && acc_number == '')){
 	        	amount = message.text;
 	        }
 
@@ -93,7 +93,7 @@ class Transfer {
 			      'missing':missing,
 			      'fulfilled':fulfilled
 			    });
-	      	  text = "Bạn vui lòng xác nhận thông tin chuyển tiền: " + '\nSố tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
+	      	  text = "Bạn vui lòng xác nhận thông tin chuyển tiền: " + 'Số tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
 	          console.log(text);	      	  
 	      	}
 
