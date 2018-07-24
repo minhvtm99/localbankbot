@@ -83,6 +83,16 @@ class Transfer {
 	          text = "Bạn vui lòng gửi thêm thông tin về ngân hàng bạn muốn chuyển tiền tới";
 	      	}
 	      	else{
+	      	  missing = [];
+			  model.logMessage({
+			      'sender': sender,
+			      'message': message.text,
+			      'message tagged': msg_tagged,
+			      'time': msg_time,
+			      'request': 'transfer',
+			      'missing':missing,
+			      'fulfilled':fulfilled
+			    });
 	      	  text = 'Số tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
 	          console.log(text);	      	  
 	      	}
