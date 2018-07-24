@@ -59,7 +59,7 @@ class Transfer {
 		      'message': message.text,
 		      'message tagged': msg_tagged,
 		      'time': msg_time,
-		      'request': 'request dayoff',
+		      'request': 'transfer',
 		      'missing':missing,
 		      'fulfilled':fulfilled
 		    });
