@@ -93,7 +93,7 @@ class Transfer {
 			      'missing':missing,
 			      'fulfilled':fulfilled
 			    });
-	      	  text = 'Số tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
+	      	  text = "Bạn vui lòng xác nhận thông tin chuyển tiền: " + '\nSố tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
 	          console.log(text);	      	  
 	      	}
 
