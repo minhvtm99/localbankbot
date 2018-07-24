@@ -313,7 +313,7 @@ class Scenario {
                 var text = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items, model);
                 console.log(text); 
                 if (text !== ''){
-                  f.txt(sender, reply);
+                  f.txt(sender, text);
                 }
                 else{
                   let buttons = [{
