@@ -311,8 +311,29 @@ class Scenario {
               console.log(items);
               try {
                 var reply = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items, model);
-                console.log(reply);
-                f.txt(sender, reply);
+                if (reply !== ''){
+                  f.txt(sender, reply);
+                }
+                else{
+                  let text = "Bạn vui lòng xác nhận thông tin về yêu cầu chuyển tiền: ";
+                  let buttons = [{
+                      content_type: "text",
+                      title: "Yes",
+                      image_url: "https://png.icons8.com/color/50/000000/thumb-up.png",
+                      payload: 'DoTransfer'
+                    },
+                    {
+                      content_type: "text",
+                      title: "No",
+                      image_url: "https://png.icons8.com/color/50/000000/poor-quality.png",
+                      payload: 'NoTransfer'
+                    }];   
+                                    
+                  f.quick(sender, {
+                    text,
+                    buttons
+                  });
+                }
               }
               catch(error){
                 console.error(error);
@@ -438,9 +459,16 @@ class Scenario {
         if (quickReply.payload === 'QnA_YES') {
           f.txt(sender, "Bạn hãy gửi 3 để chọn sử dụng dịch vụ của VietinBank, 4 để nhận thông tin, 5 để tìm ATM gần nhất");
         }
-
         else if (quickReply.payload === 'QnA_NO') {
           f.txt(sender, "Okay, have a good day");
+        }
+
+        else if (quickReply.payload === 'DoTransfer') {
+          f.txt(sender, "Yêu cầu chuyển tiền của bạn đang được xử lý!");
+        }
+
+        else if (quickReply.payload === 'NoTransfer') {
+          f.txt(sender, "Yêu cầu chuyển tiền đã được hủy");
         }
 
         else if (quickReply.payload.includes('geoCode')) {

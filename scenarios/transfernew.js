@@ -75,14 +75,17 @@ class Transfer {
 	          console.log(missing);
 	          text = "Bạn vui lòng gửi thêm thông tin về số tiền bạn muốn chuyển";
 	      	}
+	        else if (missing.includes('acc_number')) {
+	          text = "Bạn vui lòng gửi thêm thông tin về số tài khoản nhận tiền";
+	        }
 	        else if (missing.includes('bank')){
 	          console.log(missing);
 	          text = "Bạn vui lòng gửi thêm thông tin về ngân hàng bạn muốn chuyển tiền tới";
 	      	}
-	        else{
-	          text = "Bạn vui lòng gửi thêm thông tin về số tài khoản nhận tiền";
-	        }
-	        		
+	      	else{
+	      	  text = 'Số tiền: ' + fulfilled['amount'] +'\nSố tài khoản nhận tiền: ' + fulfilled['acc_number'] + '\nNgân hàng: ' + fulfilled['bank'];
+	      	}
+
 	      return text;
 
  	}
