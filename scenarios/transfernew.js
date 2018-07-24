@@ -38,7 +38,7 @@ class Transfer {
         		} 
         	}
 
-	        var amount = util.extractProperty('amount');	
+	        var amount = util.extractProperty(msg_tagged, 'amount');	
 	        console.log("PREV MESSAGE");
 	        console.log(items[items.length -1]);
 
