@@ -315,7 +315,7 @@ class Scenario {
                   f.txt(sender, reply);
                 }
                 else{
-                  let text = "Bạn vui lòng xác nhận thông tin về yêu cầu chuyển tiền: ";
+                  let text = reply;
                   let buttons = [{
                       content_type: "text",
                       title: "Yes",
