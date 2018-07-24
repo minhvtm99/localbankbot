@@ -10,7 +10,7 @@ var model = new Model();
 const Util = require('./Util.js');
 const util = new Util();
 
-const Transfer = require('./transfer.js');
+const Transfer = require('./transfernew.js');
 const transferCase = new Transfer(model);
 
 const Dayoff = require('./dayoff.js');
@@ -411,13 +411,13 @@ class Scenario {
     // let buttons = '';
     // let text = '';
     // let data = '';
-    var managerID = '100023389924832';
+    var managerID = '1687931741303780';
     var managerMail = 'hungdl@vietinbank.vn';
 
-    if(sender == '100023389924832') {
-      managerID = '100023455158512';
-      managerMail = 'nguyennh@vietinbank.vn';
-    }
+    // if(sender == '100023389924832') {
+    //   managerID = '100023455158512';
+    //   managerMail = 'nguyennh@vietinbank.vn';
+    // }
 
     
     var sender_name = '';
