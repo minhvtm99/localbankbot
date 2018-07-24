@@ -312,10 +312,7 @@ class Scenario {
               try {
                 var text = transferCase.transferMoney(sender, message, msg_time, msg_tagged, items, model);
                 console.log(text); 
-                if (text !== ''){
-                  f.txt(sender, text);
-                }
-                else{
+                if (text.includes('xác nhận')){
                   let buttons = [{
                       content_type: "text",
                       title: "Yes",
@@ -333,6 +330,9 @@ class Scenario {
                     text,
                     buttons
                   });
+                }
+                else{
+                  f.txt(sender, text);
                 }
               }
               catch(error){
