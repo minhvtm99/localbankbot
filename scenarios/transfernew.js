@@ -42,7 +42,7 @@ class Transfer {
 	        console.log("PREV MESSAGE");
 	        console.log(items[items.length -1]);
 
-	        if ((items.length > 1 && items[items.length -1].missing.includes('amount')) || (amount !== '' && bank == '' && acc == '')){
+	        if (items.length > 1 && items[items.length -1].missing.includes('amount')){
 	        	amount = message.text;
 	        }
 
