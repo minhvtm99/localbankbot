@@ -531,7 +531,7 @@ class Scenario {
                host: config.SMTP_SERVER,
                port: 465,
                secure: true, // true for 465, false for other ports
-               requireTLS: true,
+               // requireTLS: true,
                auth: {
                  user: config.SMTP_USER, // generated ethereal user
                  pass: config.SMTP_PASS // generated ethereal password
