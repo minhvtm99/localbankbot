@@ -531,10 +531,10 @@ class Scenario {
                host: config.SMTP_SERVER,
                port: 465,
                secure: true, // true for 465, false for other ports
-               // requireTLS: true,
+               requireTLS: true,
                auth: {
-                 user: config.SMTP_USER, // generated ethereal user
-                 pass: config.SMTP_PASS // generated ethereal password
+                 user: 'minhvtm99@gmail.com', // generated ethereal user
+                 pass: '@Lexisozil99' // generated ethereal password
                }
              });
 
@@ -550,7 +550,7 @@ class Scenario {
 
              // setup email data with unicode symbols
              let mailOptions = {
-               from: '"VietinBank HR ChatBot" <vietinbankchatbot@gmail.com>', // sender address
+               from: '"VietinBank HR ChatBot" <minhvtm99@gmail.com>', // sender address
                to: managerMail, // list of receivers
                subject: mailSubject, // Subject line
                text: plaintTextContent, // plain text body
