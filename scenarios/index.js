@@ -7,6 +7,8 @@ var model = new Model();
 // const Atm = require('./atm.js');
 // const atm = new Atm();
 
+const nodemailer = require('nodemailer');
+
 const Util = require('./Util.js');
 const util = new Util();
 
