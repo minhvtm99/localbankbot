@@ -140,6 +140,7 @@ class Scenario {
           var dayoff = util.extractProperty(msg_tagged, 'dayoff');
           var req = util.extractProperty(msg_tagged, 'request');
           var greeting = util.extractProperty(msg_tagged, 'greeting');
+          var count = util.extractProperty(msg_tagged, 'count');
 
           // Delete all other intents 
           if (atm !== ''){
@@ -169,6 +170,18 @@ class Scenario {
               'fulfilled': {'date': null, 'reason' : null}
             });       
           }
+          else if (dayoff !== '' && count !== ''){
+            model.deleteMessage({"request":{ $ne: "initialize" }});    
+            model.logMessage({
+              'sender': sender,
+              'message': message.text,
+              'message tagged': msg_tagged,
+              'time': msg_time,
+              'request': 'dayoffLeft'
+            });       
+            f.txt(sender, "Bạn còn 9 ngày nghỉ phép trong năm nay");
+          }
+
           else if (greeting !== '') {
             model.deleteMessage({"request":{ $ne: "initialize" }});    
             let text = 'Xin chào! Tôi có thể giúp gì cho bạn?'
@@ -298,8 +311,6 @@ class Scenario {
           }).catch(function(reason) {
            console.error(reason);
           });
-
-
 
           //CASE transfer money
           model.sortMessage('time');
@@ -609,7 +620,7 @@ class Scenario {
             f.txt(sender, "Bạn hãy gửi yêu cầu để tôi chuyển cho quản lý"); 
           }
           else if (request == 'dayoffLeft'){
-            f.txt(sender, "Bạn còn 12 ngày nghỉ phép năm nay");
+            f.txt(sender, "Bạn còn 12 ngày nghỉ phép trong năm nay");
           }
           else{
             this.news(sender, f);
