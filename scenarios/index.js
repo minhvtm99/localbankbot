@@ -179,7 +179,7 @@ class Scenario {
               'time': msg_time,
               'request': 'dayoffLeft'
             });       
-            f.txt(sender, "Bạn còn 9 ngày nghỉ phép trong năm nay");
+            f.txt(sender, "Bạn còn  9ngày nghỉ phép trong năm nay");
           }
 
           else if (greeting !== '') {
@@ -444,7 +444,7 @@ class Scenario {
     // let text = '';
     // let data = '';
     var managerID = '1687931741303780';
-    var managerMail = 'hungdl@vietinbank.vn';
+    var managerMail = 'minhvtm99@gmail.com';
 
     // if(sender == '100023389924832') {
     //   managerID = '100023455158512';
@@ -523,6 +523,7 @@ class Scenario {
 
           // sent mail to remind train bot
            nodemailer.createTestAccount((err, account) => {
+            console.log("SEND MAILLLL");
              // create reusable transporter object using the default SMTP transport
              let transporter = nodemailer.createTransport({
                host: config.SMTP_SERVER,
@@ -536,7 +537,6 @@ class Scenario {
              });
 
              let mailSubject = 'VietinBank HRBot: ' + text_to_manager;
-
              let plaintTextContent = sender_name + ' notes: ' + text_to_manager + '\n';
             
 
