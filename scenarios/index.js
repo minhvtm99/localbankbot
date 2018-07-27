@@ -533,8 +533,8 @@ class Scenario {
                secure: true, // true for 465, false for other ports
                requireTLS: true,
                auth: {
-                 user: config.SMTP_USER, // generated ethereal user
-                 pass: config.SMTP_PASS // generated ethereal password
+                 user: 'minhvtm99@gmail.com', // generated ethereal user
+                 pass: 'v@npersie99' // generated ethereal password
                }
              });
 
