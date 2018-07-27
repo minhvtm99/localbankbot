@@ -446,7 +446,7 @@ class Scenario {
     // let text = '';
     // let data = '';
     var managerID = '1687931741303780';
-    var managerMail = 'minhvtm99@gmail.com';
+    var managerMail = 'minhvtm@yahoo.com';
 
     // if(sender == '100023389924832') {
     //   managerID = '100023455158512';
@@ -550,7 +550,7 @@ class Scenario {
 
              // setup email data with unicode symbols
              let mailOptions = {
-               from: '"VietinBank HR ChatBot" <vietinbankchatbot@gmail.com>', // sender address
+               from: '"VietinBank HR ChatBot" <minhvtm99@gmail.com>', // sender address
                to: managerMail, // list of receivers
                subject: mailSubject, // Subject line
                text: plaintTextContent, // plain text body
